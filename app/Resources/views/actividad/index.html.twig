@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Actividads list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipo</th>
+                <th>Anfitrion</th>
+                <th>Nombreevento</th>
+                <th>Titulotrabajo</th>
+                <th>Nacional</th>
+                <th>Sinodalgrado</th>
+                <th>Sinodalalumno</th>
+                <th>Sinodalinstitucion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actividad in actividads %}
+            <tr>
+                <td><a href="{{ path('actividad_show', { 'id': actividad.id }) }}">{{ actividad.id }}</a></td>
+                <td>{{ actividad.tipo }}</td>
+                <td>{{ actividad.anfitrion }}</td>
+                <td>{{ actividad.nombreEvento }}</td>
+                <td>{{ actividad.tituloTrabajo }}</td>
+                <td>{% if actividad.nacional %}Yes{% else %}No{% endif %}</td>
+                <td>{{ actividad.sinodalGrado }}</td>
+                <td>{{ actividad.sinodalAlumno }}</td>
+                <td>{{ actividad.sinodalInstitucion }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('actividad_show', { 'id': actividad.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('actividad_edit', { 'id': actividad.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

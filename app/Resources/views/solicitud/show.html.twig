@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
+        <li><a href="#">{{ solicitud.id }}</a></li>
+        <li class="active">{{ solicitud.tipo }}</li>
+    </ol>
+
+    <h2>{{ solicitud.tipo }}</h2>
+    Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong>
+
+    <strong>
+        {% if solicitud.ambito == true %}
+            <span class="label label-success "><i class="fa fa-check-square"></i> Nacional</span>
+        {% elseif solicitud.ambito is null %}
+            <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+        {% elseif solicitud.ambito == false %}
+            <span class="label label-danger"><i class="fa fa-times-circle"></i> Internacional</span>
+        {% endif %}
+    </strong>
+
+    <br><br>
+    {% if solicitud.cartaSolicitudName != null %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Carta Solicitud</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaSolicitudFile') }}"  target="_blank"/>{{ solicitud.cartaSolicitudName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+    {% if solicitud.cartaInvitacionName != null  %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Carta invitación</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaInvitacionFile') }}"  target="_blank"/>{{ solicitud.cartaInvitacionName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+    {% if solicitud.planName  != null  %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Plan de trabajo</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'planFile') }}"  target="_blank"/>{{ solicitud.planName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalsolicitud">
+        Modificar solicitud
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <h2>Actividades</h2>
+
+
+
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <ul class="list-group">
+            {% for actividad in actividades %}
+                {% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}
+
+                <li class="list-group-item">
+                    <div>
+                        <i class="fa fa-search fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
+                    </div>
+                    <span class="label label-default">{{ actividad.institucion }}</span>
+                    <span class="label label-default">{{ actividad.departamento }}</span>
+                    <span class="label label-default">{{ actividad.lugar }}</span>
+                    <span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span>
+                    <p class="pull-right">
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#{{ actividadmodalshow }}">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+
+                    </p>
+
+
+                </li>
+
+                <!-- Modal -->
+                <div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                {% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </ul>
+    </div>
+
+
+
+    <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-info" role="button">Nueva actividad</a>
+
+    <hr>
+    <h2>Financiamiento</h2>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalfinanciamiento" tabindex="-1" role="dialog" aria-labelledby="modalfinanciamientoLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalfinanciamientoLabel">Financiamiento</h4>
+                </div>
+                <div class="modal-body">
+                    {% render controller("SiaBundle:Solicitud:financiamiento", {'id': solicitud.id}) %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Fuente</th>
+                        <th class="text-center">CCM</th>
+                        <th class="text-center">PAPIIT</th>
+                        <th class="text-center">Conacyt</th>
+                        <th class="text-center">Otro</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% set ccm = 0 %}
+                    {% set papiit = 0 %}
+                    {% set conacyt = 0 %}
+                    {% set otro = 0 %}
+
+                    {% for fin in solicitud.financiamiento %}
+                        <tr>
+                            <td>{{ fin.nombre }}</td>
+                            <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
+                            <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
+                            <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
+                            <td class="text-right">{{ fin.otro  }}</td>
+                        </tr>
+                        {% set ccm = fin.ccm + ccm %}
+                        {% set papiit = fin.papiit + papiit %}
+                        {% set conacyt = fin.conacyt + conacyt %}
+                        {% set otro = fin.otro + otro %}
+
+                    {% endfor %}
+                    <tr>
+                        <td><h4><i class="fa fa-usd"></i> Total</td>
+                        <td class="text-right"><h4><strong>${{ ccm|number_format(2) }}</strong></h4></td>
+                        <td class="text-right"><h4><strong>${{ papiit|number_format(2)  }}</strong></h4></td>
+                        <td class="text-right"><h4><strong>${{ conacyt|number_format(2)  }}</strong></h4></td>
+                        <td class="text-right"><h4><strong></strong></h4></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalfinanciamiento">
+        Modificar financiamineto
+    </button>
+
+
+
+    <div class="row">
+        <div class="col-lg-7 col-lg-offset-5">
+
+            {{ form_start(delete_form) }}
+            <button type="button" class="btn btn-success" data-dismiss="modal">Enviar solicitud</button>
+            {#  {% if enviado != true %}  #}
+            <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
+            {#  {% endif %}  #}
+            {{ form_end(delete_form) }}
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

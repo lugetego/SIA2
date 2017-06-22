@@ -1,0 +1,374 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
+        <li><a href="{{ path('solicitud_show',{'id': id}) }}">Regresar a la solicitud</a></li>
+    </ol>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Agregar actividad a la solicitud</h3>
+                </div>
+                <div class="panel-body">
+                    {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
+
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+
+                    {% if flow.getCurrentStepNumber() == 1 %}
+                        <div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <div>
+                                        {{ form_label(form.tipo) }}
+                                    </div>
+                                    <div>
+                                        {{ form_widget(form.tipo) }}
+                                    </div>
+                                    <div>{{ form_errors(form.tipo) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.anfitrion is defined %}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <div>{{ form_label(form.anfitrion) }}</div>
+                                <div>{{ form_widget(form.anfitrion, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.anfitrion) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.sinodalAlumno is defined %}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <div>{{ form_label(form.sinodalAlumno) }}</div>
+                                <div>{{ form_widget(form.sinodalAlumno, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.sinodalAlumno) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.sinodalGrado is defined %}
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <div>{{ form_label(form.sinodalGrado) }}</div>
+                                <div>{{ form_widget(form.sinodalGrado, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.sinodalGrado) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.motivo is defined %}
+                        <p class="text-info">Seleccionar el motivo de la actividad</p>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                {% for key in form.motivo %}
+                                    <div class="col-md-3" >
+                                        <div>
+                                            {{ form_widget(key) }}
+                                            {{ form_label(key) }}
+                                        </div>
+                                        <div>{{ form_errors(key) }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.nombreEvento is defined %}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <br>
+                            <div class="form-group">
+                                <div>{{ form_label(form.nombreEvento) }}</div>
+                                <div>{{ form_widget(form.nombreEvento, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.nombreEvento) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.tituloTrabajo is defined %}
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <br>
+                            <div class="form-group">
+                                <div>{{ form_label(form.tituloTrabajo) }}</div>
+                                <div>{{ form_widget(form.tituloTrabajo, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.tituloTrabajo) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.nacional is defined %}
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div>{{ form_label(form.nacional) }}</div>
+                                <div>
+                                    {% spaceless %}
+                                        {% for child in form.nacional %}
+                                            <div class="radio-inline">
+                                                {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endspaceless %}
+                                </div>
+                                <div>{{ form_errors(form.nacional) }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.invitacion is defined %}
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div>{{ form_label(form.invitacion) }}</div>
+                                <div>
+                                    {% spaceless %}
+                                        {% for child in form.invitacion %}
+                                            <div class="radio-inline">
+                                                {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endspaceless %}
+                                </div>
+                                <div>{{ form_errors(form.invitacion) }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.plenaria is defined %}
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div>{{ form_label(form.plenaria) }}</div>
+                                <div>
+                                    {% spaceless %}
+                                        {% for child in form.plenaria %}
+                                            <div class="radio-inline">
+                                                {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endspaceless %}
+                                </div>
+                                <div>{{ form_errors(form.plenaria) }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.institucion is defined %}
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <div>{{ form_label(form.institucion) }}</div>
+                                <div>{{ form_widget(form.institucion, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.institucion) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.departamento is defined %}
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <div>{{ form_label(form.departamento) }}</div>
+                                <div>{{ form_widget(form.departamento, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.departamento) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.lugar is defined %}
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <div>{{ form_label(form.lugar) }}</div>
+                                <div>{{ form_widget(form.lugar, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
+                                <div>{{ form_errors(form.lugar) }}</div><br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if form.fechaActividad is defined %}
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div>
+                                    {{ form_label(form.fechaActividad) }}
+                                </div>
+                                <div>
+                                    {{ form_widget(form.fechaActividad) }}
+                                </div>
+                                <div>{{ form_errors(form.fechaActividad) }}</div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                    {% if flow.getCurrentStepNumber() == 3 %}
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <dl>
+                                    <dt><strong>Tipo de actividad</strong></dt>
+                                    <dd>{{ formdata.tipo }}</dd>
+                                </dl>
+                            </div>
+
+                            {% if formdata.nacional is defined and formdata.nacional == true or formdata.nacional == false %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Ámbito de la solicitud</strong></dt>
+                                        <dd>
+                                            {% if formdata.nacional is not null %}
+                                                <span class="label label-success "><i class="fa fa-check-square"></i> Nacional</span>
+                                            {% elseif formdata.nacional is null %}
+                                                <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+                                            {% elseif formdata.nacional == false %}
+                                                <span class="label label-danger"><i class="fa fa-times-circle"></i> Internacional</span>
+                                            {% endif %}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {% if formdata.invitacion is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Por invitación</strong></dt>
+                                        <dd>
+                                            {% if formdata.invitacion == true %}
+                                                <span class="label label-success "><i class="fa fa-check-square"></i> Si</span>
+                                            {% elseif formdata.invitacion is null %}
+                                                <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+                                            {% elseif formdata.invitacion == false %}
+                                                <span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>
+                                            {% endif %}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {% if formdata.plenaria is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Conferencia plenaria</strong></dt>
+                                        <dd>
+                                            {% if formdata.plenaria == true %}
+                                                <span class="label label-success "><i class="fa fa-check-square"></i> Si</span>
+                                            {% elseif formdata.plenaria is null %}
+                                                <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+                                            {% elseif formdata.plenaria == false %}
+                                                <span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>
+                                            {% endif %}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {% if formdata.anfitrion is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Nombre del anfitrión</strong></dt>
+                                        <dd>{{ formdata.anfitrion }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.sinodalAlumno is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Nombre del alumno:</strong></dt>
+                                        <dd>{{ formdata.sinodalAlumno }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.sinodalGrado is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Grado:</strong></dt>
+                                        <dd>{{ formdata.sinodalGrado }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.motivo is not null  %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Motivo de la actividad</strong></dt>
+                                        <dd>{% for key,value in formdata.motivo if value %}
+                                                {{ value |title}},
+                                            {% endfor %}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.nombreEvento is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Nombre del evento</strong></dt>
+                                        <dd>{{ formdata.nombreEvento }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.tituloTrabajo is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Título del trabajo</strong></dt>
+                                        <dd>{{ formdata.tituloTrabajo }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.institucion is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Institución</strong></dt>
+                                        <dd>{{ formdata.institucion }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.departamento is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Departamento:</strong></dt>
+                                        <dd>{{ formdata.departamento }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.lugar is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Lugar:</strong></dt>
+                                        <dd>{{ formdata.lugar }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                            {% if formdata.fechaActividad is not null %}
+                                <div class="col-lg-4">
+                                    <dl>
+                                        <dt><strong>Fecha de la actividad:</strong></dt>
+                                        <dd>{{ formdata.fechaActividad|localizeddate('long', 'none') }}</dd>
+                                    </dl>
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+                    {% endif %}
+
+                </div>
+                {{ form_rest(form) }}
+
+                <div class="panel-footer pull-center">
+                    {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
+                    craue_formflow_button_class_last: 'btn btn-primary',
+                    craue_formflow_button_class_back: 'btn btn-default',
+                    craue_formflow_button_class_reset: 'btn btn-warning',
+                    craue_formflow_button_label_finish: 'Agregar actividad',
+                    craue_formflow_button_label_back: 'Regresar',
+                    craue_formflow_button_label_next: 'Siguiente',
+                    craue_formflow_button_label_reset: 'Reiniciar',
+                    } %}
+                </div>
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}

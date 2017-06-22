@@ -1,0 +1,310 @@
+<?php
+
+namespace SiaBundle\Controller;
+
+use SiaBundle\Entity\Solicitud;
+use SiaBundle\Entity\Actividad;
+use SiaBundle\Entity\Financiamiento;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+
+/**
+ * Solicitud controller.
+ *
+ * @Route("solicitud")
+ */
+class SolicitudController extends Controller
+{
+    /**
+     * Lists all solicitud entities.
+     *
+     * @Route("/", name="solicitud_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $solicituds = $em->getRepository('SiaBundle:Solicitud')->findAll();
+
+        return $this->render('solicitud/index.html.twig', array(
+            'solicituds' => $solicituds,
+        ));
+    }
+
+    /**
+     * Lists all solicitud entities.
+     *
+     * @Route("/step", name="solicitud_step")
+     * @Method({"GET", "POST"})
+     */
+    public function createSolicitudAction()
+    {
+       $formData = new Solicitud(); // Your form data class. Has to be an object, won't work properly with an array.
+
+       $viaticos = new Financiamiento();
+       $viaticos->setNombre("Viáticos");
+       $viaticos->setCcm(0);
+       $viaticos->setPapiit(0);
+       $viaticos->setConacyt(0);
+       $viaticos->setOtro(0);
+       $formData->getFinanciamiento()->add($viaticos);
+
+       $aereo = new Financiamiento();
+       $aereo->setNombre("Pasaje aéreo");
+       $aereo->setCcm(0);
+       $aereo->setPapiit(0);
+       $aereo->setConacyt(0);
+       $aereo->setOtro(0);
+       $formData->getFinanciamiento()->add($aereo);
+
+       $terrestre = new Financiamiento();
+       $terrestre->setNombre("Pasaje terrestre");
+       $terrestre->setCcm(0);
+       $terrestre->setPapiit(0);
+       $terrestre->setConacyt(0);
+       $terrestre->setOtro(0);
+       $formData->getFinanciamiento()->add($terrestre);
+
+       $inscripciones = new Financiamiento();
+       $inscripciones->setNombre("Inscripciones");
+       $inscripciones->setCcm(0);
+       $inscripciones->setPapiit(0);
+       $inscripciones->setConacyt(0);
+       $inscripciones->setOtro(0);
+       $formData->getFinanciamiento()->add($inscripciones);
+
+        $flow = $this->get('Ccm.form.flow.createSolicitud'); // must match the flow's service id
+        $flow->bind($formData);
+
+        // form of the current step
+//        $form = $flow->createForm($formData,array('tipo'=>$tipo));
+        $form = $flow->createForm('SiaBundle\Form\CreateSolicitudForm', $formData, array('tipo'=>null));
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm();
+            } else {
+                // flow finished
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($formData);
+                $em->flush();
+
+                $flow->reset(); // remove step data from the session
+
+                //return $this->redirect($this->generateUrl('solicitud_index')); // redirect when done
+                return $this->redirectToRoute('solicitud_show', array('id' => $formData->getId()));
+
+            }
+        }
+
+        return $this->render('solicitud/createSolicitud.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+            'formdata' => $formData,
+        ));
+    }
+
+
+    /**
+     * Creates a new solicitud entity.
+     *
+     * @Route("/new", name="solicitud_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
+    {
+        $solicitud = new Solicitud();
+/*
+        $viaticos = new Financiamiento();
+        $viaticos->setNombre("Viáticos");
+        $viaticos->setCcm(0);
+        $viaticos->setPapiit(0);
+        $viaticos->setConacyt(0);
+        $viaticos->setOtro(0);
+        $solicitud->getFinanciamiento()->add($viaticos);
+
+        $aereo = new Financiamiento();
+        $aereo->setNombre("Pasaje aéreo");
+        $aereo->setCcm(0);
+        $aereo->setPapiit(0);
+        $aereo->setConacyt(0);
+        $aereo->setOtro(0);
+        $solicitud->getFinanciamiento()->add($aereo);
+
+        $terrestre = new Financiamiento();
+        $terrestre->setNombre("Pasaje terrestre");
+        $terrestre->setCcm(0);
+        $terrestre->setPapiit(0);
+        $terrestre->setConacyt(0);
+        $terrestre->setOtro(0);
+        $solicitud->getFinanciamiento()->add($terrestre);
+
+        $inscripciones = new Financiamiento();
+        $inscripciones->setNombre("Inscripciones");
+        $inscripciones->setCcm(0);
+        $inscripciones->setPapiit(0);
+        $inscripciones->setConacyt(0);
+        $inscripciones->setOtro(0);
+        $solicitud->getFinanciamiento()->add($inscripciones);*/
+
+
+        $form = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()  ) {
+
+
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $em->persist($solicitud);
+            $em->flush();
+
+
+
+            return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
+        }
+
+        return $this->render('solicitud/new.html.twig', array(
+            'solicitud' => $solicitud,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a solicitud entity.
+     *
+     * @Route("/{id}", name="solicitud_show")
+     * @Method("GET")
+     */
+    public function showAction(Solicitud $solicitud)
+    {
+        $deleteForm = $this->createDeleteForm($solicitud);
+
+        return $this->render('solicitud/show.html.twig', array(
+            'solicitud' => $solicitud,
+            'delete_form' => $deleteForm->createView(),
+            'actividades'=> $solicitud->getActividades()
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing solicitud entity.
+     *
+     * @Route("/{id}/edit", name="solicitud_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, Solicitud $solicitud)
+    {
+        $deleteForm = $this->createDeleteForm($solicitud);
+        $editForm = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud, array('tipo'=>$solicitud->getTipo()));
+
+
+        $editForm->remove('tipo');
+        $editForm->remove('financiamiento');
+
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
+        }
+
+        return $this->render('solicitud/edit.html.twig', array(
+            'solicitud' => $solicitud,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing solicitud entity.
+     *
+     * @Route("/{id}/financiamiento", name="solicitud_financiamiento")
+     * @Method({"GET", "POST"})
+     */
+    public function financiamientoAction(Request $request, Solicitud $solicitud)
+    {
+
+
+
+        $deleteForm = $this->createDeleteForm($solicitud);
+        $editForm = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud);
+
+        $editForm->remove('tipo');
+        $editForm->remove('ambito');
+        $editForm->remove('fechaInicio');
+        $editForm->remove('fechaFin');
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            $financiamientos = $solicitud->getFinanciamiento();
+            $financiamiento[0] = clone $financiamientos[0];
+            $financiamiento[1] = clone $financiamientos[1];
+            $financiamiento[2] = clone $financiamientos[2];
+            $financiamiento[3] = clone $financiamientos[3];
+
+            $solicitud->setFinanciamiento($financiamiento);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            //dump($editForm->get('financiamiento')->getData());
+            return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
+        }
+
+        return $this->render('solicitud/financiamiento.html.twig', array(
+            'solicitud' => $solicitud,
+            'id'=>$solicitud->getId(),
+            'form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a solicitud entity.
+     *
+     * @Route("/{id}", name="solicitud_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, Solicitud $solicitud)
+    {
+        $form = $this->createDeleteForm($solicitud);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($solicitud);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('solicitud_index');
+    }
+
+    /**
+     * Creates a form to delete a solicitud entity.
+     *
+     * @param Solicitud $solicitud The solicitud entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(Solicitud $solicitud)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('solicitud_delete', array('id' => $solicitud->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
+}

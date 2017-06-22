@@ -1,0 +1,118 @@
+{% block body %}
+
+    {{ form_start(edit_form, {'action': path('solicitud_edit', { 'id': solicitud.id})}) }}
+<div class="row">
+
+
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <div>{{ form_label(edit_form.ambito) }}</div>
+            <div>
+                {% spaceless %}
+                    {% for child in edit_form.ambito %}
+                        <div class="radio-inline">
+                            {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                        </div>
+                    {% endfor %}
+                {% endspaceless %}
+            </div>
+            <div>{{ form_errors(edit_form.ambito) }}</div>
+        </div>
+    </div>
+    </div>
+
+    {% if solicitud.cartaSolicitudName != null %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Carta Solicitud</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaSolicitudFile') }}"  target="_blank"/>{{ solicitud.cartaSolicitudName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+    {% if solicitud.cartaInvitacionName != null  %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Carta invitación</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaInvitacionFile') }}"  target="_blank"/>{{ solicitud.cartaInvitacionName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+    {% if solicitud.planName  != null  %}
+        <div class="col-lg-4">
+            <dl>
+                <dt>Plan de trabajo</dt>
+
+                <dd><a href="{{ vich_uploader_asset(solicitud, 'planFile') }}"  target="_blank"/>{{ solicitud.planName }}</a></dd>
+
+            </dl>
+        </div>
+    {% endif %}
+
+    {% if edit_form.cartaSolicitudFile is defined %}
+        <div class="col-lg-4">
+            <dl>
+                <dd>{{ form_widget(edit_form.cartaSolicitudFile) }}</dd>
+            </dl>
+        </div>
+    {% endif %}
+
+    {% if edit_form.cartaInvitacionFile is defined %}
+        <div class="col-lg-4">
+            <dl>
+                <dd>{{ form_widget(edit_form.cartaInvitacionFile) }}</dd>
+            </dl>
+        </div>
+    {% endif %}
+
+    {% if edit_form.planFile is defined %}
+        <div class="col-lg-4">
+            <dl>
+                <dd>{{ form_widget(edit_form.planFile) }}</dd>
+            </dl>
+
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <div>
+                    {{ form_label(edit_form.fechaInicio) }}
+                </div>
+                <div>
+                    {{ form_widget(edit_form.fechaInicio) }}
+                </div>
+                <div>{{ form_errors(edit_form.fechaInicio) }}</div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <div>
+                    {{ form_label(edit_form.fechaFin) }}
+                </div>
+                <div>
+                    {{ form_widget(edit_form.fechaFin) }}
+                </div>
+                <div>{{ form_errors(edit_form.fechaFin) }}</div>
+            </div>
+        </div>
+    </div>
+
+
+
+        {{ form_widget(edit_form) }}
+
+
+    <div class="row">
+        <div class="col-lg-7 col-lg-offset-5">
+            <input type="submit" value="Guardar"  class="btn btn-primary"/>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+{% endblock %}

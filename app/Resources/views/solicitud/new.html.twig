@@ -1,0 +1,77 @@
+
+{% form_theme form _self %}
+
+
+{{ form_start(form, {'action': path('solicitud_new')}) }}
+
+<div class="row">
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <div>
+                {{ form_label(form.tipo) }}
+            </div>
+            <div>
+                {{ form_widget(form.tipo) }}
+            </div>
+            <div>{{ form_errors(form.tipo) }}</div>
+        </div>
+    </div>
+
+    <div class="col-lg-3">
+        <div class="form-group">
+            <div>{{ form_label(form.ambito) }}</div>
+            <div>
+                {% spaceless %}
+                    {% for child in form.ambito %}
+                        <div class="radio-inline">
+                            {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                        </div>
+                    {% endfor %}
+                {% endspaceless %}
+            </div>
+            <div>{{ form_errors(form.ambito) }}</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <div>
+                    {{ form_label(form.fechaInicio) }}
+                </div>
+                <div>
+                    {{ form_widget(form.fechaInicio) }}
+                </div>
+                <div>{{ form_errors(form.fechaInicio) }}</div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <div>
+                    {{ form_label(form.fechaFin) }}
+                </div>
+                <div>
+                    {{ form_widget(form.fechaFin) }}
+                </div>
+                <div>{{ form_errors(form.fechaFin) }}</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<br>
+
+
+<div class="col-lg-12">
+    <input type="submit" value="Nueva solicitud" class="btn btn-success"/>
+    {{ form_end(form) }}
+</div>
+
+
+
+
+
