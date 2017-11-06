@@ -31,6 +31,13 @@ class Solicitud
     private $id;
 
     /**
+     * @var academico
+     * @ORM\ManyToOne(targetEntity="Academico", inversedBy="solicitudes")
+     * @ORM\JoinColumn(name="academico_id", referencedColumnName="id")
+     */
+    private $academico;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="tipo", type="string", length=255, nullable=true)
@@ -531,5 +538,24 @@ class Solicitud
         return $dias->format('%d') + 1;
     }
 
+    /**
+     * Set academico
+     *
+     * @param \SiaBundle\Entity\academico $academico
+     */
+    public function setAcademico($academico)
+    {
+        $this->academico = $academico;
+    }
+
+    /**
+     * Get academico
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAcademico()
+    {
+        return $this->academico;
+    }
 
 }

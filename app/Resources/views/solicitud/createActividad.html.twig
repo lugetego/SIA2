@@ -193,9 +193,13 @@
                                 <div>
                                     {{ form_label(form.fechaActividad) }}
                                 </div>
-                                <div>
-                                    {{ form_widget(form.fechaActividad) }}
+                                <div class="input-group date">
+                                    {{ form_widget(form.fechaActividad, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </div>
                                 </div>
+
                                 <div>{{ form_errors(form.fechaActividad) }}</div>
                             </div>
                         </div>
@@ -343,6 +347,8 @@
                                     <dl>
                                         <dt><strong>Fecha de la actividad:</strong></dt>
                                         <dd>{{ formdata.fechaActividad|localizeddate('long', 'none') }}</dd>
+
+
                                     </dl>
                                 </div>
 
@@ -370,5 +376,34 @@
 
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/dates.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker2').datepicker({
+                format: 'yyyy-MM-dd',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+
+
 
 {% endblock %}

@@ -1,0 +1,178 @@
+{# src/AppBundle/Resources/views/layout-pdf.html.twig #}
+<meta charset="UTF-8" />
+
+{% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css', absolute=true) }}" type="text/css"/>
+{% endblock %}
+
+{% block body %}
+    {# Layout for PDF files #}
+    {% block content %}
+        <div class="print-area">
+            <div class="row page-header">
+                <div class="col-xs-5">
+
+                    <p><small><strong>Académico:</strong> {{ academico.nombre }} {{ academico.apellido }}</small> </p>
+                    <p>Informe de actividades 2016</p>
+                </div>
+                <div class="col-xs-7">
+                   {#  <p class="text-right small"><img class="right" src="{{ asset('img/ccm.png', absolute=true) }}" width="180px" height="60px" /></p>   #}
+                    <p class="text-justify small alert-warning"> Dictamen del Consejo Interno: <strong>{{ academico.aprobado }}</strong><br>
+                        <small>{{ academico.observaciones }}</small></p>
+
+                </div>
+            </div>
+
+            {% if investigaciones|length > 0 %}
+                <strong><small>Investigación</small></strong><br>
+                <ol>
+                    {% for investigacion in investigaciones %}
+                        <small><li class="text-justify">{{ investigacion.titulo }}, <small><em> {{ investigacion.autores }}</em></small>, <small>{{ investigacion.tipo|title }}</small>,
+                                {% if investigacion.revista %} {{ investigacion.revista }},{% endif %}
+                                {% if investigacion.year %} {{ investigacion.year }}, {% endif %}
+                                {% if investigacion.numero %}Núm. {{ investigacion.numero }}, {% endif %}
+                                {% if investigacion.volumen %}Vol. {{ investigacion.volumen }},{% endif %}
+                                {% if investigacion.pags %}{{ investigacion.pags }} págs.,{% endif %}
+                                {% if investigacion.indizado %} indizado,{% endif %}
+                                {% if investigacion.issn %} ISSN: {{ investigacion.issn  }}, {% endif %}
+                                {% if investigacion.status %} {{ investigacion.status|lower  }} {% endif %}</li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if estudiantes|length > 0 %}
+                <strong><small>Estudiantes</small></strong><br>
+                <ol>
+                    {% for estudiante in estudiantes %}
+                        <small>
+                            <li class="text-justify">
+                                {{ estudiante.alumno |title }},
+                                {{ estudiante.nivel|title }},
+                                {{ estudiante.programa }},
+                                {% if estudiante.avance %}{{ estudiante.avance }}% de avance,{% endif %}
+                                {% if estudiante.titulado %} titulado el {{ estudiante.titulacion|localizeddate('long', 'none') }},{% endif %}
+                                {% if estudiante.tesis %}Tesis: <em>{{ estudiante.tesis }}</em>{% endif %}
+                            </li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if posdocs|length > 0 %}
+                <strong><small>Posdocs</small></strong><br>
+                <ol>
+                    {% for posdoc in posdocs %}
+                        <small>
+                            <li class="text-justify">{{ posdoc.nombre |title }}, <small>del {{ posdoc.inicio|localizeddate('long', 'none') }} al {{ posdoc.fin|localizeddate('long', 'none') }}</small>
+                                <br>
+                            </li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if cursos|length > 0 %}
+                <strong><small>Cursos y seminarios</small></strong><br>
+                <ol>
+                    {% for curso in cursos %}
+                        <small> <li class="text-justify">{{ curso.nombre }},
+                                <small>{{ curso.tipo|title }}</small>,
+                                <em> {{ curso.nivel }}, {% if curso.horas %}{{ curso.horas }} horas,{% endif %}
+                                    {{ curso.lugar }}</em>
+                            </li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if proyectos|length > 0 %}
+                <strong><small>Proyectos</small></strong><br>
+                <ol>
+                    {% for proyecto in proyectos %}
+                        <small><li class="text-justify">{{ proyecto.nombre }}, <small>{{ proyecto.tipo|title }}</small>,<em> {{ proyecto.numero }}</em></li></small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if eventos|length > 0 %}
+                <strong><small>Eventos académicos y de divulgación</small></strong><br>
+                <ol>
+                    {% for evento in eventos %}
+                        <small>
+                            <li class="text-justify">
+                            {{ evento.nombre }},
+                            <small>{% if evento.nacional %} nacional, {% else %} internacional,{% endif %}</small>
+                             <small>{% if evento.organizador %} organizador,{% endif %}</small>
+                             <small> {{ evento.tipo|title }},</small>
+                             {% if evento.platica %} "{{ evento.platica }}",{% endif %}
+                             <small>{% if evento.divulgacion %} Divulgación, {% endif %} </small>
+                                <em> {% if evento.institucion %} {{ evento.institucion }}</em>,{% endif %}
+                                {% if evento.actividad %} {{ evento.actividad }},{% endif %}
+                                {% if evento.pais %} {{ evento.pais }}{% endif %}
+                            </li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if salidas|length > 0 %}
+                <strong><small>Licencias y comisiones</small></strong><br>
+                <ol>
+                    {% for salida in salidas %}
+                        <small><li class="text-justify">{{ salida.pais|title }},
+                                <em> {{ salida.universidad }}</em>,
+                                {% if salida.actividad  %} {{ salida.actividad }},{% endif %}
+                                {% if salida.trabajo %} "{{ salida.trabajo }}" {% endif %}
+                                <br>
+                            </li>
+                        </small>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            {% if is_granted("ROLE_ADMIN") %}
+                <div class="row page-header">
+                    <div class="col-xs-6">
+                        <h5>Plan de trabajo 2017</h5>
+                    </div>
+                </div>
+                {% for plan in planes %}
+                    {% if plan.investigacion %}
+                        <strong><small>Investigación</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.investigacion| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.estudiantes %}
+                        <strong><small>Estudiantes</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.estudiantes| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.cursos %}
+                        <strong><small>Cursos y seminarios</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.cursos | nl2br  }}  </small></p>
+                    {% endif %}
+                    {% if plan.proyectos %}
+                        <strong><small>Proyectos</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.proyectos| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.eventos %}
+                        <strong><small>Eventos académicos y de divulgación</small></strong><br>
+                        <p class="text-justify"> <small>{{ plan.eventos| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.salidas %}
+                        <strong><small>Licencias y comisiones</small></strong><br>
+                        <p class="text-justify"> <small>{{ plan.salidas| nl2br }}</small></p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endblock %}

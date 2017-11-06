@@ -1,0 +1,49 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+        {% block paneltitle %}
+            <h3 class="panel-title">CCM Login</h3>
+        {% endblock %}
+
+    {% block fos_user_content %}
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <p>Credenciales actuales</p>
+            <p>Usuario: <b>{{ app.user.username }}</b></p>
+            <p>Correo: <b>{{ app.user.email }}</b></p>
+
+            <a href="{{ path('fos_user_security_logout') }}" class="btn btn-lg btn-success btn-block" role="button">
+                {{ 'Logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+
+        {% else %}
+
+            {% if error %}
+                <p class="text-danger"><span class="glyphicon glyphicon-remove"></span> {{ error.messageKey|trans(error.messageData, 'security') }}</p>
+            {% endif %}
+
+
+            <form role="form" action="{{ path('fos_user_security_check') }}" method="post">
+                <fieldset>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Usuario" type="text" id="username" name="_username" value="{{ last_username }}" required="required" / autofocus>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="Contraseña" type="password" id="password" name="_password" required="required" />
+                    </div>
+
+                    <button class="btn btn-lg btn-success btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}">Login</button>
+                </fieldset>
+            </form>
+
+            <br>
+            <p class="text-right"> <a href="{{ path('fos_user_resetting_request') }}">Recuperar contraseña</a></p>
+
+        {% endif %}
+
+    {% endblock fos_user_content %}

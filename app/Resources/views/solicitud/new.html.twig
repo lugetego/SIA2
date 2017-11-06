@@ -1,6 +1,13 @@
 
 {% form_theme form _self %}
 
+{% block css %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
+
+
+{% endblock %}
 
 {{ form_start(form, {'action': path('solicitud_new')}) }}
 
@@ -74,4 +81,29 @@
 
 
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker2').datepicker({
+                format: 'yyyy-MM-dd',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+
+
+
+{% endblock %}

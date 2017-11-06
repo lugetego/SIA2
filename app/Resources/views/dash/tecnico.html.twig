@@ -1,0 +1,278 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CCM - Dashboard{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <!-- Bootstrap Core CSS -->
+{% endblock %}
+
+{% block sidebar %}
+
+    <li>
+        <a href="{{ path('dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+    </li>
+
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p></p>
+            <br>
+            {#                <h1 class="page-header">Solicitudes </h1>#}
+        </div>
+    </div>
+
+    <div class="row">::
+        <div class="col-lg-12xxxxxxxxxxxxx">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <strong>{{ academico.nombre | title}} {{ academico.apellido | title}}</strong>
+                    <span class="pull-right text-muted small">
+                </span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="http://placekitten.com/g/150/150" alt="..." class="img-circle" style="width: 50px; height: 50px;">
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <i class="fa fa-book"></i> RFC:
+                                        </label>
+                                        {{ academico.rfc}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fa fa-bookmark"></i> Dias disponibles:
+
+                                            {#<span class="badge">{{ totalDias - diasLicencia - diasComision}}</span>#}
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="col-lg-12">
+
+                                    <a href="{{ path('academico_edit', { 'id': academico.id }) }}" type="button" class="btn btn-primary">Modificar</a>
+                                    <a href="{{ path('academico') }}" type="button"  class="btn btn-danger">Regresar</a>
+                                    <button href="{{ path('academico_delete', { 'id': academico.id }) }}" type="submit" class="btn btn-primary"
+                                            onclick="return confirm('¿Estás seguro de eliminar esta información?')">Eliminar</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="fa fa-calendar-o" aria-hidden="true"></i> Licencia y comisión
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 text-center">
+                                    <dl>
+                                        <dt><i class="fa fa-tasks fa-3x" aria-hidden="true"></i></dt>
+                                         <dd><a href="{{ path('solicitud_index' ) }} ">Solicitudes <span class="counter">{{solicitudes|length }}</span></a></dd>
+                                    </dl>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+               {# <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a data-toggle="modal" data-target="#myModal2" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="fa fa-paper-plane" aria-hidden="true"></i> Envío de información
+                            </a>
+                        </h4>
+                    </div>
+
+                </div>#}
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> <i class="fa fa-envelope-o" aria-hidden="true"></i> Mensajes</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-exclamation-triangle media-object fa-2x text-info" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="alert-info"> <h4 class="media-heading">Próxima sesión del CI</h4></span>
+                            <p class="text-info"></p>
+                        </div>
+                    </div>
+
+                    {% if enviado is defined and enviado == 1 %}
+
+    <div class="media">
+        <div class="media-left">
+            <i class="fa fa-check media-object fa-2x text-success" aria-hidden="true"></i>
+        </div>
+        <div class="media-body">
+            <span class="alert-success"> <h4 class="media-heading">Hemos recibido tu información</h4></span>
+            <p class="text-success text-justify">Se ha recibido la información de tu informe y plan de trabajo, por lo tanto ya no es posible realizar modificaciones en tu informe o plan de trabajo.</p>
+        </div>
+    </div>
+
+{% else %}
+    <div class="media">
+        <div class="media-left">
+            <i class="fa fa-check media-object fa-2x text-success" aria-hidden="true"></i>
+        </div>
+        <div class="media-body">
+            <span class="alert-success"> <h4 class="media-heading">No tienes solicitudes pendientes</h4></span>
+            <p class="text-danger"></p>
+        </div>
+    </div>
+{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal informe -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Vista previa</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row page-header">
+                        <div class="col-xs-6">
+                            <h3>Informe 2016</h3>
+                            <p> <strong>Académico:</strong> {{ academico.nombre }} {{ academico.apellido }}</p>
+                        </div>
+                        <div class="col-xs-6">
+                            <p class="text-right"><img class="right" src="{{ asset('img/ccm.png', absolute=true) }}" width="180px" height="60px" /></p>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid">
+
+                        <strong>Investigación</strong><br>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal envío -->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Envío de información</h4>
+                </div>
+
+                {% if enviado is defined and enviado == 1 %}
+    <div class="panel-body">
+        <div class="col-lg-12 col-md-2 text-center">
+            <p class="text-justify alert alert-success">Hemos enviado un acuse de recibo a tu correo <em><strong>{{ app.user.email }}</strong></em></p>
+        </div>
+    </div>
+{% else %}
+    <div class="panel-body">
+        <div class="col-lg-12 col-md-2 text-center">
+            <p class="text-justify alert alert-info">Al momento de enviar tu informe y plan de trabajo recibirás un acuse de recibo a tu correo <em><strong>{{ app.user.email }}</strong></em>.<br>
+                Una vez enviada la información no será posible realizar modificaciones sobre el informe o plan de trabajo.
+            </p>
+            {% if tecnicoid is defined %}
+                <p><a class="btn btn-primary" href="{{ path('informe_send') }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar informe y plan de trabajo</a></p>
+            {% else %}
+                <p class="text-justify alert alert-danger">Todavía no has registrado tu información.</p>
+            {% endif %}
+
+        </div>
+    </div>
+{% endif %}
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal envío -->
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Vista previa</h4>
+                </div>
+                <div class="panel-body">
+                    {% if tecnicoid is defined %}
+    {% render controller("InformeBundle:Tecnico:show", {'id': tecnicoid}) %}
+
+{% else %}
+    <p class="text-danger"> Todavía no has registrado tu información.</p>
+
+{% endif %}
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

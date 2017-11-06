@@ -8,7 +8,6 @@ services:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
 
-
     Ccm.form.flow.createSolicitud:
         class: SiaBundle\Form\CreateSolicitudFlow
         parent: craue.form.flow
@@ -22,3 +21,14 @@ services:
 #        scope: request
 #        calls:
 #            - [ setFormType, [ "@Ccm.form.create_vehicle" ] ]
+
+    app.inves_voter:
+        class: SiaBundle\Security\InvesVoter
+        arguments: ['@security.access.decision_manager']
+        public: false
+        tags:
+            - { name: security.voter }
+        # small performance boost
+
+
+

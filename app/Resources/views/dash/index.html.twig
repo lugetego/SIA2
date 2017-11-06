@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CCM - Dashboard{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <!-- Bootstrap Core CSS -->
+{% endblock %}
+
+{% block sidebar %}
+
+    <li>
+        <a href="{{ path('dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Inicio</a>
+    </li>
+    <li>
+        <a href="{{ path('solicitud_index') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Solicitudes<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="{{ path('investigacion_index') }}">Licencia y comisión</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+
+    <li>
+        <a href="{{ path('dashboard')}} "> <i class="fa fa-table fa-fw"></i> Licencia y comisión </a>
+    </li>
+
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <p></p>
+            <br>
+            {#                <h1 class="page-header">Solicitudes </h1>#}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa fa-clock-o" aria-hidden="true"></i> Licencia y comisión
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="row">
+
+                                <div class="col-lg-4 col-md-4 text-center">
+                                    <dl>
+                                        <dt><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i></dt>
+                                        <dd><a href="{{ path('solicitud_index' ) }} ">Solicitudes <span class="counter">{{ solicitudes|length }}</span></a></dd>
+                                    </dl>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"> <i class="fa fa-envelope-o" aria-hidden="true"></i> Mensajes</h3>
+                </div>
+                <div class="panel-body">
+
+                    <div class="media">
+                        <div class="media-left">
+                            <i class="fa fa-exclamation-triangle media-object fa-2x text-info" aria-hidden="true"></i>
+                        </div>
+                        <div class="media-body">
+                            <span class="alert-info"> <h4 class="media-heading">Informe 2016 y Plan de trabajo 2017</h4></span>
+                            <p class="text-info">La fecha límite para el envío de tu información es el 31 de enero de 2017.</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

@@ -44,16 +44,12 @@ class ActividadController extends Controller
             ->getRepository('SiaBundle:Solicitud')
             ->find($id);
 
-
-
         $flow = $this->get('Ccm.form.flow.createActividad'); // must match the flow's service id
         $flow->bind($formData);
-
 
         // form of the current step
 //        $form = $flow->createForm($formData,array('tipo'=>$tipo));
         $form = $flow->createForm('SiaBundle\Form\CreateActividadForm', $formData, array('tipo' => null));
-
 
         if ($flow->isValid($form)) {
             $flow->saveCurrentStepData($form);
@@ -97,8 +93,6 @@ class ActividadController extends Controller
         $actividad = new Actividad();
         $form = $this->createForm('SiaBundle\Form\ActividadType', $actividad);
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();

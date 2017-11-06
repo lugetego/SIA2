@@ -1,0 +1,75 @@
+{# src/AppBundle/Resources/views/layout-pdf.html.twig #}
+<meta charset="UTF-8" />
+
+{% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css', absolute=true) }}" type="text/css"/>
+
+
+{% endblock %}
+
+{% block body %}
+    {# Layout for PDF files #}
+
+    {% block content %}
+
+        <div class="print-area">
+            <div class="row page-header">
+                <div class="col-xs-6">
+                    <p><small><strong>Académico:</strong> {{ academico.nombre }} {{ academico.apellido }}</small> </p>
+                    <p>Plan de trabajo 2017</p>
+                </div>
+                <div class="col-xs-6">
+                    <p class="text-right"><img class="right" src="{{ asset('img/ccm.png', absolute=true) }}" width="180px" height="60px" /></p>
+                </div>
+            </div>
+
+
+                {% for plan in planes %}
+
+                    {% if plan.investigacion %}
+                        <strong><small>Investigación</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.investigacion| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.estudiantes %}
+                        <strong><small>Estudiantes</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.estudiantes| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.cursos %}
+                        <strong><small>Cursos y seminarios</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.cursos | nl2br  }}  </small></p>
+                    {% endif %}
+                    {% if plan.proyectos %}
+                        <strong><small>Proyectos</small></strong><br>
+                        <p class="text-justify"><small>{{ plan.proyectos| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.eventos %}
+                        <strong><small>Eventos académicos y de divulgación</small></strong><br>
+                        <p class="text-justify"> <small>{{ plan.eventos| nl2br }}</small></p>
+                    {% endif %}
+                    {% if plan.salidas %}
+                        <strong><small>Licencias y comisiones</small></strong><br>
+                        <p class="text-justify"> <small>{{ plan.salidas| nl2br }}</small></p>
+                    {% endif %}
+                {% endfor %}
+
+
+
+        </div>
+
+
+
+    {% endblock %}
+
+{% endblock %}

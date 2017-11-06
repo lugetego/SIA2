@@ -1,0 +1,76 @@
+{# src/AppBundle/Resources/views/layout-pdf.html.twig #}
+<meta charset="UTF-8" />
+
+{% block css %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css', absolute=true) }}" type="text/css"/>
+
+
+{% endblock %}
+
+{% block body %}
+    {# Layout for PDF files #}
+
+    {% block content %}
+
+        <div class="print-area">
+            <div class="row page-header">
+                <div class="col-xs-5">
+                    <p><small><strong>Académico:</strong> {{ academico.nombre }} {{ academico.apellido }}</small> </p>
+                    <p>Informe de actividades 2016</p>
+
+                </div>
+                <div class="col-xs-7">
+              {#       <p class="text-right"><img class="right" src="{{ asset('img/ccm.png', absolute=true) }}" width="180px" height="60px" /></p>   #}
+                    <p class="text-justify small alert-warning"> Dictamen del Consejo Interno: <strong>{{ academico.aprobado }}</strong><br>
+                    <small>{{ academico.observaciones }}</small></p>
+
+                </div>
+            </div>
+
+            {% for tecnico in tecnicos %}
+
+                {% if tecnico.informe %}
+
+                    <p class="text-justify"><small>{{ tecnico.informe| nl2br }}</small></p>
+
+                {% endif %}
+
+
+            {% endfor %}
+
+
+                <div class="row page-header">
+                    <div class="col-xs-6">
+                        <h5>Plan de trabajo 2017</h5>
+                    </div>
+                </div>
+                {% for tecnico in tecnicos %}
+
+                    {% if tecnico.plan %}
+
+                        <p class="text-justify"><small>{{ tecnico.plan| nl2br }}</small></p>
+                    {% endif %}
+
+                {% endfor %}
+
+
+
+        </div>
+
+
+
+    {% endblock %}
+
+{% endblock %}

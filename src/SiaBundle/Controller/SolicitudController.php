@@ -9,6 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use SiaBundle\Security\InvesVoter;
+use InformeBundle\Entity\User;
+use InformeBundle\Entity\Academico;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 
 /**
@@ -26,13 +31,19 @@ class SolicitudController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $solicituds = $em->getRepository('SiaBundle:Solicitud')->findAll();
+        if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $solicitudes = $user->getAcademico()->getSolicitudes();
 
         return $this->render('solicitud/index.html.twig', array(
-            'solicituds' => $solicituds,
+            'solicituds' => $solicitudes,
+
         ));
+
     }
 
     /**
@@ -43,7 +54,17 @@ class SolicitudController extends Controller
      */
     public function createSolicitudAction()
     {
-       $formData = new Solicitud(); // Your form data class. Has to be an object, won't work properly with an array.
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $formData = new Solicitud(); // Your form data class. Has to be an object, won't work properly with an array.
+
+        $securityContext = $this->container->get('security.token_storage');
+
+        $user = $securityContext->getToken()->getUser();
+        $academico = $user->getAcademico();
 
        $viaticos = new Financiamiento();
        $viaticos->setNombre("Viáticos");
@@ -93,6 +114,7 @@ class SolicitudController extends Controller
             } else {
                 // flow finished
                 $em = $this->getDoctrine()->getManager();
+                $formData->setAcademico($academico);
                 $em->persist($formData);
                 $em->flush();
 
@@ -160,15 +182,9 @@ class SolicitudController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()  ) {
 
-
-
             $em = $this->getDoctrine()->getManager();
-
-
-            $em->persist($solicitud);
+                $em->persist($solicitud);
             $em->flush();
-
-
 
             return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
         }
@@ -187,7 +203,14 @@ class SolicitudController extends Controller
      */
     public function showAction(Solicitud $solicitud)
     {
+
+        $securityContext = $this->container->get('security.token_storage');
+        $user = $securityContext->getToken()->getUser();
+
         $deleteForm = $this->createDeleteForm($solicitud);
+
+        // check for "view" access: calls all voters
+        $this->denyAccessUnlessGranted('edit', $solicitud);
 
         return $this->render('solicitud/show.html.twig', array(
             'solicitud' => $solicitud,
@@ -207,10 +230,8 @@ class SolicitudController extends Controller
         $deleteForm = $this->createDeleteForm($solicitud);
         $editForm = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud, array('tipo'=>$solicitud->getTipo()));
 
-
         $editForm->remove('tipo');
         $editForm->remove('financiamiento');
-
 
         $editForm->handleRequest($request);
 
@@ -235,8 +256,6 @@ class SolicitudController extends Controller
      */
     public function financiamientoAction(Request $request, Solicitud $solicitud)
     {
-
-
 
         $deleteForm = $this->createDeleteForm($solicitud);
         $editForm = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud);

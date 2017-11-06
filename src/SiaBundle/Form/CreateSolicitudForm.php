@@ -63,14 +63,29 @@ class CreateSolicitudForm extends AbstractType {
                         'allow_delete' => false,
                     ));
 
-                    $builder->add('fechaInicio');
-                    $builder->add('fechaFin');
+                    //$builder->add('fechaInicio');
+                    $builder->add('fechaInicio', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+                        'widget' => 'single_text',
+                        'html5' => false,
+                        'required' => false,));
+                    //$builder->add('fechaFin');
+                    $builder->add('fechaFin', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+                        'widget' => 'single_text',
+                        'html5' => false,
+                        'required' => false,));
                 }
 
                 else {
 
-                    $builder->add('fechaInicio');
-                    $builder->add('fechaFin');
+                    $builder->add('fechaInicio', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+                        'widget' => 'single_text',
+                        'html5' => false,
+                        'required' => false,));
+                    //$builder->add('fechaFin');
+                    $builder->add('fechaFin', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+                        'widget' => 'single_text',
+                        'html5' => false,
+                        'required' => false,));
 
 
                 }

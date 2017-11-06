@@ -1,4 +1,13 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css"/>
+
+
+
+{% endblock %}
 
 {% block body %}
     {# in src/MyCompany/MyBundle/Resources/views/Vehicle/createVehicle.html.twig #}
@@ -87,9 +96,13 @@
                                 <div>
                                     {{ form_label(form.fechaInicio) }}
                                 </div>
-                                <div>
-                                    {{ form_widget(form.fechaInicio) }}
+                                <div class="input-group date">
+                                    {{ form_widget(form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </div>
                                 </div>
+
                                 <div>{{ form_errors(form.fechaInicio) }}</div>
                             </div>
                         </div>
@@ -102,15 +115,25 @@
                                 <div>
                                     {{ form_label(form.fechaFin) }}
                                 </div>
-                                <div>
-                                    {{ form_widget(form.fechaFin) }}
+                                <div class="input-group date">
+                                    {{ form_widget(form.fechaFin, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                                 <div>{{ form_errors(form.fechaFin) }}</div>
                             </div>
                         </div>
 
 
+
+
                     {% endif %}
+
+        <div class="col-lg-4">
+            <h3><span class="label label-primary" id="days"></span></h3>
+            <p class="text-info" id="days"></p>
+        </div>
 
 
                     {{ form_errors(form) }}
@@ -182,6 +205,8 @@
                                     <dd>{{ formdata.fechaFin|localizeddate('long', 'none') }}</dd>
                                 </dl>
                             </div>
+
+
                         </div>
                     {% endif %}
                 </div>
@@ -207,5 +232,34 @@
 
         {{ form_end(form) }}
     </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/dates.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker2').datepicker({
+                format: 'yyyy-MM-dd',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+
+
 
 {% endblock %}
