@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SiaBundle\Entity\Academico;
+use SiaBundle\Entity\AcademicoRepository;
 use SiaBundle\Entity\User;
 use SiaBundle\Entity\Plan;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,10 +39,10 @@ class DashController extends Controller
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
-            $academicos = $em->getRepository('SiaBundle:Academico')->findAll();
-            return $this->render('dash/admin.html.twig', array(
-                'academicos'=> $academicos,
-            ));
+            $academicos = $em->getRepository('SiaBundle:Academico')->findAllOrderedByApellido();
+                return $this->render('dash/admin.html.twig', array(
+                    'academicos'=> $academicos,
+                ));
         }
 
         elseif ($this->get('security.context')->isGranted('ROLE_TECNICO'))

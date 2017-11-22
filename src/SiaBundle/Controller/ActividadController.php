@@ -60,8 +60,10 @@ class ActividadController extends Controller
             } else {
                 // flow finished
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($formData);
+
                 $solicitud->addActividade($formData);
+
+                $em->persist($formData);
 
                 $em->flush();
 

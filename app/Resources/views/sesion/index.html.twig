@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sesions list</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Name</th>
+                <th>Updatedat</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sesion in sesions %}
+            <tr>
+                <td><a href="{{ path('sesion_show', { 'id': sesion.id }) }}">{{ sesion.id }}</a></td>
+                <td>{% if sesion.fecha %}{{ sesion.fecha|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ sesion.name }}</td>
+                <td>{% if sesion.updatedAt %}{{ sesion.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ sesion.slug }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('sesion_show', { 'id': sesion.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('sesion_edit', { 'id': sesion.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sesion_new') }}">Create a new sesion</a>
+        </li>
+    </ul>
+{% endblock %}

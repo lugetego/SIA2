@@ -1,4 +1,4 @@
-{% extends 'CcmSiaBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block wrapper %}
 
@@ -27,12 +27,12 @@
 
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ path('academico_show', { 'id': entity.id }) }}">{{ entity.apellido }} {{ entity.name }}</a></td>
+                    <td><a href="{{ path('academico_show', { 'id': entity.id }) }}">{{ entity.apellido }} {{ entity.nombre }}</a></td>
                     <td>{{ entity.rfc }}</td>
                     <td>
                         <a href="{{ path('academico_show', { 'id': entity.id }) }}" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Ver</a>
                         <a href="{{ path('academico_edit', { 'id': entity.id }) }}"class="btn btn-default btn-sm"><i class="fa fa-pencil-square-o"></i> Edit</a>
-                        <a href="{{ path('solicitud', {'_switch_user': entity.name }) }}"class="btn btn-default btn-sm"><i class="fa fa-plus-square-o"></i> Nueva solicitud</a>
+                        <a href="{{ path('solicitud', {'_switch_user': entity.nombre }) }}"class="btn btn-default btn-sm"><i class="fa fa-plus-square-o"></i> Nueva solicitud</a>
                     </td>
                 </tr>
             {% endfor %}

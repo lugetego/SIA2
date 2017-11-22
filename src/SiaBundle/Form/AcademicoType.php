@@ -1,6 +1,6 @@
 <?php
 
-namespace Ccm\SiaBundle\Form;
+namespace SiaBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -68,7 +68,7 @@ class AcademicoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Ccm\SiaBundle\Entity\Academico'
+            'data_class' => 'SiaBundle\Entity\Academico'
         ));
     }
 
@@ -77,6 +77,6 @@ class AcademicoType extends AbstractType
      */
     public function getName()
     {
-        return 'ccm_siabundle_academico';
+        return 'siabundle_academico';
     }
 }

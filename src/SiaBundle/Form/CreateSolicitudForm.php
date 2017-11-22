@@ -21,6 +21,7 @@ class CreateSolicitudForm extends AbstractType {
                     'choices'=>array(
                         'Comisión'=>'Comisión',
                         'Licencia'=>'Licencia',
+                        'Visitante'=>'Visitante',
                     ),
                     'placeholder'=>'Seleccionar',
                     'required'=>true,
@@ -42,17 +43,16 @@ class CreateSolicitudForm extends AbstractType {
 
                 ));
 
-
                 if ( $tipo === 'Comisión') {
 
                     $builder->add('cartaInvitacionFile', 'vich_file', array(
-                        'required'=> true,
+                        'required'=> false,
                         'label' => 'Carta de invitacion',
                         'allow_delete' => false,
                     ));
 
                     $builder->add('planFile', 'vich_file', array(
-                        'required'=> true,
+                        'required'=> false,
                         'label' => 'Plan de trabajo',
                         'allow_delete' => false,
                     ));
@@ -86,8 +86,6 @@ class CreateSolicitudForm extends AbstractType {
                         'widget' => 'single_text',
                         'html5' => false,
                         'required' => false,));
-
-
                 }
                 break;
 

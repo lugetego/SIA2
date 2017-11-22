@@ -6,6 +6,7 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
+         ROLE_USER: ROLE_ALLOWED_TO_SWITCH
          ROLE_ADMIN: ROLE_USER
          ROLE_SUPER_ADMIN: ROLE_ADMIN
 
@@ -36,6 +37,7 @@ security:
                 target: /login
 
             anonymous:    true
+            switch_user: true
 
             # activate different ways to authenticate
 

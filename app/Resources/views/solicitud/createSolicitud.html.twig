@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css"/>
 
 
-
 {% endblock %}
 
 {% block body %}
+    <strong>{{ app.user }}</strong>
     {# in src/MyCompany/MyBundle/Resources/views/Vehicle/createVehicle.html.twig #}
 
     <ol class="breadcrumb">
@@ -21,7 +21,7 @@
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Crear una nueva solicitud</h3>
+                    <h3 class="panel-title">Solicitud</h3>
                 </div>
                 <div class="panel-body">
                     {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
@@ -212,9 +212,6 @@
                 </div>
                 {{ form_rest(form) }}
 
-
-
-
                 <div class="panel-footer pull-center">
                     {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
                     craue_formflow_button_class_last: 'btn btn-primary',
@@ -232,6 +229,12 @@
 
         {{ form_end(form) }}
     </div>
+
+ {#   {% if is_granted('ROL_ADMIN') %}
+        <p>Username: {{ app.user.username }}</p>
+        <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Dash</a>
+    {% endif %}#}
+
 
 {% endblock %}
 

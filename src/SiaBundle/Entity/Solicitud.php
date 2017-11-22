@@ -115,6 +115,21 @@ class Solicitud
     private $ambito;
 
     /**
+     * @var string $descripcion
+     *
+     * @ORM\Column(name="descripcion", type="text", nullable=true)
+     */
+    private $descripcion;
+
+    /**
+     * @var sesion
+     * @ORM\ManyToOne(targetEntity="Sesion", inversedBy="solicitudes")
+     * @ORM\JoinColumn(name="sesion_id", referencedColumnName="id", nullable=true)
+     *
+     */
+    private $sesion;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fechaInicio", type="date", nullable=true)
@@ -132,7 +147,7 @@ class Solicitud
      * @var array $actividades
      *
      *
-     * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Actividad", mappedBy="solicitud", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Actividad", mappedBy="solicitud")
      *
      * The mappedBy attribute designates the field in the entity that is the owner of the relationship.
      */
@@ -221,7 +236,7 @@ class Solicitud
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -244,7 +259,7 @@ class Solicitud
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -350,7 +365,6 @@ class Solicitud
             $this->modified = new \DateTime('now');
         }
     }
-
 
 
     /**
@@ -471,7 +485,7 @@ class Solicitud
     /**
      * Get actividades
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getActividades()
     {
@@ -496,7 +510,7 @@ class Solicitud
      */
     //public function setFinanciamiento($financiamiento)
     //{
-      //  $this->financiamiento = $financiamiento;
+    //  $this->financiamiento = $financiamiento;
     //}
 
     public function setFinanciamiento(array $financiamiento)
@@ -556,6 +570,48 @@ class Solicitud
     public function getAcademico()
     {
         return $this->academico;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Solicitud
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Get sesion
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSesion()
+    {
+        return $this->sesion;
+    }
+
+    /**
+     * Set sesion
+     *
+     * @param string $sesion
+     */
+    public function setSesion($sesion)
+    {
+        $this->sesion = $sesion;
     }
 
 }

@@ -79,6 +79,8 @@ class SolicitudType extends AbstractType
         $builder
             ->add('fechaInicio')
             ->add('fechaFin')
+            ->add('descripcion')
+            ->add('sesion')
         ;
     }
 

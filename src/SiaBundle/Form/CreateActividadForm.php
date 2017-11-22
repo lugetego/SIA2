@@ -86,8 +86,6 @@ class CreateActividadForm extends AbstractType {
                             'label'=>'Nombre del alumno',
                             'required'=>false,
                         ))
-
-
                         ->add('sinodalGrado', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',array(
                             'label'=>'Grado',
                             'choices'=>array(
@@ -260,10 +258,6 @@ class CreateActividadForm extends AbstractType {
                             'html5' => false,
                             'required' => false,));
                 }
-
-
-
-
 
                 break;
         }

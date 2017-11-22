@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>{{ sesion.name }}</h2>
+
+    <ul>
+        <li>
+            <a href="{{ path('sesion_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('sesion_edit', { 'id': sesion.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+
+    <h4>Solicitudes <small> {{ sesion.solicitudes| length }}</small></h4>
+    <table class="table">
+        {% for solicitud in sesion.solicitudes %}
+            <tr>
+                <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
+                <td>{{ solicitud.fechaInicio|date("d M y") }}</td><td>{{ solicitud.descripcion }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

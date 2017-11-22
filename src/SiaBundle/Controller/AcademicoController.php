@@ -7,8 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Ccm\SiaBundle\Entity\Academico;
-use Ccm\SiaBundle\Form\AcademicoType;
+use SiaBundle\Entity\Academico;
+use SiaBundle\Form\AcademicoType;
 
 /**
  * Academico controller.
@@ -29,18 +29,18 @@ class AcademicoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CcmSiaBundle:Academico')->findAll();
+        $entities = $em->getRepository('SiaBundle:Academico')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        return $this->render('academico/index.html.twig', array(
+                    'entities'=> $entities,
+                ));
     }
     /**
      * Creates a new Academico entity.
      *
      * @Route("/", name="academico_create")
      * @Method("POST")
-     * @Template("CcmSiaBundle:Academico:new.html.twig")
+     * @Template("SiaBundle:academico:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -116,7 +116,7 @@ class AcademicoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CcmSiaBundle:Academico')->find($id);
+        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Academico entity.');
@@ -130,11 +130,11 @@ class AcademicoController extends Controller
         $totalDias = $dLic + $dCom;
 
         // Calcula Totales
-        $totalAsignacionLicencia = $em->getRepository('CcmSiaBundle:Academico')->erogadoLicencias($entity);
-        $totalAsignacionComision = $em->getRepository('CcmSiaBundle:Academico')->erogadoComisiones($entity);
-        $totalAsignacionVisitante = $em->getRepository('CcmSiaBundle:Academico')->erogadoVisitantes($entity);
-        $totalDiasLicencia = $em->getRepository('CcmSiaBundle:Academico')->diasSolicitadosLicencia($entity);
-        $totalDiasComision = $em->getRepository('CcmSiaBundle:Academico')->diasSolicitadosComision($entity);
+        $totalAsignacionLicencia = $em->getRepository('SiaBundle:Academico')->erogadoLicencias($entity);
+        $totalAsignacionComision = $em->getRepository('SiaBundle:Academico')->erogadoComisiones($entity);
+        $totalAsignacionVisitante = $em->getRepository('SiaBundle:Academico')->erogadoVisitantes($entity);
+        $totalDiasLicencia = $em->getRepository('SiaBundle:Academico')->diasSolicitadosLicencia($entity);
+        $totalDiasComision = $em->getRepository('SiaBundle:Academico')->diasSolicitadosComision($entity);
 
         $deleteForm = $this->createDeleteForm($id);
 
@@ -162,7 +162,7 @@ class AcademicoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CcmSiaBundle:Academico')->find($id);
+        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Academico entity.');
@@ -203,13 +203,13 @@ class AcademicoController extends Controller
      *
      * @Route("/{id}", name="academico_update")
      * @Method("PUT")
-     * @Template("CcmSiaBundle:Academico:edit.html.twig")
+     * @Template("SiaBundle:Academico:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('CcmSiaBundle:Academico')->find($id);
+        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Academico entity.');
@@ -245,7 +245,7 @@ class AcademicoController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('CcmSiaBundle:Academico')->find($id);
+            $entity = $em->getRepository('SiaBundle:Academico')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Academico entity.');

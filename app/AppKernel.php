@@ -22,7 +22,6 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

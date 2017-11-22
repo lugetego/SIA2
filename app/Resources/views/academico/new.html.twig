@@ -1,6 +1,6 @@
-{% extends 'CcmSiaBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% form_theme form 'CcmSiaBundle::form_errors.html.twig' %}
+{% form_theme form 'SiaBundle::form_errors.html.twig' %}
 
 
 {% block wrapper %}
@@ -20,12 +20,12 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <div>
-                        {{ form_label(form.name) }}
+                        {{ form_label(form.nombre) }}
                     </div>
                     <div>
-                        {{ form_widget(form.name, {'attr': {'class': 'form-control input-sm','placeholder': 'Nombre(s)'} } ) }}
+                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control input-sm','placeholder': 'Nombre(s)'} } ) }}
                     </div>
-                    <div>{{ form_errors(form.name) }}</div>
+                    <div>{{ form_errors(form.nombre) }}</div>
                 </div>
             </div>
             <div class="col-lg-4">

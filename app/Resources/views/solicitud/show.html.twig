@@ -8,6 +8,10 @@
         <li class="active">{{ solicitud.tipo }}</li>
     </ol>
 
+    <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>
+
+
+    <h3 class="text-muted"> {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</h3>
     <h2>{{ solicitud.tipo }}</h2>
     Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong>
 
@@ -53,7 +57,12 @@
         </div>
     {% endif %}
 
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalsolicitud">
+    <div class="well">
+        {{ solicitud.descripcion }}
+    </div>
+    <p><strong>Acta: {{ solicitud.sesion }}</strong></p>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalsolicitud">
         Modificar solicitud
     </button>
 
@@ -75,8 +84,6 @@
 
     <hr>
     <h2>Actividades</h2>
-
-
 
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
         <ul class="list-group">
@@ -123,7 +130,7 @@
 
 
 
-    <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-info" role="button">Nueva actividad</a>
+    <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-primary" role="button">Agregar actividad</a>
 
     <hr>
     <h2>Financiamiento</h2>
@@ -190,7 +197,7 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalfinanciamiento">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalfinanciamiento">
         Modificar financiamineto
     </button>
 
