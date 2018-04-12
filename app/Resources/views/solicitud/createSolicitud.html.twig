@@ -9,21 +9,23 @@
 {% endblock %}
 
 {% block body %}
-    <strong>{{ app.user }}</strong>
+    {#<strong>{{ app.user }}</strong>#}
     {# in src/MyCompany/MyBundle/Resources/views/Vehicle/createVehicle.html.twig #}
 
-    <ol class="breadcrumb">
-        <li><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
-        <li><a href="#">Nueva solicitud</a></li>
-    </ol>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Nueva solicitud</li>
+        </ol>
+    </nav>
 
     <div class="row">
         <div class="col-md-10">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Solicitud</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Solicitud</h3>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
 
                     {{ form_start(form) }}
@@ -36,7 +38,7 @@
                                         {{ form_label(form.tipo) }}
                                     </div>
                                     <div>
-                                        {{ form_widget(form.tipo) }}
+                                        {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
                                     </div>
                                     <div>{{ form_errors(form.tipo) }}</div>
                                 </div>
@@ -44,100 +46,106 @@
                         </div>
                     {% endif %}
 
-    {% if flow.getCurrentStepNumber() == 2 %}
+                    {% if flow.getCurrentStepNumber() == 2 %}
 
-        {% if form.ambito is defined %}
+                        {% if form.ambito is defined %}
 
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div>{{ form_label(form.ambito) }}</div>
-                                <div>
-                                    {% spaceless %}
-                                        {% for child in form.ambito %}
-                                            <div class="radio-inline">
-                                                {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div>{{ form_label(form.ambito) }}</div>
+                                    <div>
+                                        {% spaceless %}
+                                            {% for child in form.ambito %}
+                                                <div class="form-check form-check-inline">
+                                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                                    {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default form-check-label'}}) }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endspaceless %}
+                                    </div>
+                                    <div>{{ form_errors(form.ambito) }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            {% if form.cartaInvitacionFile is defined %}
+                                <div class="col-md-4">
+                                    <dl>
+                                        <dd>{{ form_widget(form.cartaInvitacionFile) }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {% if form.planFile is defined %}
+                                <div class="col-md-4">
+                                    <dl>
+                                        <dd>{{ form_widget(form.planFile) }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {% if form.cartaSolicitudFile is defined %}
+                                <div class="col-md-4">
+                                    <dl>
+                                        <dd>{{ form_widget(form.cartaSolicitudFile) }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            {% if form.fechaInicio is defined %}
+
+                                <div class="col-lg-4">
+                                    <div class="control-group">
+                                        <div>
+                                            {{ form_label(form.fechaInicio) }}
+                                        </div>
+                                        <div class="input-group date">
+                                            {{ form_widget(form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                                            <div class="input-group-text">
+                                                <label for="createSolicitud_fechaInicio" class="input-group-addon fa fa-calendar"></label>
                                             </div>
-                                        {% endfor %}
-                                    {% endspaceless %}
+                                        </div>
+                                        <div>{{ form_errors(form.fechaInicio) }}</div>
+                                    </div>
                                 </div>
-                                <div>{{ form_errors(form.ambito) }}</div>
-                            </div>
-                        </div>
-                    {% endif %}
+                            {% endif %}
 
-                    {% if form.cartaInvitacionFile is defined %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dd>{{ form_widget(form.cartaInvitacionFile) }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
 
-                    {% if form.planFile is defined %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dd>{{ form_widget(form.planFile) }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
 
-                    {% if form.cartaSolicitudFile is defined %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dd>{{ form_widget(form.cartaSolicitudFile) }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
+                            {% if form.fechaFin is defined %}
 
-                    {% if form.fechaInicio is defined %}
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <div>
-                                    {{ form_label(form.fechaInicio) }}
-                                </div>
-                                <div class="input-group date">
-                                    {{ form_widget(form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <div>
+                                            {{ form_label(form.fechaFin) }}
+                                        </div>
+                                        <div class="input-group date">
+                                            {{ form_widget(form.fechaFin, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                                            <div class="input-group-text">
+                                                <label for="createSolicitud_fechaFin" class="input-group-addon fa fa-calendar"></label>
+                                            </div>
+                                        </div>
+                                        <div>{{ form_errors(form.fechaFin) }}</div>
                                     </div>
                                 </div>
 
-                                <div>{{ form_errors(form.fechaInicio) }}</div>
-                            </div>
-                        </div>
-                    {% endif %}
+                            {% endif %}
 
-                    {% if form.fechaFin is defined %}
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <div>
-                                    {{ form_label(form.fechaFin) }}
-                                </div>
-                                <div class="input-group date">
-                                    {{ form_widget(form.fechaFin, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                                <div>{{ form_errors(form.fechaFin) }}</div>
+                            <div class="col-lg-4">
+                                <br>
+                                <h4><span class="badge badge-primary " id="days"></span></h4>
+                                <p class="text-info" id="days"></p>
                             </div>
+
                         </div>
 
 
 
 
+                        {{ form_errors(form) }}
                     {% endif %}
-
-        <div class="col-lg-4">
-            <h3><span class="label label-primary" id="days"></span></h3>
-            <p class="text-info" id="days"></p>
-        </div>
-
-
-                    {{ form_errors(form) }}
-        {% endif %}
 
                     {% if flow.getCurrentStepNumber() == 3 %}
 
@@ -154,19 +162,22 @@
                                 <dl>
                                     <dt><strong>Ámbito de la solicitud:</strong></dt>
                                     <dd>{% if formdata.ambito == true %}
-                                            <span class="label label-success "><i class="fa fa-check-square"></i> Nacional</span>
+                                            <span class="badge badge-success "><i class="fa fa-check-square"></i> Nacional</span>
                                         {% elseif formdata.ambito is null %}
-                                            <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+                                            <span class="badge badge-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
                                         {% elseif formdata.ambito == false %}
-                                            <span class="label label-danger"><i class="fa fa-times-circle"></i> Internacional</span>
+                                            <span class="badge badge-danger"><i class="fa fa-times-circle"></i> Internacional</span>
                                         {% endif %}
                                     </dd>
                                 </dl>
                             </div>
 
+                        </div>
+
+                        <div class="row">
 
                             {% if formdata.cartaInvitacionFile != null %}
-                                <div class="col-lg-5">
+                                <div class="col-lg-4">
                                     <dl>
                                         <dt>Carta de invitación</dt>
 
@@ -176,7 +187,7 @@
                             {% endif %}
 
                             {% if formdata.planFile != null %}
-                                <div class="col-lg-5">
+                                <div class="col-lg-4">
                                     <dl>
                                         <dt>Plan de trabajo</dt>
                                         <dd>Si</dd>
@@ -192,6 +203,8 @@
                                     </dl>
                                 </div>
                             {% endif %}
+                        </div>
+                        <div class="row">
 
                             <div class="col-lg-4">
                                 <dl>
@@ -212,7 +225,7 @@
                 </div>
                 {{ form_rest(form) }}
 
-                <div class="panel-footer pull-center">
+                <div class="card-footer pull-center">
                     {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
                     craue_formflow_button_class_last: 'btn btn-primary',
                     craue_formflow_button_class_back: 'btn btn-default',
@@ -230,10 +243,10 @@
         {{ form_end(form) }}
     </div>
 
- {#   {% if is_granted('ROL_ADMIN') %}
-        <p>Username: {{ app.user.username }}</p>
-        <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Dash</a>
-    {% endif %}#}
+    {#   {% if is_granted('ROL_ADMIN') %}
+           <p>Username: {{ app.user.username }}</p>
+           <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Dash</a>
+       {% endif %}#}
 
 
 {% endblock %}
@@ -246,12 +259,18 @@
     <script src="{{ asset('js/dates.js')}}"></script>
 
     <script>
+
+        $(".date-picker").datepicker();
+
         $(document).ready(function() {
             $('.js-datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 language: 'es',
                 orientation: "auto bottom"
+
             });
+
+
         });
     </script>
     <script>
