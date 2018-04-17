@@ -45,24 +45,24 @@ class DashController extends Controller
                 ));
         }
 
-        elseif ($this->get('security.context')->isGranted('ROLE_TECNICO'))
-        {
-            $user = $this->get('security.context')->getToken()->getUser();
-            $academico = $user->getAcademico();
-            //$tecnicos = $academico->getTecnicos();
-            //$enviado = $academico->isEnviado();
-            $solicitudes = $academico->getSolicitudes();
-
-
-            return $this->render('dash/tecnico.html.twig', array(
-                'academico'=>$academico,
-               // 'tecnicos'=> $tecnicos,
-               // 'enviado'=>$enviado,
-                'solicitudes'=>$solicitudes,
-                'user'=>$user,
-
-            ));
-        }
+//        elseif ($this->get('security.context')->isGranted('ROLE_TECNICO'))
+//        {
+//            $user = $this->get('security.context')->getToken()->getUser();
+//            $academico = $user->getAcademico();
+//            //$tecnicos = $academico->getTecnicos();
+//            //$enviado = $academico->isEnviado();
+//            $solicitudes = $academico->getSolicitudes();
+//
+//
+//            return $this->render('dash/tecnico.html.twig', array(
+//                'academico'=>$academico,
+//               // 'tecnicos'=> $tecnicos,
+//               // 'enviado'=>$enviado,
+//                'solicitudes'=>$solicitudes,
+//                'user'=>$user,
+//
+//            ));
+//        }
 
         else {
             $user = $this->get('security.context')->getToken()->getUser();

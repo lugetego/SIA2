@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
+{% block sidebar %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ path('dashboard') }}">
+
+            Dashboard <span class="sr-only">(current)</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('solicitud_index') }}">
+            <span data-feather="file"></span>
+            Solicitudes
+        </a>
+    </li>
+{% endblock %}
+
 {% block body %}
 
-    <nav aria-label="breadcrumb">
+    <nav aria-label="breadcrumb" xmlns="http://www.w3.org/1999/html">
         <ol class="breadcrumb">
             <li  class="breadcrumb-item"><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ solicitud.id }} - {{ solicitud.tipo }}</li>
         </ol>
+
     </nav>
+    {% if solicitud.enviado == true %}
+        <span class="badge badge-pill badge-success float-right">Solicitud enviada</span>
+    {% else %}
+        <span class="badge badge-pill badge-dark float-right">Solicitud no enviada</span>
+    {% endif %}
 
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
-
-
-    <h3 class="text-muted"> {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</h3>
+    {#<h3 class="text-muted"> {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</h3>#}
     <h2>{{ solicitud.tipo }}</h2>
+
     Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong>
 
     <strong>
@@ -27,32 +47,31 @@
         {% endif %}
     </strong>
 
-    <br><br>
-    {% if solicitud.cartaSolicitudName != null %}
-        <div class="row">
-        <div class="col-lg-4">
-            <dl>
-                <dt>Carta Solicitud</dt>
-                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaSolicitudFile') }}"  target="_blank"/>{{ solicitud.cartaSolicitudName }}</a></dd>
-            </dl>
-        </div>
-    {% endif %}
-    {% if solicitud.cartaInvitacionName != null  %}
-        <div class="col-lg-4">
-            <dl>
-                <dt>Carta invitación</dt>
-                <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaInvitacionFile') }}"  target="_blank"/>{{ solicitud.cartaInvitacionName }}</a></dd>
-            </dl>
-        </div>
-    {% endif %}
-    {% if solicitud.planName  != null  %}
-        <div class="col-lg-4">
-            <dl>
-                <dt>Plan de trabajo</dt>
-                <dd><a href="{{ vich_uploader_asset(solicitud, 'planFile') }}"  target="_blank"/>{{ solicitud.planName }}</a></dd>
-            </dl>
-        </div>
-    {% endif %}
+    <div class="row">
+        {% if solicitud.cartaSolicitudName != null %}
+            <div class="col-lg-4">
+                <dl>
+                    <dt>Carta Solicitud</dt>
+                    <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaSolicitudFile') }}"  target="_blank"/>{{ solicitud.cartaSolicitudName }}</a></dd>
+                </dl>
+            </div>
+        {% endif %}
+        {% if solicitud.cartaInvitacionName != null  %}
+            <div class="col-lg-4">
+                <dl>
+                    <dt>Carta invitación</dt>
+                    <dd><a href="{{ vich_uploader_asset(solicitud, 'cartaInvitacionFile') }}"  target="_blank"/>{{ solicitud.cartaInvitacionName }}</a></dd>
+                </dl>
+            </div>
+        {% endif %}
+        {% if solicitud.planName  != null  %}
+            <div class="col-lg-4">
+                <dl>
+                    <dt>Plan de trabajo</dt>
+                    <dd><a href="{{ vich_uploader_asset(solicitud, 'planFile') }}"  target="_blank"/>{{ solicitud.planName }}</a></dd>
+                </dl>
+            </div>
+        {% endif %}
     </div>
 
     {% if solicitud.descripcion is defined %}
@@ -64,35 +83,32 @@
         </div>
     {% endif %}
 
-
     <p><strong>Acta: {{ solicitud.sesion }}</strong></p>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalsolicitud">
-        Modificar solicitud
-    </button>
-
-
-
+    {% if solicitud.enviado == false %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalsolicitud">
+            Modificar solicitud
+        </button>
+    {% endif %}
 
     {#<!-- Modal -->#}
     {#<div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel">#}
-        {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
-            {#<div class="modal-content">#}
-                {#<div class="modal-header">#}
-                    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
-                    {#<h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>#}
-                {#</div>#}
-                {#<div class="modal-body">#}
-                    {#{% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}#}
-                {#</div>#}
-
-            {#</div>#}
-        {#</div>#}
+    {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
+    {#<div class="modal-content">#}
+    {#<div class="modal-header">#}
+    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
+    {#<h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>#}
+    {#</div>#}
+    {#<div class="modal-body">#}
+    {#{% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}#}
     {#</div>#}
 
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
 
     <!-- Modal -->
-    <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby=""modalsolicitudLabel" aria-hidden="true">
+    <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -102,47 +118,40 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   {% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}
+                    {% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}
                 </div>
-
             </div>
         </div>
     </div>
 
-
     <hr>
     <h2>Actividades</h2>
-
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        <ul class="list-group">
+    <div class="card">
+        <ul class="list-group list-group-flush">
             {% for actividad in actividades %}
                 {% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}
-
                 <li class="list-group-item">
                     <div>
-                        <i class="fa fa-search fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
+                        <i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
                     </div>
                     <span class="label label-default">{{ actividad.institucion }}</span>
                     <span class="label label-default">{{ actividad.departamento }}</span>
                     <span class="label label-default">{{ actividad.lugar }}</span>
                     <span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span>
                     <p class="pull-right">
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#{{ actividadmodalshow }}">
-                            <i class="fa fa-search" aria-hidden="true"></i>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#{{ actividadmodalshow }}">
+                            <i class="fa fa-search" aria-hidden="true"></i> Ver
                         </button>
 
                     </p>
-
-
                 </li>
-
                 <!-- Modal -->
                 <div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
                                 {% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}
@@ -150,14 +159,15 @@
                         </div>
                     </div>
                 </div>
-
             {% endfor %}
         </ul>
     </div>
 
+    <br>
 
-
-    <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-primary" role="button">Agregar actividad</a>
+    {% if solicitud.enviado == false %}
+        <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-primary" role="button">Agregar actividad</a>
+    {% endif %}
 
     <hr>
     <h2>Financiamiento</h2>
@@ -167,8 +177,8 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="modalfinanciamientoLabel">Financiamiento</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     {% render controller("SiaBundle:Solicitud:financiamiento", {'id': solicitud.id}) %}
@@ -224,25 +234,23 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalfinanciamiento">
-        Modificar financiamineto
-    </button>
+    {% if solicitud.enviado == false %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalfinanciamiento">
+            Modificar financiamiento
+        </button>
+    {% endif %}
 
-
-
-    <div class="row">
-        <div class="col-lg-7 col-lg-offset-5">
-
+    <div class="row" >
+        <div class="col-md-7 offset-md-5">
             {{ form_start(delete_form) }}
-            <button type="button" class="btn btn-success" data-dismiss="modal">Enviar solicitud</button>
-            {#  {% if enviado != true %}  #}
-            <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
-            {#  {% endif %}  #}
+            {% if solicitud.enviado == true %}
+                <button disabled class="btn btn-success">Solicitud enviada</button>
+            {% else %}
+                <a class="btn btn-success" href="{{ path('solicitud_envio',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar solicitud</a>
+                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
+            {% endif %}
             {{ form_end(delete_form) }}
-
         </div>
     </div>
-
-
 
 {% endblock %}

@@ -10,8 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use SiaBundle\Security\InvesVoter;
-use InformeBundle\Entity\User;
-use InformeBundle\Entity\Academico;
+use SiaBundle\Entity\User;
+use SiaBundle\Entity\Academico;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
@@ -251,6 +251,46 @@ class SolicitudController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    /**
+     * Envío informe y plan
+     *
+     * @Route("/{id}/envio", name="solicitud_envio")
+     */
+    public function sendAction(Request $request, Solicitud $solicitud)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $academico = $user->getAcademico();
+
+        $solicitud->setEnviado(true);
+        $em->persist($solicitud);
+        $em->flush();
+
+        // Obtiene correo y msg de la forma de contacto
+        $mailer = $this->get('mailer');
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Solicitud '.$solicitud->getId())
+            ->setFrom('webmaster@matmor.unam.mx')
+//            ->setTo(array($user->getEmail() ))
+            ->setTo('gerardo@matmor.unam.mx')
+//            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
+            ->setBody($this->renderView('solicitud/mail.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+        ;
+        $mailer->send($message);
+
+        return $this->redirectToRoute('dashboard');
+
+    }
+
+
 
     /**
      * Displays a form to edit an existing solicitud entity.

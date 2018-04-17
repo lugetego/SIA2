@@ -10,6 +10,7 @@
 
 {% endblock %}
 
+{% block container %}
 {{ form_start(form, {'action': path('solicitud_new')}) }}
 
 <div class="row">
@@ -79,7 +80,7 @@
     {{ form_end(form) }}
 </div>
 
-
+{% endblock %}
 
 
 {% block javascripts %}

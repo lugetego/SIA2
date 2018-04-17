@@ -160,6 +160,12 @@ class Solicitud
      */
     private $financiamiento;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enviado", type="boolean", nullable=true)
+     */
+    private $enviado;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -614,4 +620,19 @@ class Solicitud
         $this->sesion = $sesion;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isEnviado()
+    {
+        return $this->enviado;
+    }
+
+    /**
+     * @param boolean $enviado
+     */
+    public function setEnviado($enviado)
+    {
+        $this->enviado = $enviado;
+    }
 }
