@@ -1,6 +1,7 @@
 body {
     padding-top: 100px;
 }
+
 .starter-template {
     padding: 40px 15px;
     text-align: center;
@@ -60,4 +61,8 @@ body {
 
 .clear {
     clear: both;
+}
+
+.modal-xlg {
+    max-width: 70%;
 }

@@ -8,29 +8,20 @@
 {% block body %}
 
     {{ form_start(edit_form, {'action': path('solicitud_edit', { 'id': solicitud.id})}) }}
-    <div class="row">
-
-
-
-        <div class="col-lg-3">
-            <div class="form-group">
-                <div>{{ form_label(edit_form.ambito) }}</div>
-                <div class="custom-control custom-radio custom-control-inline">
-                    {% spaceless %}
-                        {% for child in edit_form.ambito %}
-                            <div class="custom-control custom-radio custom-control-inline">
-                                {{ form_widget(child, {'attr': {'class': 'custom-control-input'}}) }}
-                                {{ form_label(child, null, {'label_attr': {'class': 'custom-control-label'}}) }}
-                            </div>
-                        {% endfor %}
-                    {% endspaceless %}
-                </div>
-                <div>{{ form_errors(edit_form.ambito) }}</div>
-            </div>
+    <div class="form-group">
+        {{ form_label(edit_form.ambito) }}:
+        <div class="custom-control custom-radio custom-control-inline">
+            {% spaceless %}
+                {% for child in edit_form.ambito %}
+                    <div class="custom-control custom-radio custom-control-inline">
+                        {{ form_widget(child, {'attr': {'class': 'custom-control-input'}}) }}
+                        {{ form_label(child, null, {'label_attr': {'class': 'custom-control-label'}}) }}
+                    </div>
+                {% endfor %}
+            {% endspaceless %}
         </div>
+        <div>{{ form_errors(edit_form.ambito) }}</div>
     </div>
-
-
 
     <div class="row">
 
@@ -93,62 +84,57 @@
 
 
     <div class="form-row">
-        <div class="col-lg-4">
-            <div class="control-group">
-                <div>
-                    {{ form_label(edit_form.fechaInicio) }}
-                </div>
-                <div class="input-group date">
-                    {{ form_widget(edit_form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                    <div class="input-group-text">
-                        <label for="createSolicitud_fechaInicio" class="input-group-addon fa fa-calendar"></label>
-                    </div>
-                </div>
-                <div>{{ form_errors(edit_form.fechaInicio) }}</div>
+        <div class="form-group col-md-4">
+            <div>
+                {{ form_label(edit_form.fechaInicio) }}
             </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <div>
-                    {{ form_label(edit_form.fechaFin) }}
+            <div class="input-group date">
+                {{ form_widget(edit_form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                <div class="input-group-text">
+                    <label for="createSolicitud_fechaInicio" class="input-group-addon fa fa-calendar"></label>
                 </div>
-                <div class="input-group date">
-                    {{ form_widget(edit_form.fechaFin, {'attr': {'class': 'form-control js-datepicker2'}}) }}
-                    <div class="input-group-text">
-                        <label for="createSolicitud_fechaFin" class="input-group-addon fa fa-calendar"></label>
-                    </div>
-                </div>
-                <div>{{ form_errors(edit_form.fechaFin) }}</div>
             </div>
+            <div>{{ form_errors(edit_form.fechaInicio) }}</div>
         </div>
-
+        <div class="form-group col-md-4">
+            <div>
+                {{ form_label(edit_form.fechaFin) }}
+            </div>
+            <div class="input-group date">
+                {{ form_widget(edit_form.fechaFin, {'attr': {'class': 'form-control js-datepicker2'}}) }}
+                <div class="input-group-text">
+                    <label for="createSolicitud_fechaFin" class="input-group-addon fa fa-calendar"></label>
+                </div>
+            </div>
+            <div>{{ form_errors(edit_form.fechaFin) }}</div>
+        </div>
     </div>
 
 
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="form-group">
-                <div>
-                    {{ form_label(edit_form.descripcion) }}
-                </div>
-                <div>
-                    {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                <div>{{ form_errors(edit_form.descripcion) }}</div>
-            </div>
+    <div class="form-group">
+        <div>
+            {{ form_label(edit_form.descripcion) }}
         </div>
+        <div>
+            {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div>{{ form_errors(edit_form.descripcion) }}</div>
+    </div>
+
+    <div class="form-group">
+        <div>Acta: </div>
+        <div>
+            {{ form_widget(edit_form.sesion) }}
+        </div>
+        <div>{{ form_errors(edit_form.sesion) }}</div>
     </div>
 
     {{ form_widget(edit_form) }}
 
-    <div class="row">
-        <div class="col-lg-7 col-lg-offset-5">
-            <input type="submit" value="Guardar"  class="btn btn-primary"/>
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-            {{ form_end(edit_form) }}
-        </div>
-    </div>
+    <input type="submit" value="Guardar"  class="btn btn-primary my-4"/>
+    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+    {{ form_end(edit_form) }}
+
 {% endblock %}
 
 {% block javascripts %}

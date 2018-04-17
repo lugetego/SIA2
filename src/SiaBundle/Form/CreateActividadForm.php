@@ -193,7 +193,7 @@ class CreateActividadForm extends AbstractType {
                         ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
                             'widget' => 'single_text',
                             'html5' => false,
-                            'required' => false,));
+                            'required' => false));
                 }
 
                 elseif( $tipo != '') {

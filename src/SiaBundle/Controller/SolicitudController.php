@@ -268,6 +268,8 @@ class SolicitudController extends Controller
         $editForm->remove('ambito');
         $editForm->remove('fechaInicio');
         $editForm->remove('fechaFin');
+        $editForm->remove('descripcion');
+        $editForm->remove('sesion');
 
         $editForm->handleRequest($request);
 
