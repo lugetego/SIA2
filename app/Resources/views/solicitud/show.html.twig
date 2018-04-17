@@ -1,5 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block sidebar %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ path('dashboard') }}">
+
+            Dashboard <span class="sr-only">(current)</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('solicitud_index') }}">
+            <span data-feather="file"></span>
+            Solicitudes
+        </a>
+    </li>
+{% endblock %}
+
 {% block body %}
 
     <nav aria-label="breadcrumb">
@@ -8,11 +23,15 @@
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ solicitud.id }} - {{ solicitud.tipo }}</li>
         </ol>
+
     </nav>
+    {% if solicitud.enviado == true %}
+        <span class="badge badge-pill badge-success float-right">Solicitud enviada</span>
+    {% else %}
+        <span class="badge badge-pill badge-dark float-right">Solicitud no enviada</span>
+    {% endif %}
 
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
-
-
     <h3 class="text-muted my-4 border-bottom"><strong>{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong></h3>
     <h2 class="text-info">{{ solicitud.tipo }} <small>
             {% if solicitud.ambito == true %}
@@ -24,6 +43,7 @@
             {% endif %}
         </small>
     </h2>
+
     Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong>
 
     {#<strong>#}
@@ -36,7 +56,6 @@
         {#{% endif %}#}
     {#</strong>#}
 
-    <br><br>
     <div class="row">
         {% if solicitud.cartaSolicitudName != null %}
             <div class="col-lg-4">
@@ -73,32 +92,32 @@
         {#</div>#}
     {#{% endif %}#}
 
-
     {#<p><strong>Acta: {{ solicitud.sesion }}</strong></p>#}
 
-    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalsolicitud">
-        <i class="fa fa-edit"></i> Modificar solicitud
-    </button>
+    {% if solicitud.enviado == false %}
+        <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalsolicitud">
+            <i class="fa fa-edit"></i> Modificar solicitud
+        </button>
+    {% endif %}
 
     {#<!-- Modal -->#}
     {#<div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel">#}
-        {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
-            {#<div class="modal-content">#}
-                {#<div class="modal-header">#}
-                    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
-                    {#<h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>#}
-                {#</div>#}
-                {#<div class="modal-body">#}
-                    {#{% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}#}
-                {#</div>#}
-
-            {#</div>#}
-        {#</div>#}
+    {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
+    {#<div class="modal-content">#}
+    {#<div class="modal-header">#}
+    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
+    {#<h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>#}
+    {#</div>#}
+    {#<div class="modal-body">#}
+    {#{% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}#}
     {#</div>#}
 
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
 
     <!-- Modal -->
-    <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby=""modalsolicitudLabel" aria-hidden="true">
+    <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -108,15 +127,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   {% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}
+                    {% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}
                 </div>
-
             </div>
         </div>
     </div>
 
-
     <hr>
+
     <h3 class="text-secondary">Actividades</h3>
 
     {% if solicitud.actividades|length == 0 %}
@@ -124,14 +142,15 @@
         <p class="lead text-secondary"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</p>
     {% endif %}
 
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        <ul class="list-group">
+
+    <div class="card">
+        <ul class="list-group list-group-flush">
+
             {% for actividad in actividades %}
                 {% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}
-
                 <li class="list-group-item">
                     <div>
-                        <i class="fa fa-search fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
+                        <i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
                     </div>
                     <span class="label label-default">{{ actividad.institucion }}</span>
                     <span class="label label-default">{{ actividad.departamento }}</span>
@@ -141,19 +160,15 @@
                         <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#{{ actividadmodalshow }}">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
-
                     </p>
-
-
                 </li>
-
                 <!-- Modal -->
                 <div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>
                             </div>
                             <div class="modal-body">
                                 {% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}
@@ -161,14 +176,15 @@
                         </div>
                     </div>
                 </div>
-
             {% endfor %}
         </ul>
     </div>
 
+    <br>
 
-
-    <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-outline-primary btn-sm" role="button"><i class="fa fa-plus"></i> Agregar actividad</a>
+    {% if solicitud.enviado == false %}
+        <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-outline-primary btn-sm" role="button"><i class="fa fa-plus"></i> Agregar actividad</a>
+    {% endif %}
 
     <hr>
     <h3 class="text-secondary">Financiamiento</h3>
@@ -235,25 +251,24 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-outline-primary btn-sm mb-5" data-toggle="modal" data-target="#modalfinanciamiento">
-        <i class="fa fa-edit"></i> Modificar financiamineto
-    </button>
 
+    {% if solicitud.enviado == false %}
+        <button type="button" class="btn btn-outline-primary btn-sm mb-5" data-toggle="modal" data-target="#modalfinanciamiento">
+            <i class="fa fa-edit"></i> Modificar financiamineto
+        </button>
+    {% endif %}
 
-
-    <div class="row">
-        <div class="col-lg-7 col-lg-offset-5">
-
+    <div class="row" >
+        <div class="col-md-7 offset-md-5">
             {{ form_start(delete_form) }}
-            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check"></i> Enviar solicitud</button>
-            {#  {% if enviado != true %}  #}
-            <input class="btn btn-danger" type="submit" value="Eliminar solicitud" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
-            {#  {% endif %}  #}
+            {% if solicitud.enviado == true %}
+                <button disabled class="btn btn-success">Solicitud enviada</button>
+            {% else %}
+                <a class="btn btn-success" href="{{ path('solicitud_envio',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar solicitud</a>
+                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
+            {% endif %}
             {{ form_end(delete_form) }}
-
         </div>
     </div>
-
-
 
 {% endblock %}
