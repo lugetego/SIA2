@@ -39,10 +39,14 @@ class DashController extends Controller
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
-            $academicos = $em->getRepository('SiaBundle:Academico')->findAllOrderedByApellido();
-                return $this->render('dash/admin.html.twig', array(
-                    'academicos'=> $academicos,
-                ));
+//            $academicos = $em->getRepository('SiaBundle:Academico')->findAllOrderedByApellido();
+//                return $this->render('dash/admin.html.twig', array(
+//                    'academicos'=> $academicos,
+//                ));
+            $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAll();
+            return $this->render('solicitud/index.html.twig', array(
+                'solicituds'=>$solicitudes,
+            ));
         }
 
 //        elseif ($this->get('security.context')->isGranted('ROLE_TECNICO'))
@@ -68,19 +72,19 @@ class DashController extends Controller
             $user = $this->get('security.context')->getToken()->getUser();
             $academico = $user->getAcademico();
             $solicitudes = $academico->getSolicitudes();
-           // $estudiantes = $academico->getEstudiantes();
-           // $cursos = $academico->getCursos();
-           // $proyectos = $academico->getProyectos();
-           // $eventos = $academico->getEventos();
-           // $salidas = $academico->getSalidas();
-           // $planes = $academico->getPlanes();
-           // $posdocs = $academico->getPosdocs();
-           // $enviado = $academico->isEnviado();
+            // $estudiantes = $academico->getEstudiantes();
+            // $cursos = $academico->getCursos();
+            // $proyectos = $academico->getProyectos();
+            // $eventos = $academico->getEventos();
+            // $salidas = $academico->getSalidas();
+            // $planes = $academico->getPlanes();
+            // $posdocs = $academico->getPosdocs();
+            // $enviado = $academico->isEnviado();
 
             return $this->render('dash/index.html.twig', array(
                 'academico'=> $academico,
                 'solicitudes'=> $solicitudes,
-               // 'estudiantes'=>$estudiantes,
+                // 'estudiantes'=>$estudiantes,
                 //'cursos'=>$cursos,
                 //'proyectos'=>$proyectos,
                 //'eventos'=>$eventos,

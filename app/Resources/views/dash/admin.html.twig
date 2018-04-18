@@ -41,12 +41,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for academico in academicos %}
-                        <tr>
-                            <td><a href="{{ path('solicitud_step', {'_switch_user': academico.user.username}) }}">{{ academico.apellido }} {{ academico.nombre }} </a></td>
-                            <td><a href="{{ path('solicitud_index', {'_switch_user': academico.user.username}) }}">Dash</a></td>
-                        </tr>
-                    {% endfor %}
+                    {#{% for academico in academicos %}#}
+                        {#<tr>#}
+                            {#<td><a href="{{ path('solicitud_step', {'_switch_user': academico.user.username}) }}">{{ academico.apellido }} {{ academico.nombre }} </a></td>#}
+                            {#<td><a href="{{ path('solicitud_index', {'_switch_user': academico.user.username}) }}">Dash</a></td>#}
+                        {#</tr>#}
+                    {#{% endfor %}#}
                     </tbody>
                 </table>
             </div>
