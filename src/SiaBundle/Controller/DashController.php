@@ -100,4 +100,52 @@ class DashController extends Controller
     }
 
 
+
+    /**
+     * Lists all academicos .
+     *
+     * @Route("/academico", name="academico")
+     * @Method({"GET", "POST"})
+     * @Template()
+     */
+    public function academicoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $academicos = $em->getRepository('SiaBundle:Academico')->findAllOrderedByApellido();
+            return $this->render('dash/admin.html.twig', array(
+                'academicos' => $academicos,
+            ));
+        }
+
+        else {
+            $user = $this->get('security.context')->getToken()->getUser();
+            $academico = $user->getAcademico();
+            $solicitudes = $academico->getSolicitudes();
+
+
+            return $this->render('dash/index.html.twig', array(
+                'academico'=> $academico,
+                'solicitudes'=> $solicitudes,
+                // 'estudiantes'=>$estudiantes,
+                //'cursos'=>$cursos,
+                //'proyectos'=>$proyectos,
+                //'eventos'=>$eventos,
+                //'salidas'=>$salidas,
+                //'planes'=>$planes,
+                //'posdocs'=>$posdocs,
+                'user'=>$user,
+                //'enviado'=>$enviado
+
+            ));
+        }
+
+    }
+
+
 }

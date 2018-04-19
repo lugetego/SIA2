@@ -2,11 +2,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.bootstrap4.min.css"/>
-
-
 {% endblock %}
 
 {% block sidebar %}
@@ -16,12 +13,29 @@
             Dashboard <span class="sr-only">(current)</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('solicitud_step') }}">
-            <span data-feather="file"></span>
-            Nueva solicitud
-        </a>
-    </li>
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('academico') }}">
+                <span data-feather="file"></span>
+                Academicos
+            </a>
+        </li>
+
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('solicitud_step') }}">
+                <span data-feather="file"></span>
+                Nueva solicitud
+            </a>
+        </li>
+
+        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            <li class="nav-item">
+                <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Finalizar sesión de {{app.user.username}}</a>
+            </li>
+        {% endif %}
+    {% endif %}
 {% endblock %}
 
 {% block body %}
