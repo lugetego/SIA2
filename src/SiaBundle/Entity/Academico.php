@@ -84,6 +84,13 @@ class Academico
     private $user;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="activo", type="boolean", nullable=true)
+     */
+    private $activo;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -392,4 +399,21 @@ class Academico
     {
         return $this->solicitudes;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isActivo()
+    {
+        return $this->activo;
+    }
+
+    /**
+     * @param boolean $activo
+     */
+    public function setActivo($activo)
+    {
+        $this->activo = $activo;
+    }
+
 }
