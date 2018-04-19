@@ -24,7 +24,6 @@
     </div>
 
     <div class="row">
-
         {% if solicitud.cartaSolicitudName != null %}
             <div class="col-lg-4">
                 <dl>
@@ -84,50 +83,46 @@
 
 
     <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
             <div>
                 {{ form_label(edit_form.fechaInicio) }}
             </div>
-            <div class="input-group date">
-                {{ form_widget(edit_form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                <div class="input-group-text">
-                    <label for="createSolicitud_fechaInicio" class="input-group-addon fa fa-calendar"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
+                {{ form_widget(edit_form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
             </div>
             <div>{{ form_errors(edit_form.fechaInicio) }}</div>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-5">
             <div>
                 {{ form_label(edit_form.fechaFin) }}
             </div>
-            <div class="input-group date">
-                {{ form_widget(edit_form.fechaFin, {'attr': {'class': 'form-control js-datepicker2'}}) }}
-                <div class="input-group-text">
-                    <label for="createSolicitud_fechaFin" class="input-group-addon fa fa-calendar"></label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                 </div>
+                {{ form_widget(edit_form.fechaFin, {'attr': {'class': 'form-control js-datepicker2'}}) }}
             </div>
             <div>{{ form_errors(edit_form.fechaFin) }}</div>
         </div>
     </div>
 
-
-    <div class="form-group">
-        <div>
-            {{ form_label(edit_form.descripcion) }}
-        </div>
-        <div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="form-group">
+            <div>{{ form_label(edit_form.descripcion) }}</div>
             {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control'}}) }}
+            <div class="text-danger">{{ form_errors(edit_form.descripcion) }}</div>
         </div>
-        <div>{{ form_errors(edit_form.descripcion) }}</div>
-    </div>
-
-    <div class="form-group">
-        <div>Acta: </div>
-        <div>
-            {{ form_widget(edit_form.sesion) }}
+        <div class="row">
+            <div class="form-group col-md-4">
+                <div>Acta: </div>
+                {{ form_widget(edit_form.sesion, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">{{ form_errors(edit_form.sesion) }}</div>
+            </div>
         </div>
-        <div>{{ form_errors(edit_form.sesion) }}</div>
-    </div>
+    {% endif %}
 
     {{ form_widget(edit_form) }}
 

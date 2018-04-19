@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
 
+{% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" type="text/css"/>
 {% endblock %}
 
 {% block sidebar %}
@@ -32,228 +31,191 @@
         </ol>
     </nav>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Solicitud</h3>
-                </div>
-                <div class="card-body">
-                    {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
-
-                    {{ form_start(form) }}
-
-                    {% if flow.getCurrentStepNumber() == 1 %}
-                        <div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <div>
-                                        {{ form_label(form.tipo) }}
-                                    </div>
-                                    <div>
-                                        {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <div>{{ form_errors(form.tipo) }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    {% if flow.getCurrentStepNumber() == 2 %}
-
-                        {% if form.ambito is defined %}
-
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <div>{{ form_label(form.ambito) }}</div>
-                                    <div>
-                                        {% spaceless %}
-                                            {% for child in form.ambito %}
-                                                <div class="form-check form-check-inline">
-                                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                                    {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default form-check-label'}}) }}
-                                                </div>
-                                            {% endfor %}
-                                        {% endspaceless %}
-                                    </div>
-                                    <div>{{ form_errors(form.ambito) }}</div>
-                                </div>
-                            </div>
-                        {% endif %}
-                        <div class="row">
-                            {% if form.cartaInvitacionFile is defined %}
-                                <div class="col-md-4">
-                                    <dl>
-                                        <dd>{{ form_widget(form.cartaInvitacionFile) }}</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-
-                            {% if form.planFile is defined %}
-                                <div class="col-md-4">
-                                    <dl>
-                                        <dd>{{ form_widget(form.planFile) }}</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-
-                            {% if form.cartaSolicitudFile is defined %}
-                                <div class="col-md-4">
-                                    <dl>
-                                        <dd>{{ form_widget(form.cartaSolicitudFile) }}</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-                        </div>
-
-                        <div class="row">
-                            {% if form.fechaInicio is defined %}
-
-                                <div class="col-lg-4">
-                                    <div class="control-group">
-                                        <div>
-                                            {{ form_label(form.fechaInicio) }}
-                                        </div>
-                                        <div class="input-group date">
-                                            {{ form_widget(form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                                            <div class="input-group-text">
-                                                <label for="createSolicitud_fechaInicio" class="input-group-addon fa fa-calendar"></label>
-                                            </div>
-                                        </div>
-                                        <div>{{ form_errors(form.fechaInicio) }}</div>
-                                    </div>
-                                </div>
-                            {% endif %}
-
-
-
-                            {% if form.fechaFin is defined %}
-
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <div>
-                                            {{ form_label(form.fechaFin) }}
-                                        </div>
-                                        <div class="input-group date">
-                                            {{ form_widget(form.fechaFin, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                                            <div class="input-group-text">
-                                                <label for="createSolicitud_fechaFin" class="input-group-addon fa fa-calendar"></label>
-                                            </div>
-                                        </div>
-                                        <div>{{ form_errors(form.fechaFin) }}</div>
-                                    </div>
-                                </div>
-
-                            {% endif %}
-
-                            <div class="col-lg-4">
-                                <br>
-                                <h4><span class="badge badge-primary " id="days"></span></h4>
-                                <p class="text-info" id="days"></p>
-                            </div>
-
-                        </div>
-
-
-
-
-                        {{ form_errors(form) }}
-                    {% endif %}
-
-                    {% if flow.getCurrentStepNumber() == 3 %}
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <dl>
-                                    <dt><strong>Tipo de solicitud: </strong></dt>
-                                    <dd>{{ formdata.tipo }}</dd>
-                                </dl>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <dl>
-                                    <dt><strong>Ámbito de la solicitud:</strong></dt>
-                                    <dd>{% if formdata.ambito == true %}
-                                            <span class="badge badge-success "><i class="fa fa-check-square"></i> Nacional</span>
-                                        {% elseif formdata.ambito is null %}
-                                            <span class="badge badge-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
-                                        {% elseif formdata.ambito == false %}
-                                            <span class="badge badge-danger"><i class="fa fa-times-circle"></i> Internacional</span>
-                                        {% endif %}
-                                    </dd>
-                                </dl>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-
-                            {% if formdata.cartaInvitacionFile != null %}
-                                <div class="col-lg-4">
-                                    <dl>
-                                        <dt>Carta de invitación</dt>
-
-                                        <dd>Si</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-
-                            {% if formdata.planFile != null %}
-                                <div class="col-lg-4">
-                                    <dl>
-                                        <dt>Plan de trabajo</dt>
-                                        <dd>Si</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-
-                            {% if formdata.cartaSolicitudFile != null %}
-                                <div class="col-lg-4">
-                                    <dl>
-                                        <dt><strong>Carta solicitud</strong></dt>
-                                        <dd>Si</dd>
-                                    </dl>
-                                </div>
-                            {% endif %}
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-4">
-                                <dl>
-                                    <dt><strong>Fecha de inicio</strong></dt>
-                                    <dd>{{ formdata.fechaInicio|localizeddate('long', 'none') }}</dd>
-                                </dl>
-                            </div>
-                            <div class="col-lg-4">
-                                <dl>
-                                    <dt><strong>Fecha de término</strong>:</dt>
-                                    <dd>{{ formdata.fechaFin|localizeddate('long', 'none') }}</dd>
-                                </dl>
-                            </div>
-
-
-                        </div>
-                    {% endif %}
-                </div>
-                {{ form_rest(form) }}
-
-                <div class="card-footer pull-center">
-                    {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
-                    craue_formflow_button_class_last: 'btn btn-primary',
-                    craue_formflow_button_class_back: 'btn btn-default',
-                    craue_formflow_button_class_reset: 'btn btn-warning',
-                    craue_formflow_button_label_finish: 'Enviar',
-                    craue_formflow_button_label_back: 'Regresar',
-                    craue_formflow_button_label_next: 'Siguiente',
-                    craue_formflow_button_label_reset: 'Reiniciar',
-                    } %}
-                </div>
-
-            </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-secondary">Nueva solicitud de {{ formdata.tipo }}</h3>
         </div>
+        <div class="card-body">
+            {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
+
+            {{ form_start(form) }}
+
+            {% if flow.getCurrentStepNumber() == 1 %}
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        {{ form_label(form.tipo) }}
+                        {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">{{ form_errors(form.tipo) }}</div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if flow.getCurrentStepNumber() == 2 %}
+
+                {% if form.ambito is defined %}
+                    <div class="form-group">
+                        <div>{{ form_label(form.ambito) }}:</div>
+                            {% for child in form.ambito %}
+                                <div class="form-check form-check-inline">
+                                    {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                    {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                </div>
+                            {% endfor %}
+                        <div class="text-danger">{{ form_errors(form.ambito) }}</div>
+                    </div>
+                {% endif %}
+
+                <div class="row pb-4 border-bottom">
+                    {% if form.cartaInvitacionFile is defined %}
+                        <div class="col-md-4">
+                            <div>{{ form_label(form.cartaInvitacionFile) }}</div>
+                            {% for child in form.cartaInvitacionFile %}
+                                {{ form_widget(child, {'attr': {'class': 'form-file-input'}}) }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.planFile is defined %}
+                        <div class="col-md-4">
+                            <div>{{ form_label(form.planFile) }}</div>
+                            {% for child in form.planFile %}
+                                {{ form_widget(child, {'attr': {'class': 'form-file-input'}}) }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if form.cartaSolicitudFile is defined %}
+                        <div class="col-md-4">
+                            <div>{{ form_label(form.cartaSolicitudFile) }}</div>
+                            {% for child in form.cartaSolicitudFile %}
+                                {{ form_widget(child, {'attr': {'class': 'form-file-input'}}) }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row mt-3">
+                    {% if form.fechaInicio is defined %}
+                        <div class="control-group col-md-4">
+                            {{ form_label(form.fechaInicio) }}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                {{ form_widget(form.fechaInicio, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                            </div>
+                            <div class="text-danger">{{ form_errors(form.fechaInicio) }}</div>
+                        </div>
+                    {% endif %}
+                    {% if form.fechaFin is defined %}
+                        <div class="form-group col-md-4">
+                            {{ form_label(form.fechaFin) }}
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                {{ form_widget(form.fechaFin, {'attr': {'class': 'form-control js-datepicker'}}) }}
+                            </div>
+                            <div class="text-danger">{{ form_errors(form.fechaFin) }}</div>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-4">
+                        <h4><span class="badge badge-primary " id="days"></span></h4>
+                        <p class="text-info" id="days"></p>
+                    </div>
+                </div>
+                {{ form_errors(form) }}
+            {% endif %}
+
+            {% if flow.getCurrentStepNumber() == 3 %}
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <dl>
+                            <dt><strong>Tipo de solicitud: </strong></dt>
+                            <dd>{{ formdata.tipo }}</dd>
+                        </dl>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <dl>
+                            <dt><strong>Ámbito de la solicitud:</strong></dt>
+                            <dd>{% if formdata.ambito == true %}
+                                    <span class="badge badge-success "><i class="fa fa-check-square"></i> Nacional</span>
+                                {% elseif formdata.ambito is null %}
+                                    <span class="badge badge-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
+                                {% elseif formdata.ambito == false %}
+                                    <span class="badge badge-danger"><i class="fa fa-times-circle"></i> Internacional</span>
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    {% if formdata.cartaInvitacionFile != null %}
+                        <div class="col-lg-4">
+                            <dl>
+                                <dt>Carta de invitación</dt>
+
+                                <dd>Si</dd>
+                            </dl>
+                        </div>
+                    {% endif %}
+
+                    {% if formdata.planFile != null %}
+                        <div class="col-lg-4">
+                            <dl>
+                                <dt>Plan de trabajo</dt>
+                                <dd>Si</dd>
+                            </dl>
+                        </div>
+                    {% endif %}
+
+                    {% if formdata.cartaSolicitudFile != null %}
+                        <div class="col-lg-4">
+                            <dl>
+                                <dt><strong>Carta solicitud</strong></dt>
+                                <dd>Si</dd>
+                            </dl>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <dl>
+                            <dt><strong>Fecha de inicio</strong></dt>
+                            <dd>{{ formdata.fechaInicio|localizeddate('long', 'none') }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-lg-4">
+                        <dl>
+                            <dt><strong>Fecha de término</strong>:</dt>
+                            <dd>{{ formdata.fechaFin|localizeddate('long', 'none') }}</dd>
+                        </dl>
+                    </div>
+
+
+                </div>
+            {% endif %}
+            {{ form_rest(form) }}
+        </div>
+        <div class="card-footer pull-center">
+            {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
+            craue_formflow_button_class_last: 'btn btn-primary',
+            craue_formflow_button_class_back: 'btn btn-default',
+            craue_formflow_button_class_reset: 'btn btn-warning',
+            craue_formflow_button_label_finish: 'Enviar',
+            craue_formflow_button_label_back: 'Regresar',
+            craue_formflow_button_label_next: 'Siguiente',
+            craue_formflow_button_label_reset: 'Reiniciar',
+            } %}
+        </div>
+    </div>
 
         {{ form_end(form) }}
-    </div>
 
     {#   {% if is_granted('ROL_ADMIN') %}
            <p>Username: {{ app.user.username }}</p>
@@ -271,7 +233,6 @@
     <script src="{{ asset('js/dates.js')}}"></script>
 
     <script>
-
         $(".date-picker").datepicker();
 
         $(document).ready(function() {
@@ -281,8 +242,6 @@
                 orientation: "auto bottom"
 
             });
-
-
         });
     </script>
     <script>
@@ -293,7 +252,4 @@
             });
         });
     </script>
-
-
-
 {% endblock %}

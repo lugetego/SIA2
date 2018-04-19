@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
+{% endblock %}
+
 {% block sidebar %}
     <li class="nav-item">
         <a class="nav-link active" href="{{ path('dashboard') }}">
@@ -23,12 +28,12 @@
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ solicitud.id }} - {{ solicitud.tipo }}</li>
         </ol>
-
     </nav>
+
     {% if solicitud.enviado == true %}
-        <span class="badge badge-pill badge-success float-right">Solicitud enviada</span>
+        <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
     {% else %}
-        <span class="badge badge-pill badge-dark float-right">Solicitud no enviada</span>
+        <h5><span class="badge badge-pill badge-warning float-right">Solicitud no enviada</span></h5>
     {% endif %}
 
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
@@ -44,17 +49,7 @@
         </small>
     </h2>
 
-    Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong>
-
-    {#<strong>#}
-        {#{% if solicitud.ambito == true %}#}
-            {#<span class="badge badge-success "><i class="fa fa-check-square"></i> Nacional</span>#}
-        {#{% elseif solicitud.ambito is null %}#}
-            {#<span class="badge badge-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>#}
-        {#{% elseif solicitud.ambito == false %}#}
-            {#<span class="badge badge-danger"><i class="fa fa-times-circle"></i> Internacional</span>#}
-        {#{% endif %}#}
-    {#</strong>#}
+    <p class="text-secondary">Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong></p>
 
     <div class="row">
         {% if solicitud.cartaSolicitudName != null %}
@@ -258,8 +253,8 @@
         </button>
     {% endif %}
 
-    <div class="row" >
-        <div class="col-md-7 offset-md-5">
+    <div class="row justify-content-center mb-5" >
+        <div class="col-md-4">
             {{ form_start(delete_form) }}
             {% if solicitud.enviado == true %}
                 <button disabled class="btn btn-success">Solicitud enviada</button>
@@ -271,4 +266,36 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/dates.js')}}"></script>
+
+    <script>
+
+        $(".date-picker").datepicker();
+
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                orientation: "auto bottom"
+
+            });
+
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker2').datepicker({
+                format: 'yyyy-MM-dd',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
 {% endblock %}

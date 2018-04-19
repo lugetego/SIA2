@@ -237,6 +237,11 @@ class SolicitudController extends Controller
         $editForm->remove('tipo');
         $editForm->remove('financiamiento');
 
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $editForm->remove('descripcion');
+            $editForm->remove('sesion');
+        }
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker3.css') }}">
+{% endblock %}
+
 {% block body %}
 
     <nav aria-label="breadcrumb">
@@ -9,200 +14,178 @@
         </ol>
     </nav>
 
-    <div class="row">
-        <div class="col-md-12">
+    {#<div class="row">#}
+        {#<div class="col-md-12">#}
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Agregar actividad académica a la solicitud</h3>
+                    <h3 class="card-title text-secondary">Agregar actividad académica a la solicitud</h3>
                 </div>
-                <div class="panel-body">
+                <div class="card-body pt-4">
                     {% include '@CraueFormFlow/FormFlow/stepList.html.twig' %}
 
                     {{ form_start(form) }}
                     {{ form_errors(form) }}
 
                     {% if flow.getCurrentStepNumber() == 1 %}
-                        <div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <div>
-                                        {{ form_label(form.tipo) }}
-                                    </div>
-                                    <div>
-                                        {{ form_widget(form.tipo, {'attr': {'class': 'form-control'}}) }}
-                                    </div>
-                                    <div>{{ form_errors(form.tipo) }}</div>
-                                </div>
-                            </div>
-                            <div>{{ form_errors(form.tipo) }}</div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="tipoActividad">{{ form_label(form.tipo) }}</label>
+                            {{ form_widget(form.tipo, {'attr': {'class': 'form-control', 'id': 'tipoActividad'}}) }}
+                            <div class="text-danger">{{ form_errors(form.tipo) }}</div>
                         </div>
+                    </div>
                     {% endif %}
 
-
-                    {% if form.anfitrion is defined %}
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <div>{{ form_label(form.anfitrion) }}</div>
-                                <div>{{ form_widget(form.anfitrion, {'attr': {'class': 'form-control'} } ) }}</div>
-                                <div>{{ form_errors(form.anfitrion) }}</div><br>
+                    <div class="row">
+                        {% if form.anfitrion is defined %}
+                            <div class="form-group col-md-6">
+                                <label>{{ form_label(form.anfitrion) }}</label>
+                                {{ form_widget(form.anfitrion, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                                <div class="text-danger">{{ form_errors(form.anfitrion) }}</div>
                             </div>
                         {% endif %}
 
                         {% if form.sinodalAlumno is defined %}
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="form-group">
-                                    <div>{{ form_label(form.sinodalAlumno) }}</div>
-                                    <div>{{ form_widget(form.sinodalAlumno, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.sinodalAlumno) }}</div><br>
-                                </div>
+                            <div class="form-group col-md-6">
+                                <label>{{ form_label(form.sinodalAlumno) }}</label>
+                                {{ form_widget(form.sinodalAlumno, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                                <div class="text-danger">{{ form_errors(form.sinodalAlumno) }}</div>
                             </div>
                         {% endif %}
 
                         {% if form.sinodalGrado is defined %}
-                            <div class="col-lg-3 col-md-3 col-sm-3">
-                                <div class="form-group">
-                                    <div>{{ form_label(form.sinodalGrado) }}</div>
-                                    <div>{{ form_widget(form.sinodalGrado, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.sinodalGrado) }}</div><br>
-                                </div>
+                            <div class="form-group col-md-3">
+                                <label>{{ form_label(form.sinodalGrado) }}</label>
+                                {{ form_widget(form.sinodalGrado, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                                <div class="text-danger">{{ form_errors(form.sinodalGrado) }}</div>
                             </div>
                         {% endif %}
+                    </div>
 
                     {% if form.motivo is defined %}
-                        <p class="text-info">Seleccionar el motivo de la actividad</p>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
+                        <p class="text-info">Seleccione uno o más motivos de la actividad</p>
+                        <div class="form-group border-bottom pb-3">
+                            {% for key in form.motivo %}
                             <div class="form-check form-check-inline">
-                                {% for key in form.motivo %}
-                                    <div class="col-md-4" >
-                                        <div>
-                                            {{ form_widget(key) }}
-                                            {{ form_label(key) }}
-                                        </div>
-                                    {% endfor %}
-                                </div>
+                                {{ form_widget(key, {'attr': {'class': 'form-check-input'}})}}
+                                {{ form_label(key, label|default(null), { 'label_attr': {'class': 'form-check-label'}})}}
                             </div>
-                        {% endif %}
-
-                        {% if form.nombreEvento is defined %}
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <br>
-                                <div class="form-group">
-                                    <div>{{ form_label(form.nombreEvento) }}</div>
-                                    <div>{{ form_widget(form.nombreEvento, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.nombreEvento) }}</div><br>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if form.tituloTrabajo is defined %}
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <br>
-                                <div class="form-group">
-                                    <div>{{ form_label(form.tituloTrabajo) }}</div>
-                                    <div>{{ form_widget(form.tituloTrabajo, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.tituloTrabajo) }}</div><br>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                    {% if form.nacional is defined %}
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <div>{{ form_label(form.nacional) }}</div>
-                                <div>
-                                    {% spaceless %}
-                                        {% for child in form.nacional %}
-                                            <div class="form-check form-check-inline">
-                                                {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
-                                                {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default form-check-label'}}) }}
-                                            </div>
-                                        {% endfor %}
-                                    {% endspaceless %}
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
-
                     {% endif %}
 
-                    {% if form.invitacion is defined %}
-                        <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col">
+                        {% if form.nombreEvento is defined %}
                             <div class="form-group">
-                                <div>{{ form_label(form.invitacion) }}</div>
-                                <div>
-                                    {% spaceless %}
-                                        {% for child in form.invitacion %}
-                                            <div class="form-check form-check-inline">
-                                            {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
-                                            </div>
-                                        {% endfor %}
-                                    {% endspaceless %}
-                                </div>
+                                {{  form_label(form.nombreEvento) }}
+                                {{ form_widget(form.nombreEvento, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                                <div class="text-danger">{{ form_errors(form.nombreEvento) }}</div>
                             </div>
                         {% endif %}
+                        </div>
+                        <div class="col">
+                        {% if form.tituloTrabajo is defined %}
+                            <div class="form-group">
+                                {{ form_label(form.tituloTrabajo) }}
+                                {{ form_widget(form.tituloTrabajo, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                                <div class="text-danger">{{ form_errors(form.tituloTrabajo) }}</div>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
 
-                        {% if form.plenaria is defined %}
-                            <div class="col-lg-4">
+                    <div class="row mt-3">
+                        {% if form.nacional is defined %}
+                            <div class="col">
                                 <div class="form-group">
-                                    <div>{{ form_label(form.plenaria) }}</div>
-                                    <div>
-                                        {% spaceless %}
-                                            {% for child in form.plenaria %}
-                                                <div class="radio-inline">
-                                                    {{ form_widget(child) }}  {{ form_label(child, null, {'label_attr': {'class': 'btn btn-default btn-xs'}}) }}
-                                                </div>
-                                            {% endfor %}
-                                        {% endspaceless %}
-                                    </div>
-                                    <div>{{ form_errors(form.plenaria) }}</div>
+                                    <div class="text-info">{{ form_label(form.nacional) }}</div>
+                                    {% for child in form.nacional %}
+                                        <div class="form-check form-check-inline">
+                                            {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                            {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="text-danger">{{ form_errors(form.nacional) }}</div>
                                 </div>
                             </div>
                         {% endif %}
 
-                        {% if form.institucion is defined %}
-                            <div class="col-lg-12 col-md-12 col-sm-12">
+                        {% if form.invitacion is defined %}
+                            <div class="col">
+                                <div class="form-group">
+                                    <div class="text-info">{{ form_label(form.invitacion) }}</div>
+                                    {% for child in form.invitacion %}
+                                        <div class="form-check form-check-inline">
+                                        {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                        {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                    <div class="text-danger">{{ form_errors(form.invitacion) }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if form.plenaria is defined %}
+                        <div class="col">
+                            <div class="form-group">
+                                <div class="text-info">{{ form_label(form.plenaria) }}</div>
+                                    {% for child in form.plenaria %}
+                                        <div class="form-check form-check-inline">
+                                            {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}
+                                            {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}
+                                        </div>
+                                    {% endfor %}
+                                <div class="text-danger">{{ form_errors(form.plenaria) }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            {% if form.institucion is defined %}
                                 <div class="form-group">
                                     <div>{{ form_label(form.institucion) }}</div>
-                                    <div>{{ form_widget(form.institucion, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.institucion) }}</div><br>
+                                    <div>{{ form_widget(form.institucion, {'attr': {'class': 'form-control form-control-sm'} } ) }}</div>
+                                    <small id="passwordHelpBlock" class="form-text text-muted">Nombre de la institución que visitará</small>
+                                    <div>{{ form_errors(form.institucion) }}</div>
                                 </div>
-                            </div>
-                        {% endif %}
-
-                        {% if form.departamento is defined %}
-                            <div class="col-lg-12 col-md-12 col-sm-12">
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            {% if form.departamento is defined %}
                                 <div class="form-group">
                                     <div>{{ form_label(form.departamento) }}</div>
-                                    <div>{{ form_widget(form.departamento, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.departamento) }}</div><br>
+                                    <div>{{ form_widget(form.departamento, {'attr': {'class': 'form-control form-control-sm'} } ) }}</div>
+                                    <small id="passwordHelpBlock" class="form-text text-muted">Nombre del departamento que visitará (si es el caso)</small>
+                                    <div>{{ form_errors(form.departamento) }}</div>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
 
+                    <div class="row">
                         {% if form.lugar is defined %}
-                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="form-group">
-                                    <div>{{ form_label(form.lugar) }}</div>
-                                    <div>{{ form_widget(form.lugar, {'attr': {'class': 'form-control input-sm'} } ) }}</div>
-                                    <div>{{ form_errors(form.lugar) }}</div><br>
-                                </div>
+                            <div class="form-group col-md-6">
+                                <div>{{ form_label(form.lugar) }}</div>
+                                <div>{{ form_widget(form.lugar, {'attr': {'class': 'form-control form-control-sm'} } ) }}</div>
+                                <div class="text-danger">{{ form_errors(form.lugar) }}</div>
                             </div>
                         {% endif %}
-                    {% if form.fechaActividad is defined %}
-                        <div class="col-lg-4">
-                            <div class="control-group">
-                                <div>
-                                    {{ form_label(form.fechaActividad) }}
-                                </div>
-                                <div class="input-group date">
-                                    {{ form_widget(form.fechaActividad, {'attr': {'class': 'form-control js-datepicker'}}) }}
-                                    <div class="input-group-text">
-                                        <label for="createSolicitud_fechaActividad" class="input-group-addon fa fa-calendar"></label>
-                                    </div>
 
-                                    <div>{{ form_errors(form.fechaActividad) }}</div>
+                        {% if form.fechaActividad is defined %}
+                            <div class="form-group col-md-3">
+                                {{ form_label(form.fechaActividad) }}
+                                <div class="input-group">
+                                    {{ form_widget(form.fechaActividad, {'attr': {'class': 'form-control form-control-sm js-datepicker'}}) }}
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="fechaActividad"><i class="fa fa-calendar"></i></span>
+                                    </div>                            {#<div class="input-group-text">#}
                                 </div>
+                                    {#<label for="createSolicitud_fechaActividad" class="input-group-addon fa fa-calendar"></label>#}
+                                {#</div>#}
+                                <div class="text-danger">{{ form_errors(form.fechaActividad) }}</div>
                             </div>
-
                         {% endif %}
                     </div>
 
@@ -211,7 +194,7 @@
                     {% if flow.getCurrentStepNumber() == 3 %}
 
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col">
                                 <dl>
                                     <dt><strong>Tipo de actividad</strong></dt>
                                     <dd>{{ formdata.tipo }}</dd>
@@ -219,7 +202,7 @@
                             </div>
 
                             {% if formdata.nacional is defined and formdata.nacional == true or formdata.nacional == false %}
-                                <div class="col-lg-4">
+                                <div class="col">
                                     <dl>
                                         <dt><strong>Ámbito de la solicitud:</strong></dt>
                                         <dd>
@@ -236,7 +219,7 @@
                             {% endif %}
 
                             {% if formdata.invitacion is not null %}
-                                <div class="col-lg-4">
+                                <div class="col">
                                     <dl>
                                         <dt><strong>Por invitación</strong></dt>
                                         <dd>
@@ -253,7 +236,7 @@
                             {% endif %}
 
                             {% if formdata.plenaria is not null %}
-                                <div class="col-lg-4">
+                                <div class="col">
                                     <dl>
                                         <dt><strong>Conferencia plenaria</strong></dt>
                                         <dd>
@@ -270,7 +253,7 @@
                             {% endif %}
 
                             {% if formdata.anfitrion is not null %}
-                                <div class="col-lg-4">
+                                <div class="col-md-4">
                                     <dl>
                                         <dt><strong>Nombre del anfitrión</strong></dt>
                                         <dd>{{ formdata.anfitrion }}</dd>
@@ -362,7 +345,7 @@
                 </div>
                 {{ form_rest(form) }}
 
-                <div class="panel-footer py-5">
+                <div class="card-footer py-5">
                     {% include '@CraueFormFlow/FormFlow/buttons.html.twig' with {
                     craue_formflow_button_class_last: 'btn btn-primary',
                     craue_formflow_button_class_back: 'btn btn-default',
@@ -375,9 +358,8 @@
                 </div>
             </div>
             {{ form_end(form) }}
-
-        </div>
-    </div>
+        {#</div>#}
+    {#</div>#}
 
 {% endblock %}
 
@@ -389,21 +371,15 @@
     <script src="{{ asset('js/dates.js')}}"></script>
 
     <script>
+        $(".date-picker").datepicker();
+
         $(document).ready(function() {
             $('.js-datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 language: 'es',
                 orientation: "auto bottom"
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.js-datepicker2').datepicker({
-                format: 'yyyy-MM-dd',
-                orientation: "auto bottom"
-            });
-        });
-    </script>
 
+            });
+        });
+    </script>
 {% endblock %}

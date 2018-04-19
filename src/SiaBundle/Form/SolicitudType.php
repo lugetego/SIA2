@@ -87,7 +87,7 @@ class SolicitudType extends AbstractType
             'required' => false,));
 
         $builder
-            ->add('descripcion')
+            ->add('descripcion', 'Symfony\Component\Form\Extension\Core\Type\TextareaType')
             ->add('sesion')
         ;
     }
