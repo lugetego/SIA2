@@ -1,254 +1,60 @@
-{% extends 'CcmSiaBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block wrapper %}
-    <div class="row">
+{% block body %}
+    <h1>Academico</h1>
 
-        <div class="col-lg-12">
-            <h3 class="page-header">Académico</h3>
-        </div>
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ academico.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ academico.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ academico.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Nacimiento</th>
+                <td>{% if academico.nacimiento %}{{ academico.nacimiento|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Rfc</th>
+                <td>{{ academico.rfc }}</td>
+            </tr>
+            <tr>
+                <th>Activo</th>
+                <td>{% if academico.activo %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ academico.slug }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if academico.created %}{{ academico.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Modified</th>
+                <td>{% if academico.modified %}{{ academico.modified|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
 
-        {#       <div class="col-lg-8">
-                    <ol class="breadcrumb">
-                        <li><a href="{{ path('sia') }}">Inicio</a></li>
-                        <li><a href="{{ path('academico') }}">Academicos</a></li>
-                        <li class="active">{{ entity.id }}</li>
-                    </ol>
-                </div>
-        #}
-
-        {% for flashMessage in app.session.flashbag.get('info') %}
-            <div class="col-lg-8">
-                <div class="alert alert-success alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    <i class="fa fa-check fa-lg"></i> {{ flashMessage }}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <strong>{{ entity.name | title}} {{ entity.apellido | title}}</strong>
-                    <span class="pull-right text-muted small">
-                </span>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <table class="table table-striped">
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="http://placekitten.com/g/150/150" alt="..." class="img-circle" style="width: 50px; height: 50px;">
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <i class="fa fa-book"></i> RFC:
-                                        </label>
-                                        {{ entity.rfc}}
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-primary" type="button">
-                                            <i class="fa fa-bookmark"></i> Dias disponibles:
-
-                                            <span class="badge">{{ totalDias - diasLicencia - diasComision}}</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="col-lg-12">
-
-                                    {{ form_start(delete_form) }}
-                                    <a href="{{ path('academico_edit', { 'id': entity.id }) }}" type="button" class="btn btn-primary">Modificar</a>
-                                    <a href="{{ path('academico') }}" type="button"  class="btn btn-danger">Regresar</a>
-                                    <button href="{{ path('academico_delete', { 'id': entity.id }) }}" type="submit" class="btn btn-primary"
-                                            onclick="return confirm('¿Estás seguro de eliminar esta información?')">Eliminar</button>
-                                    {{ form_end(delete_form) }}
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <h3 class="page-header"><small>Asignación Anual</small></h3><br>
-            <table  class="table table-condensed table-bordered">
-                <thead>
-                <tr><th>Total Licencias</th><th>Días Lic.</th><th>Total Comisiones</th><th>Días Com</th><th>Total Visitantes</th></tr>
-                </thead>
-                <tbody>
-                <tr><td>${{ asignacionLicencia |number_format(2)}}</td>
-                    <td>{{ diasLicencia }}</td>
-                    <td>${{ asignacionComision |number_format(2)}}</td>
-                    <td>{{ diasComision }}</td>
-                    <td>${{ asignacionVisitante |number_format(2)}}</td></tr>
-                </tbody>
-            </table>
-
-            {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
-            {% set saldo = asignacionAnual - totalErogado %}
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2">
-            <div  id="doughnut-chart" style="height: 160px;">
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3">
-            <strong>Saldo</strong><span style="color:#428bca; font-size:150%"> ${{ saldo |number_format(2)}}</span>
-        </div>
-        <div class="col-lg-3">
-            <strong>Días disponibles</strong><span style="color:#428bca; font-size:150%"> {{ totalDias - diasLicencia - diasComision}}</span>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-lg-10">
-            <h3 class="page-header"><small>Solicitudes</small></h3>
-            <table class="table table-striped">
-                <thead>
-                <tr><th>Tipo</th><th>Actividad a realizar</th><th>Erogaciones</th><th>Enviada</th><th>Aprobada</th><th>Fecha</th></tr>
-                </thead>
-                <tbody>
-                {% for solicitud in entity.solicitudes %}
-
-                    {# Muestra solo licitudes del año vigente #}
-                    {% if solicitud.inicio >= '2016-01-01'  %}
-                        <tr>
-                            <td>
-                                {{ solicitud.tipo }}
-                            </td>
-                            <td> <a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.actividad | truncate(80) }}</a></td>
-                                {% set ccm = 0 %}
-                                {% for fin in solicitud.financiamiento %}
-                                    {% set ccm = fin.ccm + ccm %}
-                                {% endfor %}
-                            <td> ${{ ccm | number_format(2)}}</td>
-                            {#                        <td {% if solicitud.enviada is not null %}class="success"{% else %} class="danger" {% endif %}>
-                                                    </td>#}
-                            <td style="text-align: center"> {% if solicitud.enviada is not null %}
-                                    <span class="label label-success"><i class="fa fa-check"></i></span>
-                                {% else %}<span class="label label-danger"><i class="fa fa-times"></i></span>{% endif %}
-                            </td>
-                            <td class="text-center">
-                                {% if solicitud.aprobada == 1 %}
-                                    <span class="label label-success"><i class="fa fa-check"></i></span>
-                                {% elseif solicitud.aprobada is null %}
-                                    <span class="label label-warning"><i class="fa fa-minus"></i></span>
-                                {% else %}
-                                    <span class="label label-danger"><i class="fa fa-times"></i></span>
-                                {% endif %}
-                            </td>
-    {#
-                            <td {% if solicitud.aprobada == 1 %} class="success"{% elseif solicitud.aprobada is null %} class="warning" {% else %} class="danger" {% endif %}>
-                            </td>
-    #}
-                            <td>
-                                del {{ solicitud.inicio | localizeddate('medium', 'none', null, null, "d LLL") }} al {{ solicitud.fin| localizeddate('medium', 'none', null, null, "d LLL Y") }}
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="col-lg-12">
-                            <a href="{{ path('solicitud_new', { 'tipo': "licencia-comision" }) }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Licencia-Comisión</a>
-                            <a href="{{ path('solicitud_new', { 'tipo': "visitante" }) }}" type="button" class="btn btn-success"><i class="fa fa-plus"></i> Visitante</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <h3 class="page-header"><small>Proyectos</small></h3>
-            <table class="table table-striped">
-                <thead>
-                <tr><th>Número</th><th>Nombre</th></tr>
-                </thead>
-                <tbody>
-                {% for proyecto in entity.proyectos %}
-                    <tr>
-                        <td><a href="{{ path('proyecto_show', { 'id': proyecto.id }) }}">{{ proyecto.numero }}</a> </td><td> {{ proyecto.nombre }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
+    <ul>
+        <li>
+            <a href="{{ path('academico_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('academico_edit', { 'id': academico.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
 {% endblock %}
-
-{%  block morris %}
-
-    {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
-
-    {% if totalErogado >= asignacionAnual %}
-
-        <script>
-            Morris.Donut({
-                element: 'doughnut-chart',
-                data: [
-                    {label: 'Erogado', value: 100 },
-                ],
-                labelColor: '#AF0B0B',
-                colors: [
-                    '#AF0B0B',
-                    '#910000',
-                    '#6B0000',
-                ],
-                formatter: function (y) { return y + "%" }
-            });
-        </script>
-
-    {% else %}
-
-        {% set saldo = asignacionAnual - totalErogado %}
-
-        {% set porcentajeLicencia =  (asignacionLicencia * 100) / asignacionAnual %}
-        {% set porcentajeComision =  (asignacionComision * 100) / asignacionAnual %}
-        {% set porcentajeVisitante =  (asignacionVisitante * 100) / asignacionAnual %}
-        {% set porcentajeSaldo =  ( saldo * 100) / asignacionAnual %}
-
-        <script>
-            Morris.Donut({
-                element: 'doughnut-chart',
-                data: [
-                    {label: 'Licencia', value: {{ porcentajeLicencia |number_format(2) }} },
-                    {label: 'Comisión', value: {{ porcentajeComision |number_format(2) }} },
-                    {label: 'Visitante', value: {{ porcentajeVisitante |number_format(2) }} },
-                    {label: 'Saldo', value: {{ porcentajeSaldo |number_format(2) }} },
-                ],
-                formatter: function (y) { return y + "%" }
-            });
-        </script>
-
-    {% endif %}
-
-{%  endblock %}

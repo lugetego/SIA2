@@ -6,72 +6,69 @@
     {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.bootstrap4.min.css"/>#}
 {% endblock %}
 
-{% block sidebar %}
-    <li class="nav-item">
-        <a class="nav-link active" href="{{ path('dashboard') }}">
 
-            Dashboard <span class="sr-only">(current)</span>
-        </a>
-    </li>
-
-    {% if is_granted("ROLE_ADMIN") %}
+    {% block sidebar %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('academico') }}">
-                <span data-feather="file"></span>
-                Academicos
+            <a class="nav-link active" href="{{ path('dashboard') }}">
+
+                Dashboard <span class="sr-only">(current)</span>
             </a>
         </li>
 
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('solicitud_step') }}">
-                <span data-feather="file"></span>
-                Nueva solicitud
-            </a>
-        </li>
-
-        {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        {% if is_granted("ROLE_ADMIN") %}
             <li class="nav-item">
-                <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Finalizar sesión de {{app.user.username}}</a>
+                <a class="nav-link" href="{{ path('academico') }}">
+                    <span data-feather="file"></span>
+                    Academicos
+                </a>
             </li>
+
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('solicitud_step') }}">
+                    <span data-feather="file"></span>
+                    Nueva solicitud
+                </a>
+            </li>
+
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                <li class="nav-item">
+                    <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Finalizar sesión de {{app.user.username}}</a>
+                </li>
+            {% endif %}
         {% endif %}
-    {% endif %}
-{% endblock %}
+    {% endblock %}
+
 
 {% block body %}
+    <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
 
-        <table id="example" class="table table-hover table-bordered table-striped table-sm">
+    <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm">
 
         <thead>
         <tr>
-            <th class="text-center">Solicitud</th>
             {% if is_granted("ROLE_ADMIN") %}
                 <th class="text-center">Académico</th>
             {% endif %}
             <th class="text-center">Tipo</th>
-            <th class="text-center">Ámbito</th>
             <th class="text-center">Fechas</th>
             <th class="text-center">Estatus</th>
-            <th class="text-center">Acta</th>
-            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
         {% for solicitud in solicituds %}
             <tr>
-                <td class="text-center"><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}" >{{ solicitud.id }}</a></td>
                 {% if is_granted("ROLE_ADMIN") %}
                     <td class="text-center">{{ solicitud.academico }}</td>
                 {% endif %}
-                <td class="text-center">{{ solicitud.tipo }}</td>
-                <td class="text-center">
-                    {% if solicitud.ambito == true %}
-                        <span class="badge badge-secondary">Nacional</span>
-                    {% else %}
-                        <span class="badge badge-dark">Internacional</span>
-                    {% endif %}
-                </td>
-
+                <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
+                {#<td class="text-center">#}
+                {#{% if solicitud.ambito == true %}#}
+                {#<span class="badge badge-secondary">Nacional</span>#}
+                {#{% else %}#}
+                {#<span class="badge badge-dark">Internacional</span>#}
+                {#{% endif %}#}
+                {#</td>#}
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
                 <td class="text-center">{% if solicitud.enviado == true %}
                         <span class="badge badge-success">Enviada</span>
@@ -79,22 +76,10 @@
                         <span class="badge badge-warning">En proceso</span>
                     {% endif %}
                 </td>
-                <td>{{ solicitud.sesion }}</td>
-
-                <td class="text-center">
-
-                    <a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}"><i class="fa fa-search"></i></a>
-
-                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-
-    <a href="{{ path('solicitud_step') }}" class="btn btn-info" role="button">Nueva solicitud</a>
-
-
 
 {% endblock %}
 
@@ -116,7 +101,7 @@
 
     <script>
         $(document).ready(function() {
-            var table = $('#example').DataTable( {
+            var table = $('#tablaSolicitudes').DataTable( {
 
 //                lengthChange: false,
 //                pageLength: 50,
@@ -159,10 +144,8 @@
 
 
             } );
-
             table.buttons().container()
                     .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-
         } );
     </script>
 {% endblock %}
