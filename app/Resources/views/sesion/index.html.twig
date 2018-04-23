@@ -23,6 +23,9 @@
 {% endblock %}
 
 {% block body %}
+    <a href="{{ path('sesion_new') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva sesión</a>
+
+
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>
         <tr>
@@ -76,8 +79,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('sesion_new') }}" class="btn btn-info" role="button">Nueva sesión</a>
 
 {% endblock %}
 
