@@ -2,275 +2,134 @@
 
 namespace SiaBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
+use SiaBundle\Entity\Academico;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use SiaBundle\Entity\Academico;
-use SiaBundle\Form\AcademicoType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Academico controller.
  *
- * @Route("/academico")
+ * @Route("academico")
  */
 class AcademicoController extends Controller
 {
-
     /**
-     * Lists all Academico entities.
+     * Lists all academico entities.
      *
-     * @Route("/", name="academico")
+     * @Route("/", name="academico_index")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('SiaBundle:Academico')->findAll();
+        $academicos = $em->getRepository('SiaBundle:Academico')->findAll();
 
         return $this->render('academico/index.html.twig', array(
-                    'entities'=> $entities,
-                ));
-    }
-    /**
-     * Creates a new Academico entity.
-     *
-     * @Route("/", name="academico_create")
-     * @Method("POST")
-     * @Template("SiaBundle:academico:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Academico();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            $this->get('session')->getFlashBag()->add('info', 'El registro se ha guardado exitosamente');
-
-            return $this->redirect($this->generateUrl('academico_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to create a Academico entity.
-    *
-    * @param Academico $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Academico $entity)
-    {
-        $securityContext = $this->container->get('security.context');
-
-        $form = $this->createForm(new AcademicoType($securityContext), $entity, array(
-            'action' => $this->generateUrl('academico_create'),
-            'method' => 'POST',
+            'academicos' => $academicos,
         ));
-
-        //$form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
-     * Displays a form to create a new Academico entity.
+     * Creates a new academico entity.
      *
      * @Route("/new", name="academico_new")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $securityContext = $this->container->get('security.context');
+        $academico = new Academico();
+        $form = $this->createForm('SiaBundle\Form\AcademicoType', $academico);
+        $form->handleRequest($request);
 
-        $entity = new Academico($securityContext);
-        $form   = $this->createCreateForm($entity);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($academico);
+            $em->flush();
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+            return $this->redirectToRoute('academico_show', array('id' => $academico->getId()));
+        }
+
+        return $this->render('academico/new.html.twig', array(
+            'academico' => $academico,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
-     * Finds and displays a Academico entity.
+     * Finds and displays a academico entity.
      *
      * @Route("/{id}", name="academico_show")
      * @Method("GET")
-     * @Template()
      */
-    public function showAction($id)
+    public function showAction(Academico $academico)
     {
-        $em = $this->getDoctrine()->getManager();
+        $deleteForm = $this->createDeleteForm($academico);
 
-        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Academico entity.');
-        }
-
-        $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
-        $dLic = $this->container->getParameter('sia.dias_licencia');
-        $dCom = $this->container->getParameter('sia.dias_comision');
-        $year = $this->container->getParameter('sia.year');
-
-        $totalDias = $dLic + $dCom;
-
-        // Calcula Totales
-        $totalAsignacionLicencia = $em->getRepository('SiaBundle:Academico')->erogadoLicencias($entity);
-        $totalAsignacionComision = $em->getRepository('SiaBundle:Academico')->erogadoComisiones($entity);
-        $totalAsignacionVisitante = $em->getRepository('SiaBundle:Academico')->erogadoVisitantes($entity);
-        $totalDiasLicencia = $em->getRepository('SiaBundle:Academico')->diasSolicitadosLicencia($entity);
-        $totalDiasComision = $em->getRepository('SiaBundle:Academico')->diasSolicitadosComision($entity);
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
+        return $this->render('academico/show.html.twig', array(
+            'academico' => $academico,
             'delete_form' => $deleteForm->createView(),
-            'asignacionLicencia' => $totalAsignacionLicencia,
-            'asignacionComision' => $totalAsignacionComision,
-            'asignacionVisitante' => $totalAsignacionVisitante,
-            'diasLicencia' => $totalDiasLicencia,
-            'diasComision' => $totalDiasComision,
-            'totalDias' => $totalDias,
-            'asignacionAnual' => $asignacionAnual,
-        );
+        ));
     }
 
     /**
-     * Displays a form to edit an existing Academico entity.
+     * Displays a form to edit an existing academico entity.
      *
      * @Route("/{id}/edit", name="academico_edit")
-     * @Method("GET")
-     * @Template()
+     * @Method({"GET", "POST"})
      */
-    public function editAction($id)
+    public function editAction(Request $request, Academico $academico)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Academico entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Academico entity.
-    *
-    * @param Academico $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Academico $entity)
-    {
-        $securityContext = $this->container->get('security.context');
-
-        $form = $this->createForm(new AcademicoType($securityContext), $entity, array(
-            'action' => $this->generateUrl('academico_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        //$form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Academico entity.
-     *
-     * @Route("/{id}", name="academico_update")
-     * @Method("PUT")
-     * @Template("SiaBundle:Academico:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('SiaBundle:Academico')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Academico entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($academico);
+        $editForm = $this->createForm('SiaBundle\Form\AcademicoType', $academico);
         $editForm->handleRequest($request);
 
-        if ($editForm->isValid()) {
-            $em->flush();
-            $this->get('session')->getFlashBag()->add('info', 'El registro se ha modificado exitosamente');
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirect($this->generateUrl('academico_show', array('id' => $id)));
+            return $this->redirectToRoute('academico_edit', array('id' => $academico->getId()));
         }
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+        return $this->render('academico/edit.html.twig', array(
+            'academico' => $academico,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
+
     /**
-     * Deletes a Academico entity.
+     * Deletes a academico entity.
      *
      * @Route("/{id}", name="academico_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Academico $academico)
     {
-        $form = $this->createDeleteForm($id);
+        $form = $this->createDeleteForm($academico);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('SiaBundle:Academico')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Academico entity.');
-            }
-
-            $em->remove($entity);
+            $em->remove($academico);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('academico'));
+        return $this->redirectToRoute('academico_index');
     }
 
     /**
-     * Creates a form to delete a Academico entity by id.
+     * Creates a form to delete a academico entity.
      *
-     * @param mixed $id The entity id
+     * @param Academico $academico The academico entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
+    private function createDeleteForm(Academico $academico)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('academico_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('academico_delete', array('id' => $academico->getId())))
             ->setMethod('DELETE')
-            //->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }

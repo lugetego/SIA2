@@ -1,135 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% form_theme form 'SiaBundle::form_errors.html.twig' %}
-
-
-{% block wrapper %}
-
-
-    <div class="row">
-        <div class="col-lg-12">
-            <h3 class="page-header">Nuevo Académico</h3>
-        </div>
-    </div>
-
+{% block body %}
+    <h1>Academico creation</h1>
 
     {{ form_start(form) }}
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.nombre) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control input-sm','placeholder': 'Nombre(s)'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.nombre) }}</div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.apellido) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.apellido, {'attr': {'class': 'form-control input-sm','placeholder': 'Apellido(s)'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.apellido) }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.nacimiento) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.nacimiento, {'attr': {'class': 'form-control input-sm', 'placeholder':'dd-mm-aaaa'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.nacimiento) }}</div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.rfc) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.rfc, {'attr': {'class': 'form-control input-sm', 'placeholder':'13 caracteres'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.rfc) }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.dias) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.dias, {'attr': {'class': 'form-control input-sm'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.dias) }}</div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.asignacion) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.asignacion, {'attr': {'class': 'form-control input-sm'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.asignacion) }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <div>
-                        {{ form_label(form.user) }}
-                    </div>
-                    <div>
-                        {{ form_widget(form.user, {'attr': {'class': 'form-control input-sm'} } ) }}
-                    </div>
-                    <div>{{ form_errors(form.user) }}</div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="col-lg-12">
-                {{ form_widget(form.save,{'attr':{'class':'btn btn-primary'} } )}}
-
-                <a href="{{ path('academico') }}" type="button"  class="btn btn-danger">Cancelar</a>
-            </div>
-        </div>
-    </div>
-
-    {{ form_rest(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Create" />
     {{ form_end(form) }}
 
-
-
-
+    <ul>
+        <li>
+            <a href="{{ path('academico_index') }}">Back to the list</a>
+        </li>
+    </ul>
 {% endblock %}

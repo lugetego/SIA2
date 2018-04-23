@@ -3,10 +3,8 @@
 namespace SiaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Index;
 use Symfony\Component\Validator\Constraints as Assert;
-
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Academico
  *
@@ -61,23 +59,6 @@ class Academico
     protected $rfc;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="enviado", type="boolean", nullable=true)
-     */
-    private $enviado;
-
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    protected $aprobado;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $observaciones;
-
-    /**
      *
      * @ORM\OneToOne(targetEntity="SiaBundle\Entity\User", inversedBy="academico")
      */
@@ -89,6 +70,12 @@ class Academico
      * @ORM\Column(name="activo", type="boolean", nullable=true)
      */
     private $activo;
+
+    /**
+     * @Gedmo\Slug(fields={"apellido", "nombre"}, updatable=false)
+     * @ORM\Column(length=255, unique=true)
+     */
+    protected $slug;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -152,15 +139,6 @@ class Academico
         $this->setCreated(new \DateTime());
         $this->setModified(new \DateTime());
     }
-
-//    /**
-//     * @ORM\PreUpdate
-//     */
-//    public function preUpdate()
-//    {
-//        $this->setModified(new \DateTime());
-//    }
-
 
     /**
      * Get id
@@ -251,38 +229,6 @@ class Academico
     }
 
     /**
-     * @return mixed
-     */
-    public function getAprobado()
-    {
-        return $this->aprobado;
-    }
-
-    /**
-     * @param mixed $aprobado
-     */
-    public function setAprobado($aprobado)
-    {
-        $this->aprobado = $aprobado;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getObservaciones()
-    {
-        return $this->observaciones;
-    }
-
-    /**
-     * @param mixed $observaciones
-     */
-    public function setObservaciones($observaciones)
-    {
-        $this->observaciones = $observaciones;
-    }
-
-    /**
      * Set user
      *
      * @param \SiaBundle\Entity\User $user
@@ -335,37 +281,6 @@ class Academico
         return $this;
     }
 
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isEnviado()
-    {
-        return $this->enviado;
-    }
-
-    /**
-     * @param boolean $enviado
-     */
-    public function setEnviado($enviado)
-    {
-        $this->enviado = $enviado;
-    }
-
-
-    /**
-     * Get enviado
-     *
-     * @return boolean 
-     */
-    public function getEnviado()
-    {
-        return $this->enviado;
-    }
 
     /**
      * Add solicitudes
@@ -401,6 +316,28 @@ class Academico
     }
 
     /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Academico
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+
+    /**
      * @return boolean
      */
     public function isActivo()
@@ -415,5 +352,4 @@ class Academico
     {
         $this->activo = $activo;
     }
-
 }
