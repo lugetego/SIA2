@@ -13,9 +13,19 @@ class SesionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fecha')->add('name');
+        $builder
+            ->add('fecha','Symfony\Component\Form\Extension\Core\Type\DateType',
+                array(
+                    'widget' => 'single_text',
+                    'html5' => false,
+                    'required' => true,))
+            ->add('name','Symfony\Component\Form\Extension\Core\Type\TextType',
+                array(
+                    'label'=>'Nombre',
+                    'required'=>true,))
+        ;
     }
-    
+
     /**
      * {@inheritdoc}
      */

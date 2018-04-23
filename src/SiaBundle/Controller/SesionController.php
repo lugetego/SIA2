@@ -88,7 +88,10 @@ class SesionController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('sesion_edit', array('id' => $sesion->getId()));
+//            return $this->redirectToRoute('sesion_edit', array('id' => $sesion->getId()));
+            return $this->redirectToRoute('sesion_index');
+
+
         }
 
         return $this->render('sesion/edit.html.twig', array(

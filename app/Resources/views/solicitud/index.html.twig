@@ -6,38 +6,37 @@
     {#<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.bootstrap4.min.css"/>#}
 {% endblock %}
 
+{% block sidebar %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ path('dashboard') }}">
 
-    {% block sidebar %}
+            Dashboard <span class="sr-only">(current)</span>
+        </a>
+    </li>
+
+    {% if is_granted("ROLE_ADMIN") %}
         <li class="nav-item">
-            <a class="nav-link active" href="{{ path('dashboard') }}">
-
-                Dashboard <span class="sr-only">(current)</span>
+            <a class="nav-link" href="{{ path('academico') }}">
+                <span data-feather="file"></span>
+                Academicos
             </a>
         </li>
 
-        {% if is_granted("ROLE_ADMIN") %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('academico') }}">
-                    <span data-feather="file"></span>
-                    Academicos
-                </a>
-            </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('sesion_index') }}">
+                <span data-feather="file"></span>
+                Sesiones
+            </a>
+        </li>
+    {% endif %}
 
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('solicitud_step') }}">
-                    <span data-feather="file"></span>
-                    Nueva solicitud
-                </a>
-            </li>
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <li class="nav-item">
+            <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Finalizar sesión de {{app.user.username}}</a>
+        </li>
+    {% endif %}
 
-            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                <li class="nav-item">
-                    <a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Finalizar sesión de {{app.user.username}}</a>
-                </li>
-            {% endif %}
-        {% endif %}
-    {% endblock %}
+{% endblock %}
 
 
 {% block body %}
@@ -145,7 +144,7 @@
 
             } );
             table.buttons().container()
-                    .appendTo( '#example_wrapper .col-md-6:eq(0)' );
+                    .appendTo( '#tablaSolicitudes_wrapper .col-md-6:eq(0)' );
         } );
     </script>
 {% endblock %}
