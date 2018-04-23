@@ -9,7 +9,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Academico
  *
  * @ORM\Table(name="academico")
- * @ORM\Entity(repositoryClass="AcademicoRepository")
+ * @ORM\Entity(repositoryClass="SiaBundle\Repository\AcademicoRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Academico

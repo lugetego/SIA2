@@ -22,6 +22,8 @@ class AcademicoController extends Controller
      */
     public function indexAction()
     {
+//        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $academicos = $em->getRepository('SiaBundle:Academico')->findAll();
@@ -48,7 +50,7 @@ class AcademicoController extends Controller
             $em->persist($academico);
             $em->flush();
 
-            return $this->redirectToRoute('academico_show', array('id' => $academico->getId()));
+            return $this->redirectToRoute('academico_show', array('slug' => $academico->getSlug()));
         }
 
         return $this->render('academico/new.html.twig', array(
@@ -60,23 +62,52 @@ class AcademicoController extends Controller
     /**
      * Finds and displays a academico entity.
      *
-     * @Route("/{id}", name="academico_show")
+     * @Route("/{slug}/{year}", requirements={"year" = "\d+"}, name="academico_show")
+     *
      * @Method("GET")
      */
-    public function showAction(Academico $academico)
+    public function showAction(Academico $academico, $year = '2018')
     {
+
+//        $year = $this->container->getParameter('sia.year');
+
+        $em = $this->getDoctrine()->getManager();
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, $year);
+
+        $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
+        $diasLicencia = $this->container->getParameter('sia.dias_licencia');
+        $diasComision = $this->container->getParameter('sia.dias_comision');
+
+        $totalDias = $diasLicencia + $diasComision;
+
+        // Calcula Totales
+        $totalAsignacionLicencia = $this->erogadoLicencias($solicitudes);
+        $totalAsignacionComision = $this->erogadoComisiones($solicitudes);
+        $totalAsignacionVisitante = $this->erogadoVisitantes($solicitudes);
+        $totalDiasLicencia = $this->diasSolicitadosLicencia($solicitudes);
+        $totalDiasComision = $this->diasSolicitadosComision($solicitudes);
+
         $deleteForm = $this->createDeleteForm($academico);
 
         return $this->render('academico/show.html.twig', array(
+            'year' => $year,
             'academico' => $academico,
+            'solicitudes' => $solicitudes,
             'delete_form' => $deleteForm->createView(),
+            'asignacionLicencia' => $totalAsignacionLicencia,
+            'asignacionComision' => $totalAsignacionComision,
+            'asignacionVisitante' => $totalAsignacionVisitante,
+            'diasLicencia' => $totalDiasLicencia,
+            'diasComision' => $totalDiasComision,
+            'totalDias' => $totalDias,
+            'asignacionAnual' => $asignacionAnual,
         ));
     }
 
     /**
      * Displays a form to edit an existing academico entity.
      *
-     * @Route("/{id}/edit", name="academico_edit")
+     * @Route("/{slug}/edit", name="academico_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Academico $academico)
@@ -88,7 +119,7 @@ class AcademicoController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('academico_edit', array('id' => $academico->getId()));
+            return $this->redirectToRoute('academico_edit', array('slug' => $academico->getSlug()));
         }
 
         return $this->render('academico/edit.html.twig', array(
@@ -101,7 +132,7 @@ class AcademicoController extends Controller
     /**
      * Deletes a academico entity.
      *
-     * @Route("/{id}", name="academico_delete")
+     * @Route("/{slug}", name="academico_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Academico $academico)
@@ -128,9 +159,82 @@ class AcademicoController extends Controller
     private function createDeleteForm(Academico $academico)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('academico_delete', array('id' => $academico->getId())))
+            ->setAction($this->generateUrl('academico_delete', array('slug' => $academico->getSlug())))
             ->setMethod('DELETE')
             ->getForm()
         ;
     }
+
+    /**
+     * Erogado Licencias
+     * Regresa el total de la asignación anual solicitado por licencia
+     *
+     */
+    public function erogadoLicencias($solicitudes)
+    {
+        $erogadoLicencias = 0;
+
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia')
+                $erogadoLicencias += $solicitud->getTotalAsignacion();
+        }
+        return $erogadoLicencias;
+    }
+    /**
+     * Erogado Comisiones
+     * Regresa el total de la asignación anual solicitado por comisión
+     *
+     */
+    public function erogadoComisiones($solicitudes)
+    {
+        $erogadoComisiones = 0;
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Comision')
+                $erogadoComisiones += $solicitud->getTotalAsignacion();
+        }
+        return $erogadoComisiones;
+    }
+    /**
+     * Erogado Visitantes
+     * Regresa el total de la asignación anual solicitado para visitantes
+     *
+     */
+    public function ErogadoVisitantes($solicitudes)
+    {
+        $erogadoVisitantes = 0;
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Visitante')
+                $erogadoVisitantes += $solicitud->getTotalAsignacion();
+        }
+        return $erogadoVisitantes;
+    }
+    /**
+     * Dias Solicitados de licencia
+     * Regresa el total de dias solicitados por licencia
+     *
+     */
+    public function diasSolicitadosLicencia($solicitudes)
+    {
+        $dias = 0;
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia')
+                $dias += $solicitud->getDias();
+        }
+        return $dias;
+    }
+    /**
+     * Dias Solicitados de comisión
+     * Regresa el total de dias solicitados por comision
+     *
+     */
+    public function diasSolicitadosComision($solicitudes)
+    {
+        $dias = 0;
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Comision')
+                $dias += $solicitud->getDias();
+        }
+        return $dias;
+    }
+
 }

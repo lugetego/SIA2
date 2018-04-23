@@ -3,43 +3,31 @@
 {% block body %}
     <h1>Academicos list</h1>
 
-    <table>
+    <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Nacimiento</th>
+                <th>Academico</th>
                 <th>Rfc</th>
                 <th>Activo</th>
-                <th>Slug</th>
-                <th>Created</th>
-                <th>Modified</th>
-                <th>Actions</th>
+                {#<th>Actions</th>#}
             </tr>
         </thead>
         <tbody>
         {% for academico in academicos %}
             <tr>
-                <td><a href="{{ path('academico_show', { 'id': academico.id }) }}">{{ academico.id }}</a></td>
-                <td>{{ academico.nombre }}</td>
-                <td>{{ academico.apellido }}</td>
-                <td>{% if academico.nacimiento %}{{ academico.nacimiento|date('Y-m-d') }}{% endif %}</td>
+                <td><a href="{{ path('academico_show', { 'slug': academico.slug }) }}">{{ academico.nombre }} {{ academico.apellido }}</a></td>
                 <td>{{ academico.rfc }}</td>
                 <td>{% if academico.activo %}Yes{% else %}No{% endif %}</td>
-                <td>{{ academico.slug }}</td>
-                <td>{% if academico.created %}{{ academico.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if academico.modified %}{{ academico.modified|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('academico_show', { 'id': academico.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('academico_edit', { 'id': academico.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                {#<td>#}
+                    {#<ul>#}
+                        {#<li>#}
+                            {#<a href="{{ path('academico_show', { 'slug': academico.slug }) }}">show</a>#}
+                        {#</li>#}
+                        {#<li>#}
+                            {#<a href="{{ path('academico_edit', { 'slug': academico.slug }) }}">edit</a>#}
+                        {#</li>#}
+                    {#</ul>#}
+                {#</td>#}
             </tr>
         {% endfor %}
         </tbody>

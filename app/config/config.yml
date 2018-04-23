@@ -8,6 +8,10 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: es_MX
+    sia.asignacion_anual: 30000
+    sia.dias_licencia: 45
+    sia.dias_comision: 45
+    sia.year: 2018
 
 framework:
     #esi: ~
@@ -120,4 +124,3 @@ services:
             class: Twig_Extensions_Extension_Date
             tags:
                 - { name: twig.extension }
-
