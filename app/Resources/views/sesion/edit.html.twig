@@ -1,21 +1,25 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Sesion edit</h1>
-
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+<div class="form-group">
+    {{ form_start(edit_form, {'action': path('sesion_edit', { 'id': sesion.id})}) }}
+    <div class="row">
+        <div class="form-group col-md-6">
+            {{ form_label(edit_form.name) }}
+            {{ form_widget(edit_form.name, {'attr': {'class': 'form-control'}}) }}
+            <div class="text-danger">{{ form_errors(edit_form.name) }}</div>
+        </div>
+        <div class="form-group col-md-6">
+            <div>
+                {{ form_label(edit_form.fecha) }}
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+                {{ form_widget(edit_form.fecha, {'attr': {'class': 'form-control js-datepicker'}}) }}
+            </div>
+            <div>{{ form_errors(edit_form.fecha) }}</div>
+        </div>
+    </div>
+    <input type="submit" value="Guardar" class="btn btn-primary my-4"/>
     {{ form_end(edit_form) }}
+</div>
 
-    <ul>
-        <li>
-            <a href="{{ path('sesion_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
-{% endblock %}

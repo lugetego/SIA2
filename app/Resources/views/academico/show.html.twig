@@ -1,4 +1,4 @@
-{% extends 'CcmSiaBundle::layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block wrapper %}
     <div class="row">
@@ -30,7 +30,7 @@
         <div class="col-lg-8">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <strong>{{ entity.name | title}} {{ entity.apellido | title}}</strong>
+                    <strong>{{ entity.nombre | title}} {{ entity.apellido | title}}</strong>
                     <span class="pull-right text-muted small">
                 </span>
                 </div>

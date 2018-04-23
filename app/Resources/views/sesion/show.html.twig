@@ -1,31 +1,141 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.bootstrap4.min.css"/>
+{% endblock %}
+
+{% block sidebar %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ path('dashboard') }}">
+
+            Dashboard <span class="sr-only">(current)</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('sesion_index') }}">
+            <span data-feather="file"></span>
+            Sesiones
+        </a>
+    </li>
+{% endblock %}
+
+
 {% block body %}
 
-    <h2>{{ sesion.name }}</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white boder-bottom">
+            <li  class="breadcrumb-item"><a href="{{ path('sesion_index') }}">Sesiones</a></li>
+            {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
+            <li class="breadcrumb-item active" aria-current="page">{{ sesion.name }}</li>
+        </ol>
+    </nav>
 
-    <ul>
-        <li>
-            <a href="{{ path('sesion_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('sesion_edit', { 'id': sesion.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <h3><small> {{ sesion.solicitudes| length }} solicitudes relacionadas a esta sesión</small></h3>
 
-    <h4>Solicitudes <small> {{ sesion.solicitudes| length }}</small></h4>
-    <table class="table">
+    <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
+        <thead>
+        <tr>
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Académico</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">Estatus</th>
+        </tr>
+        </thead>
+        <tbody>
+
         {% for solicitud in sesion.solicitudes %}
             <tr>
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
-                <td>{{ solicitud.fechaInicio|date("d M y") }}</td><td>{{ solicitud.descripcion }}</td>
+                <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</td>
+                <td class="text-center">{% if solicitud.enviado == true %}
+                        <span class="badge badge-success">Enviada</span>
+                    {% else %}
+                        <span class="badge badge-warning">En proceso</span>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
+        </tbody>
+
     </table>
 
+    {#<a href="{{ path('sesion_edit',{'id':sesion.id}) }}" class="btn btn-info" role="button">Modificar sesión</a>#}
+
+
+        {#<li>#}
+            {#{{ form_start(delete_form) }}#}
+            {#<input type="submit" value="Delete">#}
+            {#{{ form_end(delete_form) }}#}
+        {#</li>#}
+    {##}
+
+{% endblock %}
+
+{% block javascripts %}
+    {#{{ parent() }}#}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#sesion').DataTable( {
+
+//                lengthChange: false,
+//                pageLength: 50,
+
+                buttons: [
+                    {
+                        text: '<i class="fa fa-files-o"></i>',
+                        titleAttr: 'Copiar',
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="fa fa-file-text-o"></i>',
+                        titleAttr: 'CSV separado por comas',
+                        exportOptions: {
+                            columns: ':visible'
+                        },
+                        fieldSeparator: ',',
+                        extension: '.csv'
+                    },
+
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fa fa-file-pdf-o"></i>',
+                        titleAttr: 'PDF',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend:'colvis',
+                        text: 'Columnas'
+                    }
+
+                ],
+
+
+
+            } );
+
+            table.buttons().container()
+                    .appendTo( '#sesiones_wrapper .col-md-6:eq(0)' );
+
+        } );
+    </script>
 {% endblock %}
