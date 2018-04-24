@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use SiaBundle\Security\InvesVoter;
+use SiaBundle\Security\SiaVoter;
 use SiaBundle\Entity\User;
 use SiaBundle\Entity\Academico;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -146,6 +146,11 @@ class SolicitudController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $solicitud = new Solicitud();
 /*
         $viaticos = new Financiamiento();
@@ -213,8 +218,8 @@ class SolicitudController extends Controller
 //
         $deleteForm = $this->createDeleteForm($solicitud);
 
-        // check for "view" access: calls all voters
-//        $this->denyAccessUnlessGranted('edit', $solicitud);
+//         check for "view" access: calls all voters
+        $this->denyAccessUnlessGranted('edit', $solicitud);
 
         return $this->render('solicitud/show.html.twig', array(
             'solicitud' => $solicitud,
@@ -231,6 +236,8 @@ class SolicitudController extends Controller
      */
     public function editAction(Request $request, Solicitud $solicitud)
     {
+        $this->denyAccessUnlessGranted('edit', $solicitud);
+
         $deleteForm = $this->createDeleteForm($solicitud);
         $editForm = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud, array('tipo'=>$solicitud->getTipo()));
 

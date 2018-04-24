@@ -23,7 +23,7 @@ services:
 #            - [ setFormType, [ "@Ccm.form.create_vehicle" ] ]
 
     app.inves_voter:
-        class: SiaBundle\Security\InvesVoter
+        class: SiaBundle\Security\SiaVoter
         arguments: ['@security.access.decision_manager']
         public: false
         tags:

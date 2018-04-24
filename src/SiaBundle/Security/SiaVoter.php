@@ -10,7 +10,7 @@ use SiaBundle\Entity\User;
 
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 
-class InvesVoter extends Voter
+class SiaVoter extends Voter
 {
 
     private $decisionManager;
