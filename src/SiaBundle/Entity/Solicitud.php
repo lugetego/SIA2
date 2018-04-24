@@ -532,7 +532,7 @@ class Solicitud
     /**
      * @return suma financiamiento CCM
      */
-    public function getTotalAsignación()
+    public function getTotalAsignacion()
     {
         $total_asignacion = 0;
 
@@ -553,7 +553,7 @@ class Solicitud
 //    $interval = $datetime1->diff($datetime2);
 //    echo $interval->format('%R%a days');
 
-        $dias = $this->fin->diff($this->inicio);
+        $dias = $this->fechaFin->diff($this->fechaInicio);
 
         return $dias->format('%d') + 1;
     }

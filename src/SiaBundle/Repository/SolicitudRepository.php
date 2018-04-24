@@ -2,6 +2,7 @@
 
 namespace SiaBundle\Repository;
 
+use SiaBundle\Entity\Academico;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -12,4 +13,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class SolicitudRepository extends EntityRepository
 {
+
+    public function findAllByYear(Academico $academico, $year)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s FROM SiaBundle:Solicitud s 
+                     WHERE SUBSTRING(s.fechaInicio,1,4) = :year AND s.academico = :id
+                     ORDER BY s.created ASC'
+            )
+            ->setParameter('id', $academico->getId())
+            ->setParameter('year', $year)
+            ->getResult();
+    }
+
 }

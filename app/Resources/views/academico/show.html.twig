@@ -1,60 +1,116 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Academico</h1>
 
-    <table>
+    <h3 class="text-secondary my-5">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- {{ year }}</small></h3>
+
+    <table  class="table table-condensed table-bordered text-secondary">
+        <thead>
+        <tr><th>Erogado Licencias</th><th>Días Licencia</th><th>Erogado Comisiones</th><th>Días Comisiones</th><th>Erogado Visitantes</th></tr>
+        </thead>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ academico.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ academico.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Apellido</th>
-                <td>{{ academico.apellido }}</td>
-            </tr>
-            <tr>
-                <th>Nacimiento</th>
-                <td>{% if academico.nacimiento %}{{ academico.nacimiento|date('Y-m-d') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Rfc</th>
-                <td>{{ academico.rfc }}</td>
-            </tr>
-            <tr>
-                <th>Activo</th>
-                <td>{% if academico.activo %}Yes{% else %}No{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ academico.slug }}</td>
-            </tr>
-            <tr>
-                <th>Created</th>
-                <td>{% if academico.created %}{{ academico.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Modified</th>
-                <td>{% if academico.modified %}{{ academico.modified|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
+        <tr><td><h4>${{ asignacionLicencia |number_format(2)}}</h4></td>
+            <td><h4>{{ diasLicencia }}</h4></td>
+            <td><h4>${{ asignacionComision |number_format(2)}}</h4></td>
+            <td><h4>{{ diasComision }}</h4></td>
+            <td><h4>${{ asignacionVisitante |number_format(2)}}</h4></td></tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('academico_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('academico_edit', { 'id': academico.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
+    {% set saldo = asignacionAnual - totalErogado %}
+
+    <div class="row my-5">
+        <div class="col-lg-3 lead text-info">
+            <h3>Disponible: ${{ saldo |number_format(2)}}</h3>
+        </div>
+        <div class="col-lg-3 lead text-info">
+            <h3>Días: {{ totalDias - diasLicencia - diasComision}}</h3>
+        </div>
+    </div>
+
+
+    {# Solicitudes #}
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr><th>Tipo de solicitud</th><th>Financiamiento CCM</th><th>Fecha</th></tr>
+        </thead>
+        <tbody>
+        {% for solicitud in solicitudes %}
+            {# Muestra solo licitudes del año vigente #}
+            {% if solicitud.fechaInicio >= '2018-01-01'  %}
+                <tr>
+                    <td>
+                        <a href="{{ path('solicitud_show', {'id': solicitud.id }) }}">{{ solicitud.tipo }}</a>
+                    </td>
+                    {% set ccm = 0 %}
+                    {% for financiamiento in solicitud.financiamiento %}
+                        {% set ccm = financiamiento.ccm + ccm %}
+                    {% endfor %}
+                    <td> ${{ ccm | number_format(2)}}</td>
+                    <td>
+                        del {{ solicitud.fechaInicio | localizeddate('medium', 'none', null, null, "d LLL") }} al {{ solicitud.fechaFin| localizeddate('medium', 'none', null, null, "d LLL Y") }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#<h1>Academico</h1>#}
+
+    {#<table>#}
+        {#<tbody>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<td>{{ academico.id }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Nombre</th>#}
+                {#<td>{{ academico.nombre }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Apellido</th>#}
+                {#<td>{{ academico.apellido }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Nacimiento</th>#}
+                {#<td>{% if academico.nacimiento %}{{ academico.nacimiento|date('Y-m-d') }}{% endif %}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Rfc</th>#}
+                {#<td>{{ academico.rfc }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Activo</th>#}
+                {#<td>{% if academico.activo %}Yes{% else %}No{% endif %}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Slug</th>#}
+                {#<td>{{ academico.slug }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Created</th>#}
+                {#<td>{% if academico.created %}{{ academico.created|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Modified</th>#}
+                {#<td>{% if academico.modified %}{{ academico.modified|date('Y-m-d H:i:s') }}{% endif %}</td>#}
+            {#</tr>#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('academico_index') }}">Back to the list</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ path('academico_edit', { 'id': academico.id }) }}">Edit</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#{{ form_start(delete_form) }}#}
+                {#<input type="submit" value="Delete">#}
+            {#{{ form_end(delete_form) }}#}
+        {#</li>#}
+    {#</ul>#}
 {% endblock %}

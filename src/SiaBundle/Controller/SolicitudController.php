@@ -208,13 +208,13 @@ class SolicitudController extends Controller
     public function showAction(Solicitud $solicitud)
     {
 
-        $securityContext = $this->container->get('security.token_storage');
-        $user = $securityContext->getToken()->getUser();
-
+//        $securityContext = $this->container->get('security.token_storage');
+//        $user = $securityContext->getToken()->getUser();
+//
         $deleteForm = $this->createDeleteForm($solicitud);
 
         // check for "view" access: calls all voters
-        $this->denyAccessUnlessGranted('edit', $solicitud);
+//        $this->denyAccessUnlessGranted('edit', $solicitud);
 
         return $this->render('solicitud/show.html.twig', array(
             'solicitud' => $solicitud,
@@ -300,8 +300,6 @@ class SolicitudController extends Controller
         return $this->redirectToRoute('solicitud_index');
 
     }
-
-
 
     /**
      * Displays a form to edit an existing solicitud entity.
