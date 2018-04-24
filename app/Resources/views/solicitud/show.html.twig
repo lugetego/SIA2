@@ -31,6 +31,12 @@
         </ol>
     </nav>
 
+    {% for flashMessage in app.session.flashbag.get('notice') %} <div class="alert alert-success" role="alert">
+        <i class="fa fa-check" aria-hidden="true"></i> {{ flashMessage }}
+        </div>{% endfor %}
+
+
+
     {% if solicitud.enviado == true %}
         <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
     {% else %}
@@ -80,12 +86,12 @@
     </div>
 
     {#{% if solicitud.descripcion is defined %}#}
-        {#<div class="card border-light">#}
-            {#<div class="card-header"><strong>Descripción</strong></div>#}
-            {#<div class="card-body">#}
-                {#<p class="card-text">{{ solicitud.descripcion }}</p>#}
-            {#</div>#}
-        {#</div>#}
+    {#<div class="card border-light">#}
+    {#<div class="card-header"><strong>Descripción</strong></div>#}
+    {#<div class="card-body">#}
+    {#<p class="card-text">{{ solicitud.descripcion }}</p>#}
+    {#</div>#}
+    {#</div>#}
     {#{% endif %}#}
 
     {#<p><strong>Acta: {{ solicitud.sesion }}</strong></p>#}
@@ -295,6 +301,7 @@
         $(document).ready(function() {
             $('.js-datepicker2').datepicker({
                 format: 'yyyy-MM-dd',
+                language: 'es',
                 orientation: "auto bottom"
             });
         });

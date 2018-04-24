@@ -247,6 +247,12 @@ class SolicitudController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash(
+                'notice',
+                'La solicitud se ha modificado'
+            );
+
+
             return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
         }
 
@@ -291,7 +297,7 @@ class SolicitudController extends Controller
         ;
         $mailer->send($message);
 
-        return $this->redirectToRoute('dashboard');
+        return $this->redirectToRoute('solicitud_index');
 
     }
 

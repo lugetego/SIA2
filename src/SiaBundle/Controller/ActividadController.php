@@ -92,6 +92,7 @@ class ActividadController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $actividad = new Actividad();
         $form = $this->createForm('SiaBundle\Form\ActividadType', $actividad);
         $form->handleRequest($request);

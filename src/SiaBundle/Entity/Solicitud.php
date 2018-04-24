@@ -147,7 +147,7 @@ class Solicitud
      * @var array $actividades
      *
      *
-     * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Actividad", mappedBy="solicitud", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Actividad", mappedBy="solicitud", cascade={"remove"})
      *
      * The mappedBy attribute designates the field in the entity that is the owner of the relationship.
      */
