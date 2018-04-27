@@ -287,7 +287,7 @@ class SolicitudController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $academico = $user->getAcademico();
 
-        $solicitud->setEnviado(true);
+        $solicitud->setEnviada(true);
         $em->persist($solicitud);
         $em->flush();
 

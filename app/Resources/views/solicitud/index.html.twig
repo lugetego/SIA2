@@ -40,7 +40,9 @@
 
 
 {% block body %}
-    <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    {% if not is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    {% endif %}
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm">
 
@@ -51,6 +53,7 @@
             {% endif %}
             <th class="text-center">Tipo</th>
             <th class="text-center">Fechas</th>
+            <th class="text-center">Dictamen</th>
             <th class="text-center">Estatus</th>
         </tr>
         </thead>
@@ -69,7 +72,17 @@
                 {#{% endif %}#}
                 {#</td>#}
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
-                <td class="text-center">{% if solicitud.enviado == true %}
+                {% if is_granted("ROLE_ADMIN") %}
+                    <td class="text-center">{% if solicitud.dictamen == true %}
+                            <span class="badge badge-success">Aprobada</span>
+                        {% elseif solicitud.dictamen == null %}
+                            <span class="badge badge-warning">En proceso</span>
+                        {% else %}
+                            <span class="badge badge-danger">Rechazada</span>
+                        {% endif %}
+                    </td>
+                {% endif %}
+                <td class="text-center">{% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
                     {% else %}
                         <span class="badge badge-warning">En proceso</span>

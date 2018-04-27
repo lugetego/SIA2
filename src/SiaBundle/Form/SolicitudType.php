@@ -36,6 +36,7 @@ class SolicitudType extends AbstractType
                 'placeholder'=>'Seleccionar',
                 'required'=>true,
                 'choices_as_values' => true,
+
             ))
             ->add('ambito', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(
@@ -45,6 +46,8 @@ class SolicitudType extends AbstractType
                 'required'=>true,
                 'label'=>'Ámbito de la solicitud',
                 'choices_as_values' => false,
+                'placeholder' => false
+
             ))
         ;
 
@@ -89,6 +92,28 @@ class SolicitudType extends AbstractType
         $builder
             ->add('descripcion', 'Symfony\Component\Form\Extension\Core\Type\TextareaType')
             ->add('sesion')
+            ->add('dictamen', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'choices'=>array(
+                    true=>'Aprobada',
+                    false=>'Rechazada'),
+                'expanded'=>true,
+                'required'=>false,
+                'label'=>'Dictamen de la solicitud',
+                'choices_as_values' => false,
+                'placeholder' => false
+
+            ))
+            ->add('enviada', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'choices'=>array(
+                    true=>'Si',
+                    false=>'No'),
+                'expanded'=>true,
+                'required'=>false,
+                'label'=>'Solicitud enviada',
+                'choices_as_values' => false,
+                'placeholder' => false
+
+            ))
         ;
     }
 

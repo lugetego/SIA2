@@ -4,20 +4,21 @@
 
 {% block sidebar %}
 
+
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
+        <div class="row ">
+            <div class="col-md-6 col-md-offset-4">
+                <div class="login-panel card">
+                    <div class="card-header">
                         {% block paneltitle %}
-                            <h3 class="panel-title">Información de usuario</h3>
+                            <h3 class="card-title">Información de usuario</h3>
                         {% endblock %}
                     </div>
-                    <div class="panel-body">
+                    <div class="card-body">
                         {% block content %}
 
                             {% if app.request.hasPreviousSession %}
