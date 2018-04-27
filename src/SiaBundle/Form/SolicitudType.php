@@ -89,6 +89,15 @@ class SolicitudType extends AbstractType
         $builder
             ->add('descripcion', 'Symfony\Component\Form\Extension\Core\Type\TextareaType')
             ->add('sesion')
+            ->add('dictamen', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'choices'=>array(
+                    true=>'Aprobada',
+                    false=>'Rechazada'),
+                'expanded'=>true,
+                'required'=>true,
+                'label'=>'Dictamen de la solicitud',
+                'choices_as_values' => false,
+            ))
         ;
     }
 

@@ -128,7 +128,7 @@
 
             {{ form_start(delete_form) }}
             <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-            {% if solicitud.enviado == false %}
+            {% if solicitud.enviada== false %}
                 <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este registro?')" >
             {% endif %}
             {{ form_end(delete_form) }}

@@ -40,7 +40,9 @@
 
 
 {% block body %}
-    <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    {% if not is_granted("ROLE_ADMIN") %}
+        <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    {% endif %}
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm">
 
@@ -69,7 +71,7 @@
                 {#{% endif %}#}
                 {#</td>#}
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
-                <td class="text-center">{% if solicitud.enviado == true %}
+                <td class="text-center">{% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
                     {% else %}
                         <span class="badge badge-warning">En proceso</span>

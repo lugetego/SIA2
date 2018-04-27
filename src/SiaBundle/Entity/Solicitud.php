@@ -163,9 +163,16 @@ class Solicitud
     /**
      * @var bool
      *
-     * @ORM\Column(name="enviado", type="boolean", nullable=true)
+     * @ORM\Column(name="enviada", type="boolean", nullable=true)
      */
-    private $enviado;
+    private $enviada;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="dictamen", type="boolean", nullable=true)
+     */
+    private $dictamen;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -623,16 +630,34 @@ class Solicitud
     /**
      * @return boolean
      */
-    public function isEnviado()
+    public function isEnviada()
     {
-        return $this->enviado;
+        return $this->enviada;
     }
 
     /**
-     * @param boolean $enviado
+     * @param boolean $enviada
      */
-    public function setEnviado($enviado)
+    public function setEnviada($enviada)
     {
-        $this->enviado = $enviado;
+        $this->enviada = $enviada;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isDictamen()
+    {
+        return $this->dictamen;
+    }
+
+    /**
+     * @param boolean $dictamen
+     */
+    public function setDictamen($dictamen)
+    {
+        $this->dictamen = $dictamen;
+    }
+
+
 }

@@ -37,7 +37,7 @@
 
 
 
-    {% if solicitud.enviado == true %}
+    {% if solicitud.enviada == true %}
         <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
     {% else %}
         <h5><span class="badge badge-pill badge-warning float-right">Solicitud no enviada</span></h5>
@@ -96,7 +96,7 @@
 
     {#<p><strong>Acta: {{ solicitud.sesion }}</strong></p>#}
 
-    {% if solicitud.enviado == false %}
+    {% if solicitud.enviada == false %}
         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalsolicitud">
             <i class="fa fa-edit"></i> Modificar solicitud
         </button>
@@ -184,7 +184,7 @@
 
     <br>
 
-    {% if solicitud.enviado == false %}
+    {% if solicitud.enviada == false %}
         <a href="{{ path('actividad_step',{'id': solicitud.id}) }}" class="btn btn-outline-primary btn-sm" role="button"><i class="fa fa-plus"></i> Agregar actividad</a>
     {% endif %}
 
@@ -254,7 +254,7 @@
     </div>
 
 
-    {% if solicitud.enviado == false %}
+    {% if solicitud.enviada == false %}
         <button type="button" class="btn btn-outline-primary btn-sm mb-5" data-toggle="modal" data-target="#modalfinanciamiento">
             <i class="fa fa-edit"></i> Modificar financiamineto
         </button>
@@ -263,7 +263,7 @@
     <div class="row justify-content-center mb-5" >
         <div class="col-md-4">
             {{ form_start(delete_form) }}
-            {% if solicitud.enviado == true %}
+            {% if solicitud.enviada == true %}
                 <button disabled class="btn btn-success">Solicitud enviada</button>
             {% else %}
                 <a class="btn btn-success" href="{{ path('solicitud_envio',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar solicitud</a>
