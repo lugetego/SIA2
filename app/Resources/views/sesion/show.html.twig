@@ -49,7 +49,7 @@
             <tr>
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</td>
-                <td class="text-center">{% if solicitud.enviado == true %}
+                <td class="text-center">{% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
                     {% else %}
                         <span class="badge badge-warning">En proceso</span>

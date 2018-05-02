@@ -43,9 +43,11 @@ class DashController extends Controller
 //                return $this->render('dash/admin.html.twig', array(
 //                    'academicos'=> $academicos,
 //                ));
-            $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAll();
+            $academicos = $em->getRepository('SiaBundle:Academico')->findByActivo(true);
+            $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findByEnviada(true);
             return $this->render('solicitud/index.html.twig', array(
                 'solicituds'=>$solicitudes,
+                'academicos'=> $academicos,
             ));
         }
 
