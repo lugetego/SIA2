@@ -71,32 +71,34 @@ class DashController extends Controller
 //        }
 
         else {
-            $user = $this->get('security.context')->getToken()->getUser();
-            $academico = $user->getAcademico();
-            $solicitudes = $academico->getSolicitudes();
-            // $estudiantes = $academico->getEstudiantes();
-            // $cursos = $academico->getCursos();
-            // $proyectos = $academico->getProyectos();
-            // $eventos = $academico->getEventos();
-            // $salidas = $academico->getSalidas();
-            // $planes = $academico->getPlanes();
-            // $posdocs = $academico->getPosdocs();
-            // $enviado = $academico->isEnviado();
 
-            return $this->render('dash/index.html.twig', array(
-                'academico'=> $academico,
-                'solicitudes'=> $solicitudes,
-                // 'estudiantes'=>$estudiantes,
-                //'cursos'=>$cursos,
-                //'proyectos'=>$proyectos,
-                //'eventos'=>$eventos,
-                //'salidas'=>$salidas,
-                //'planes'=>$planes,
-                //'posdocs'=>$posdocs,
-                'user'=>$user,
-                //'enviado'=>$enviado
-
-            ));
+            return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
+//            $user = $this->get('security.context')->getToken()->getUser();
+//            $academico = $user->getAcademico();
+//            $solicitudes = $academico->getSolicitudes();
+//            // $estudiantes = $academico->getEstudiantes();
+//            // $cursos = $academico->getCursos();
+//            // $proyectos = $academico->getProyectos();
+//            // $eventos = $academico->getEventos();
+//            // $salidas = $academico->getSalidas();
+//            // $planes = $academico->getPlanes();
+//            // $posdocs = $academico->getPosdocs();
+//            // $enviado = $academico->isEnviado();
+//
+//            return $this->render('dash/index.html.twig', array(
+//                'academico'=> $academico,
+//                'solicitudes'=> $solicitudes,
+//                // 'estudiantes'=>$estudiantes,
+//                //'cursos'=>$cursos,
+//                //'proyectos'=>$proyectos,
+//                //'eventos'=>$eventos,
+//                //'salidas'=>$salidas,
+//                //'planes'=>$planes,
+//                //'posdocs'=>$posdocs,
+//                'user'=>$user,
+//                //'enviado'=>$enviado
+//
+//            ));
         }
 
     }
