@@ -70,6 +70,9 @@ class AcademicoController extends Controller
     {
 
 //        $year = $this->container->getParameter('sia.year');
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
 
         $em = $this->getDoctrine()->getManager();
         $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, $year);
