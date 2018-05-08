@@ -90,7 +90,10 @@ class SolicitudType extends AbstractType
             'required' => false,));
 
         $builder
-            ->add('descripcion', 'Symfony\Component\Form\Extension\Core\Type\TextareaType')
+            ->add('descripcion', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', array(
+                'required'=>false,
+                'label'=>'Descripción',
+            ))
             ->add('sesion')
             ->add('dictamen', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(

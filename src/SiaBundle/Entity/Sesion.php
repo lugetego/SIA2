@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 
 /**
- * @ORM\Entity(repositoryClass="Ccm\SiaBundle\Entity\SesionesRepository")
+ * @ORM\Entity(repositoryClass="Ccm\SiaBundle\Repository\SesionRepository")
  * @ORM\Entity
  * @ORM\Table(name="sesion")
  * @ORM\HasLifecycleCallbacks

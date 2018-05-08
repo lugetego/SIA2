@@ -24,7 +24,7 @@ class SesionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sesions = $em->getRepository('SiaBundle:Sesion')->findAll();
+        $sesions = $em->getRepository('SiaBundle:Sesion')->findBy(array(),array('fecha'=>'DESC'));
 
         return $this->render('sesion/index.html.twig', array(
             'sesions' => $sesions,
@@ -48,7 +48,8 @@ class SesionController extends Controller
             $em->persist($sesion);
             $em->flush();
 
-            return $this->redirectToRoute('sesion_show', array('id' => $sesion->getId()));
+//            return $this->redirectToRoute('sesion_show', array('id' => $sesion->getId()));
+            return $this->redirectToRoute('sesion_index');
         }
 
         return $this->render('sesion/new.html.twig', array(

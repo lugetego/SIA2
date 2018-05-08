@@ -101,7 +101,7 @@
 {% if is_granted('ROLE_ADMIN') %}
     <div class="form-group">
         <div>{{ form_label(edit_form.descripcion) }}</div>
-        {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control' ,'placeholder':'Descripción','rows':'5'} } ) }}
         <div class="text-danger">{{ form_errors(edit_form.descripcion) }}</div>
     </div>
     <div class="row">
