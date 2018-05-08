@@ -32,7 +32,8 @@
         </ol>
     </nav>
 
-    <h3><small> {{ sesion.solicitudes| length }} solicitudes relacionadas a esta sesión</small></h3>
+    <h4 class="mb-5">{{ sesion.solicitudes| length }} solicitudes relacionadas a esta sesión <small>{{ sesion.fecha|date('d M Y') }}</small></h4>
+
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>

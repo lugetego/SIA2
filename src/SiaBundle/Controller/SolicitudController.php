@@ -32,6 +32,10 @@ class SolicitudController extends Controller
     public function indexAction()
     {
 
+
+
+
+
         if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
@@ -41,6 +45,8 @@ class SolicitudController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $solicitudes = $em->getRepository('SiaBundle:Academico')->findByAcademico($user->getAcademico()->getId());
+
+
 
 
         return $this->render('solicitud/index.html.twig', array(
