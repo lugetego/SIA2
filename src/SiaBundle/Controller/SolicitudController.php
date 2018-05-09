@@ -5,6 +5,7 @@ namespace SiaBundle\Controller;
 use SiaBundle\Entity\Solicitud;
 use SiaBundle\Entity\Actividad;
 use SiaBundle\Entity\Financiamiento;
+use SiaBundle\Entity\Sesion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,6 +15,7 @@ use SiaBundle\Entity\User;
 use SiaBundle\Entity\Academico;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 /**
@@ -32,10 +34,6 @@ class SolicitudController extends Controller
     public function indexAction()
     {
 
-
-
-
-
         if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
@@ -45,9 +43,6 @@ class SolicitudController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $solicitudes = $em->getRepository('SiaBundle:Academico')->findByAcademico($user->getAcademico()->getId());
-
-
-
 
         return $this->render('solicitud/index.html.twig', array(
             'solicituds' => $solicitudes,
@@ -158,38 +153,42 @@ class SolicitudController extends Controller
         }
 
         $solicitud = new Solicitud();
-/*
-        $viaticos = new Financiamiento();
-        $viaticos->setNombre("Viáticos");
-        $viaticos->setCcm(0);
-        $viaticos->setPapiit(0);
-        $viaticos->setConacyt(0);
-        $viaticos->setOtro(0);
-        $solicitud->getFinanciamiento()->add($viaticos);
 
-        $aereo = new Financiamiento();
-        $aereo->setNombre("Pasaje aéreo");
-        $aereo->setCcm(0);
-        $aereo->setPapiit(0);
-        $aereo->setConacyt(0);
-        $aereo->setOtro(0);
-        $solicitud->getFinanciamiento()->add($aereo);
 
-        $terrestre = new Financiamiento();
-        $terrestre->setNombre("Pasaje terrestre");
-        $terrestre->setCcm(0);
-        $terrestre->setPapiit(0);
-        $terrestre->setConacyt(0);
-        $terrestre->setOtro(0);
-        $solicitud->getFinanciamiento()->add($terrestre);
 
-        $inscripciones = new Financiamiento();
-        $inscripciones->setNombre("Inscripciones");
-        $inscripciones->setCcm(0);
-        $inscripciones->setPapiit(0);
-        $inscripciones->setConacyt(0);
-        $inscripciones->setOtro(0);
-        $solicitud->getFinanciamiento()->add($inscripciones);*/
+
+        /*
+                $viaticos = new Financiamiento();
+                $viaticos->setNombre("Viáticos");
+                $viaticos->setCcm(0);
+                $viaticos->setPapiit(0);
+                $viaticos->setConacyt(0);
+                $viaticos->setOtro(0);
+                $solicitud->getFinanciamiento()->add($viaticos);
+
+                $aereo = new Financiamiento();
+                $aereo->setNombre("Pasaje aéreo");
+                $aereo->setCcm(0);
+                $aereo->setPapiit(0);
+                $aereo->setConacyt(0);
+                $aereo->setOtro(0);
+                $solicitud->getFinanciamiento()->add($aereo);
+
+                $terrestre = new Financiamiento();
+                $terrestre->setNombre("Pasaje terrestre");
+                $terrestre->setCcm(0);
+                $terrestre->setPapiit(0);
+                $terrestre->setConacyt(0);
+                $terrestre->setOtro(0);
+                $solicitud->getFinanciamiento()->add($terrestre);
+
+                $inscripciones = new Financiamiento();
+                $inscripciones->setNombre("Inscripciones");
+                $inscripciones->setCcm(0);
+                $inscripciones->setPapiit(0);
+                $inscripciones->setConacyt(0);
+                $inscripciones->setOtro(0);
+                $solicitud->getFinanciamiento()->add($inscripciones);*/
 
 
         $form = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud);
@@ -198,7 +197,7 @@ class SolicitudController extends Controller
         if ($form->isSubmitted() && $form->isValid()  ) {
 
             $em = $this->getDoctrine()->getManager();
-                $em->persist($solicitud);
+            $em->persist($solicitud);
             $em->flush();
 
             return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
@@ -250,9 +249,13 @@ class SolicitudController extends Controller
         $editForm->remove('tipo');
         $editForm->remove('financiamiento');
 
+
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $editForm->remove('descripcion');
             $editForm->remove('sesion');
+            $editForm->remove('dictamen');
+            $editForm->remove('aprobada');
+            $editForm->remove('enviada');
         }
 
         $editForm->handleRequest($request);
@@ -285,6 +288,8 @@ class SolicitudController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
+        $fechaSolicitud = new \DateTime('NOW');
+        $fechaSolicitud= $fechaSolicitud->format("Y-m-d");
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
@@ -294,6 +299,8 @@ class SolicitudController extends Controller
         $academico = $user->getAcademico();
 
         $solicitud->setEnviada(true);
+        $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaSolicitud);
+        $solicitud->setSesion($proxSesion);
         $em->persist($solicitud);
         $em->flush();
 

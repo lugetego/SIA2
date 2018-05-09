@@ -139,10 +139,10 @@
 
     <hr>
 
-    <h3 class="text-secondary">Actividades</h3>
+    <h3 class="text-secondary">Actividades a realizar para esta solicitud</h3>
 
     {% if solicitud.actividades|length == 0 %}
-        <div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académica en una Solicitud de {{ solicitud.tipo }}.</div>
+        <div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académicas en una Solicitud de {{ solicitud.tipo }}.</div>
         <p class="lead text-secondary"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</p>
     {% endif %}
 
@@ -191,7 +191,7 @@
     {% endif %}
 
     <hr>
-    <h3 class="text-secondary">Financiamiento</h3>
+    <h3 class="text-secondary">Financiamiento a solicitar</h3>
 
     <!-- Modal -->
     <div class="modal fade" id="modalfinanciamiento" tabindex="-1" role="dialog" aria-labelledby="modalfinanciamientoLabel">

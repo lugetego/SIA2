@@ -233,22 +233,31 @@
     <script src="{{ asset('js/dates.js')}}"></script>
 
     <script>
+//        var date = new Date();
+//        date.setDate(date.getDate());
+
         $(".date-picker").datepicker();
 
         $(document).ready(function() {
             $('.js-datepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 language: 'es',
+//                startDate: date,
+
+
                 orientation: "auto bottom"
 
             });
         });
+
     </script>
     <script>
+
         $(document).ready(function() {
             $('.js-datepicker2').datepicker({
                 format: 'yyyy-MM-dd',
-                orientation: "auto bottom"
+                orientation: "auto bottom",
+
             });
         });
     </script>
