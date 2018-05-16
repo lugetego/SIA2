@@ -27,4 +27,17 @@ class SolicitudRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findAllNew()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s FROM SiaBundle:Solicitud s
+                     WHERE s.enviada = TRUE
+                     AND s.sesion IS NULL
+                ORDER BY s.created ASC'
+            )
+
+            ->getResult();
+    }
+
 }

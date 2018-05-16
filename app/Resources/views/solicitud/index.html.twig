@@ -53,7 +53,7 @@
             {% endif %}
             <th class="text-center">Tipo</th>
             <th class="text-center">Fechas</th>
-            <th class="text-center">Dictamen</th>
+            {#<th class="text-center">Dictamen</th>#}
             <th class="text-center">Estatus</th>
         </tr>
         </thead>
@@ -73,14 +73,14 @@
                 {#</td>#}
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
 
-                    <td class="text-center">{% if solicitud.dictamen == true %}
-                            <span class="badge badge-success">Aprobada</span>
-                        {% elseif solicitud.dictamen == null %}
-                            <span class="badge badge-warning">En proceso</span>
-                        {% else %}
-                            <span class="badge badge-danger">Rechazada</span>
-                        {% endif %}
-                    </td>
+                    {#<td class="text-center">{% if solicitud.dictamen == true %}#}
+                            {#<span class="badge badge-success">Aprobada</span>#}
+                        {#{% elseif solicitud.dictamen == null %}#}
+                            {#<span class="badge badge-warning">Pendiente</span>#}
+                        {#{% else %}#}
+                            {#<span class="badge badge-danger">No aprobada</span>#}
+                        {#{% endif %}#}
+                    {#</td>#}
 
                 <td class="text-center">{% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
