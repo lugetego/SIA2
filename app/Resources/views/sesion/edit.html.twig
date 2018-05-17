@@ -1,5 +1,5 @@
 <div class="form-group">
-    {{ form_start(edit_form, {'action': path('sesion_edit', { 'id': sesion.id})}) }}
+    {{ form_start(edit_form, {'action': path('sesion_edit', { 'slug': sesion.slug})}) }}
     <div class="row">
         <div class="form-group col-md-6">
             {{ form_label(edit_form.name) }}

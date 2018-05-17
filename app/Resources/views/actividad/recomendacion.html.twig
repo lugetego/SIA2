@@ -1,0 +1,136 @@
+<div class="row">
+        {% if actividad.nombreEvento != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Nombre del evento</strong>
+                    </dt>
+                    <dd>{{ actividad.nombreEvento }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.motivo != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Motivo</strong></dt>
+                    <dd> {% for key in actividad.motivo %}
+                            {{ key }}
+                        {% endfor %}
+                    </dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.tituloTrabajo != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Título del trabajo</strong></dt>
+                    <dd>{{ actividad.tituloTrabajo }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.invitacion != null %}
+            <div class="col-lg-3">
+                <dl>
+                    <dt><strong>Por invitación: </strong></dt>
+                    <dd>{% if actividad.invitacion %}Si{% else %}No{% endif %}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.anfitrion != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Anfitrión</strong> </dt>
+                    <dd>{{ actividad.anfitrion }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.sinodalAlumno != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Alumno</strong></dt>
+                    <dd>{{ actividad.sinodalAlumno }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.sinodalGrado != null %}
+            <div class="col-lg-3 col-md-3 col-sm-3">
+                <dl>
+                    <dt><strong>Grado</strong></dt>
+                    <dd>{{ actividad.sinodalGrado  }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.nacional != null %}
+            <div class="col-lg-3">
+                <dl>
+                    <dt><strong>Ámbito de la actividad</strong></dt>
+                    <dd>{% if actividad.nacional %}Nacional{% else %}Internacional{% endif %}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.plenaria != null %}
+            <div class="col-lg-3">
+                <dl>
+                    <dt><strong>Conferencia plenaria: </strong></dt>
+                    <dd>{% if actividad.plenaria %}Si{% else %}No{% endif %}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.institucion != null %}
+            <div class="col-lg-6 col-md-4 col-sm-4">
+                <dl>
+                    <dt><strong>Institución</strong></dt>
+                    <dd>{{ actividad.institucion }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.departamento != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Departamento</strong></dt>
+                    <dd>{{ actividad.departamento }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.lugar != null %}
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <dl>
+                    <dt><strong>Lugar</strong></dt>
+                    <dd>{{ actividad.lugar }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+        {% if actividad.fechaActividad != null %}
+            <div class="col-lg-6">
+                <dl>
+                    <dt><strong>Fecha de la actividad</strong></dt>
+                    <dd>{{ actividad.fechaActividad|localizeddate('long', 'none') }}</dd>
+                </dl>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-7 offset-md-5">
+
+            {{ form_start(delete_form) }}
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            {% if solicitud.enviada== false %}
+                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este registro?')" >
+            {% endif %}
+            {{ form_end(delete_form) }}
+
+        </div>
+    </div>

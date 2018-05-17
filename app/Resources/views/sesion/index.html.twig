@@ -40,15 +40,15 @@
             {% set sesionmodaledit = 'sesioneditModal'~ sesion.id  %}
 
             <tr>
-                <td><a href="{{ path('sesion_show', { 'id': sesion.id }) }}">{{ sesion.name }}</a></td>
+                <td><a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}">{{ sesion.name }}</a></td>
 
                 <td>{% if sesion.fecha %}{{ sesion.fecha|localizeddate('long', 'none') }}{% endif %}</td>
 
 
                 <td class="text-center">
 
-                    <a href="{{ path('sesion_show', { 'id': sesion.id }) }}"><i class="fa fa-search"></i></a>
-                    {#<a href="{{ path('sesion_edit', { 'id': sesion.id }) }}"><i class="fa fa-edit"></i></a>#}
+                    <a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}"><i class="fa fa-search"></i></a>
+                    {#<a href="{{ path('sesion_edit', { 'slug': sesion.slug }) }}"><i class="fa fa-edit"></i></a>#}
 
                     <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ sesionmodaledit }}">
                         <i class="fa fa-edit"></i>
@@ -69,7 +69,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            {% render controller("SiaBundle:Sesion:edit", {'id': sesion.id}) %}
+                            {% render controller("SiaBundle:Sesion:edit", {'slug': sesion.slug}) %}
                         </div>
                     </div>
                 </div>

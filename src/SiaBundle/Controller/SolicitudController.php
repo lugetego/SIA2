@@ -154,9 +154,6 @@ class SolicitudController extends Controller
 
         $solicitud = new Solicitud();
 
-
-
-
         /*
                 $viaticos = new Financiamiento();
                 $viaticos->setNombre("Viáticos");
@@ -280,7 +277,7 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Envío informe y plan
+     * Envío de solicitud
      *
      * @Route("/{id}/envio", name="solicitud_envio")
      */

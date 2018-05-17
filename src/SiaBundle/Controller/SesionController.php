@@ -26,7 +26,7 @@ class SesionController extends Controller
 
         $sesions = $em->getRepository('SiaBundle:Sesion')->findBy(array(),array('fecha'=>'DESC'));
 
-        return $this->render('sesion/index.html.twig', array(
+        return $this->render(':sesion:index.html.twig', array(
             'sesions' => $sesions,
         ));
     }
@@ -59,9 +59,22 @@ class SesionController extends Controller
     }
 
     /**
+     * Genera el acta de recomendaciones.
+     *
+     * @Route("/{slug}/recomendaciones/", name="sesion_recomendaciones")
+     * @Method("GET")
+     */
+    public function recomendacionesAction(Sesion $sesion)
+    {
+        return $this->render('sesion/recomendaciones.html.twig', array(
+            'sesion' => $sesion,
+        ));
+    }
+
+    /**
      * Finds and displays a sesion entity.
      *
-     * @Route("/{id}", name="sesion_show")
+     * @Route("/{slug}", name="sesion_show")
      * @Method("GET")
      */
     public function showAction(Sesion $sesion)
@@ -77,7 +90,7 @@ class SesionController extends Controller
     /**
      * Displays a form to edit an existing sesion entity.
      *
-     * @Route("/{id}/edit", name="sesion_edit")
+     * @Route("/{slug}/edit", name="sesion_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Sesion $sesion)

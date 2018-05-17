@@ -1,0 +1,48 @@
+{% if actividad.nombreEvento != null %}
+Nombre del evento: {{ actividad.nombreEvento }}.
+{% endif %}
+
+{#{% if actividad.motivo != null %}#}
+    {#{% for key in actividad.motivo %}#}
+        {#{{ key }}#}
+    {#{% endfor %}#}
+{#{% endif %}#}
+
+{% if actividad.tituloTrabajo != null %}
+Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+{% endif %}
+
+{% if actividad.invitacion != null %}
+    {% if actividad.invitacion %} La participación es por invitación.{% endif %}
+{% endif %}
+
+{% if actividad.anfitrion != null %}
+    Trabajar con {{ actividad.anfitrion }}.
+{% endif %}
+
+{% if actividad.sinodalGrado != null %}
+    Sinodal en el exámen de grado de {{ actividad.sinodalGrado  }}
+{% endif %}
+
+{% if actividad.sinodalAlumno != null %}
+        del alumno {{ actividad.sinodalAlumno }}.
+{% endif %}
+
+{#{% if actividad.nacional != null %}#}
+    {#El ámbito de la actividad es {% if actividad.nacional %}Nacional{% else %}Internacional{% endif %}.#}
+{#{% endif %}#}
+
+{% if actividad.plenaria != null %}
+        {% if actividad.plenaria %} Es una plática plenaria.{% endif %}
+{% endif %}
+
+{% if actividad.institucion != null %}
+        Institución: {{ actividad.institucion }}
+        {% if actividad.departamento != null %}
+            , departamento de {{ actividad.departamento }}
+        {% endif %}.
+{% endif %}
+
+{% if actividad.lugar != null %}
+    Lugar: {{ actividad.lugar }}.
+{% endif %}

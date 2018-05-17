@@ -26,14 +26,16 @@
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white boder-bottom">
-            <li  class="breadcrumb-item"><a href="{{ path('sesion_index') }}">Sesiones</a></li>
+            <li  class="breadcrumb-item"><a href="{{ path('sesion_index') }}">Sesiones de Consejo</a></li>
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ sesion.name }}</li>
         </ol>
     </nav>
 
-    <h4 class="mb-5">{{ sesion.solicitudes| length }} solicitudes relacionadas a esta sesión <small>{{ sesion.fecha|date('d M Y') }}</small></h4>
+    <p class="text-secondary">Sesión de Consejo Interno - {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</p>
+    <h4 class="mb-5">{{ sesion.solicitudes| length }} solicitudes.</h4>
 
+    <p><a href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">Recomendaciones</a></p>
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>

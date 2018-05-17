@@ -132,6 +132,21 @@ class ActividadController extends Controller
     }
 
     /**
+     * Finds and displays actividades from a solicitud.
+     *
+     * @Route("/{id}/recomendacion", name="actividad_formato")
+     * @Method("GET")
+     */
+    public function recomendacionAction(Actividad $actividad)
+    {
+        // TODO grant access
+
+        return $this->render('actividad/recomendacion.html.twig', array(
+            'actividad' => $actividad,
+        ));
+    }
+
+    /**
      * Displays a form to edit an existing actividad entity.
      *
      * @Route("/{id}/edit", name="actividad_edit")
