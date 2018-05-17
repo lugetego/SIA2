@@ -98,7 +98,7 @@ class SolicitudType extends AbstractType
             ->add('dictamen', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(
                     true=>'Aprobada',
-                    false=>'Rechazada'),
+                    false=>'No aprobada'),
                 'expanded'=>true,
                 'required'=>false,
                 'label'=>'Dictamen de la solicitud',

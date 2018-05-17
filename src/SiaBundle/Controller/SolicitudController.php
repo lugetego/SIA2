@@ -42,6 +42,13 @@ class SolicitudController extends Controller
         // $solicitudes = $user->getAcademico()->getSolicitudes();
 
         $em = $this->getDoctrine()->getManager();
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+
+            return $this->redirectToRoute('dashboard');
+
+        }
+
         $solicitudes = $em->getRepository('SiaBundle:Academico')->findByAcademico($user->getAcademico()->getId());
 
         return $this->render('solicitud/index.html.twig', array(
