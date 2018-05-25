@@ -287,7 +287,7 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Envío informe y plan
+     * Envío solicitud
      *
      * @Route("/{id}/envio", name="solicitud_envio")
      */
@@ -321,6 +321,44 @@ class SolicitudController extends Controller
             ->setTo('gerardo@matmor.unam.mx')
 //            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
             ->setBody($this->renderView('solicitud/mail.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+        ;
+        $mailer->send($message);
+
+        return $this->redirectToRoute('solicitud_index');
+
+    }
+
+    /**
+     * Notificación solicitud
+     *
+     * @Route("/{id}/notificacion", name="solicitud_notificacion")
+     */
+    public function noticeAction(Request $request, Solicitud $solicitud)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $academico = $user->getAcademico();
+
+        $solicitud->setNotificada(true);
+        $em->persist($solicitud);
+        $em->flush();
+
+        // Obtiene correo y msg de la forma de contacto
+        $mailer = $this->get('mailer');
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Solicitud '.$solicitud->getId())
+            ->setFrom('webmaster@matmor.unam.mx')
+//            ->setTo(array($user->getEmail() ))
+            ->setTo('gerardo@matmor.unam.mx')
+//            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
+            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
         ;
         $mailer->send($message);
 

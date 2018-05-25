@@ -267,8 +267,12 @@
             {{ form_start(delete_form) }}
             {% if solicitud.enviada == true %}
                 <button disabled class="btn btn-success">Solicitud enviada</button>
+                {% if solicitud.dictamen == true and is_granted("ROLE_ADMIN")%}
+                    <a class="btn btn-success" href="{{ path('solicitud_notificacion',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar notificación</a>
+                {% endif %}
             {% else %}
                 <a class="btn btn-success" href="{{ path('solicitud_envio',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar solicitud</a>
+
                 <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar esta solicitud?')" >
             {% endif %}
             {{ form_end(delete_form) }}

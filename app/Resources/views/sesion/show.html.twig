@@ -42,6 +42,7 @@
             <th class="text-center">Académico</th>
             <th class="text-center">Fecha</th>
             <th class="text-center">Estatus</th>
+            <th class="text-center">Dictamen</th>
         </tr>
         </thead>
         <tbody>
@@ -50,10 +51,20 @@
             <tr>
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
                 <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</td>
-                <td class="text-center">{% if solicitud.enviada == true %}
+                <td class="text-center">
+                    {% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
                     {% else %}
                         <span class="badge badge-warning">En proceso</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if solicitud.dictamen == true %}
+                        <span class="badge badge-success">Aprobada</span>
+                    {% elseif solicitud.dictamen is null %}
+                        <span class="badge badge-warning">Pendiente</span>
+                    {% elseif solicitud.dictamen == false %}
+                        <span class="badge badge-danger">No aprobada</span>
                     {% endif %}
                 </td>
             </tr>
