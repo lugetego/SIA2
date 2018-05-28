@@ -175,6 +175,13 @@ class Solicitud
     private $dictamen;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="notificada", type="boolean", nullable=true)
+     */
+    private $notificada;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -659,5 +666,20 @@ class Solicitud
         $this->dictamen = $dictamen;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isNotificada()
+    {
+        return $this->notificada;
+    }
+
+    /**
+     * @param boolean $notificada
+     */
+    public function setNotificada($notificada)
+    {
+        $this->notificada = $notificada;
+    }
 
 }
