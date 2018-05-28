@@ -9,7 +9,7 @@
 
     {% for solicitud in sesion.solicitudes %}
 
-        <p>L{{ i }}. <strong>Dr. {{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <p>L{{ i }}. <strong>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
             {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}

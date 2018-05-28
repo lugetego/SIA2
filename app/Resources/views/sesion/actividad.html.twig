@@ -1,3 +1,5 @@
+Actividad: {{ actividad.tipo }}.
+
 {% if actividad.nombreEvento != null %}
 Nombre del evento: {{ actividad.nombreEvento }}.
 {% endif %}
@@ -9,7 +11,11 @@ Nombre del evento: {{ actividad.nombreEvento }}.
 {#{% endif %}#}
 
 {% if actividad.tituloTrabajo != null %}
-Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+    {%  if actividad.tipo == 'Investigación'%}
+        Tema: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+    {% else %}
+        Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+    {% endif %}
 {% endif %}
 
 {% if actividad.invitacion != null %}
@@ -17,15 +23,15 @@ Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
 {% endif %}
 
 {% if actividad.anfitrion != null %}
-    Trabajar con {{ actividad.anfitrion }}.
+    Anfitrión: {{ actividad.anfitrion }}.
 {% endif %}
 
 {% if actividad.sinodalGrado != null %}
-    Sinodal en el exámen de grado de {{ actividad.sinodalGrado  }}
+    Examen de grado de {{ actividad.sinodalGrado  }}
 {% endif %}
 
 {% if actividad.sinodalAlumno != null %}
-        del alumno {{ actividad.sinodalAlumno }}.
+        de {{ actividad.sinodalAlumno }}.
 {% endif %}
 
 {#{% if actividad.nacional != null %}#}
@@ -39,7 +45,7 @@ Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
 {% if actividad.institucion != null %}
         Institución: {{ actividad.institucion }}
         {% if actividad.departamento != null %}
-            , departamento de {{ actividad.departamento }}
+            , {{ actividad.departamento }}
         {% endif %}.
 {% endif %}
 
