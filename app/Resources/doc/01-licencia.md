@@ -1,39 +1,42 @@
 Nueva Solicitud
 ===============
 
-Al iniciar el proceso de solicitud de licencia se debe especificar el típo de solicitud:
+Al iniciar el proceso de solicitud de licencia se debe especificar el tipo de solicitud:
 
 - Licencia
 - Comisión
 - Visitante
 
-Para los tres tipo de solicitud se pedirá la cantidad de días para la licencia.
+Para los tres tipos de solicitud se deberá especificar la cantidad de días solicitados.
 
 Cada solicitud puede ser de ámbito:
 
 - Nacional
 - Internacional
 
-En el caso de solicitar una Comisión se pedirán adicionalmente los siguientes documento:
+En el caso de solicitar una *comisión* se pedirán adicionalmente los siguientes documentos:
 
 - Carta de invitacion
 - Plan de trabajo
 - Carta de solicitud
 
-Una vez llenados los datos básicos tendremos una nueva solicitud. Esta solicitud la podremos seguir modificando **mientras no se evíe**. 
-Una vez enviada la solicitud se bloqueará y no se podrá seguir modificando.
+Una vez llenados los datos básicos habremos creado una nueva solicitud.
+
+Esta nueva solicitud se podrá seguir modificando **antes de ser enviada** a la Secretaría Académica. 
+Podremos cerrar nuestra sesión de usuario e iniciar otra sesión posteriormente para continuar con el detalle de la solicitud.
+Una vez enviada la solicitud esta se bloqueará y no se podrá seguir modificando.
 
 Llenado de la solicitud
 ------------------------
 
-Antes de enviar la nueva solicitud a la Secretaría Académica se debe completar sus datos:
+Antes de enviar la nueva solicitud a la Secretaría Académica se debe completar su detalle:
 
 - Agregando actividades
 - Especificando el financiamiento
 
-Las **actividades** describen lo que se realizará durante la salida. Por cada solicitud debe haber por lo menos **una** actividad, pero puede haber más de una.
+Las **actividades** describen lo que se realizará durante la salida. Por cada solicitud debe haber **una** o más actividades.
 
-Las actividades incluyen:
+Las actividades pueden ser:
 
 - Coloquio
 - Conferencia
