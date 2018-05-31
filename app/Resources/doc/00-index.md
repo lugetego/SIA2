@@ -18,4 +18,4 @@ Después de inciar sesión se mostrará la pantalla de inicio del académico don
 - Saldo disponible de asignación anual y días para licencia o comisión.
 - Lista de las solicitudes hechas por el académico durante el año.
 
-En ésta pantalla se tiene la opción de solicitar una [nueva Licencia](01-licencia.md).
+En ésta pantalla se tiene la opción de solicitar una [nueva solicitud](01-licencia.md).
