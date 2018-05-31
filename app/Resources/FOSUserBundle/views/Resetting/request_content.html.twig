@@ -1,15 +1,17 @@
 
 <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
 
-    <div>
+    <div class="row mt-5">
 
         {% if invalid_username is defined %}
-            <p>{{ 'Usuario no válido'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+            <p class="my-5">{{ 'Usuario no válido'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
         {% endif %}
 
-        <label for="username">{{ 'Usuario'|trans({}, 'FOSUserBundle') }}</label>
+        <label for="username mt-5">{{ 'Usuario'|trans({}, 'FOSUserBundle') }}</label>
 
-        <input type="text" id="username" name="username" class="form-control input-sm" placeholder="Nombre de usuario"/>
+        <div class="col-md-4">
+            <input type="text" id="username" name="username" class="form-control input-sm" placeholder="Nombre de usuario"/>
+        </div>
 
     </div>
 
@@ -18,7 +20,7 @@
 
         <div class="col-lg-12">
 
-            <input type="submit" value="Solicitar cambio de contraseña" class="btn btn-primary"/>
+            <input type="submit" value="Solicitar cambio de contraseña" class="btn btn-primary my-5"/>
 
         </div>
 

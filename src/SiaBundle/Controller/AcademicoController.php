@@ -22,7 +22,7 @@ class AcademicoController extends Controller
      */
     public function indexAction()
     {
-//        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
 

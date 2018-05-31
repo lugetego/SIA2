@@ -1,7 +1,9 @@
+<p class="lead my-5">Sistema de Información Académica - CCM UNAM</p>
+
 <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
 
 
-    <div class="col-lg-12">
+    <div class="col-lg-12 mt-5">
         <div class="form-group">
             <div>
                 {{ form_label(form.plainPassword.first, 'Nueva Contraseña') }}
@@ -17,7 +19,7 @@
     <div class="col-lg-12">
         <div class="form-group">
             <div>
-                {{ form_label(form.plainPassword.second, 'Confirmación') }}
+                {{ form_label(form.plainPassword.second, 'Confirmación de contraseña') }}
             </div>
             <div>
                 {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control input-sm','placeholder': 'Confirmación'} } ) }}
