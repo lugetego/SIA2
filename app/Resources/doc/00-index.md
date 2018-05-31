@@ -7,7 +7,8 @@
 ## Inicio
 
 Para utilizar el SIA, es necesario iniciar una sesión con su usuario y contraseña de académico.
-En caso de no saber la contraseña esta se puede cambiar en la misma pantalla de Login.
+
+En la pantalla de inicio de sesión también se encuentra la opción de recuperación de contraseña.
 
 ## Pantalla de inicio
 
