@@ -6,6 +6,8 @@ use SiaBundle\Entity\Sesion;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Sesion controller.
@@ -69,6 +71,35 @@ class SesionController extends Controller
         return $this->render('sesion/recomendaciones.html.twig', array(
             'sesion' => $sesion,
         ));
+    }
+
+    /**
+     * Export to PDF
+     *
+     * @Route("/{slug}/recomendaciones/pdf", name="sesion_recomendaciones_pdf")
+     */
+    public function recomendacionespdfAction(Sesion $sesion)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $html = $this->renderView('sesion/recomendaciones.html.twig', array(
+            'sesion'=>$sesion,
+        ));
+
+        $filename = sprintf($sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html,array(
+                'encoding' => 'utf-8',
+            )),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
     }
 
     /**
