@@ -32,10 +32,10 @@
         </ol>
     </nav>
 
-    <p class="text-secondary">Sesión de Consejo Interno - {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</p>
-    <h4 class="mb-5">{{ sesion.solicitudes| length }} solicitudes.</h4>
+    <p class="text-muted">Sesión de Consejo Interno - <strong>{{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</strong></p>
+    <h4 class="text-muted">{{ sesion.solicitudes| length }} solicitudes</h4>
 
-    <p><a href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">Recomendaciones</a></p>
+    <p class="my-4"><a href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">Recomendaciones</a></p>
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>
