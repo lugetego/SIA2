@@ -19,6 +19,7 @@
             Sesiones
         </a>
     </li>
+
 {% endblock %}
 
 
@@ -28,14 +29,20 @@
         <ol class="breadcrumb bg-white boder-bottom">
             <li  class="breadcrumb-item"><a href="{{ path('sesion_index') }}">Sesiones de Consejo</a></li>
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
-            <li class="breadcrumb-item active" aria-current="page">{{ sesion.name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ sesion.name }}
+                ({{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }})
+
+            </li>
         </ol>
     </nav>
 
-    <p class="text-muted">Sesión de Consejo Interno - <strong>{{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</strong></p>
-    <h4 class="text-muted">{{ sesion.solicitudes| length }} solicitudes</h4>
+    <div>
+        <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
+            <span data-feather="file"></span>
+            Recomendaciones {{ sesion.name }}
+        </a>
+    </div>
 
-    <p class="my-4"><a href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">Recomendaciones</a></p>
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>
@@ -78,11 +85,11 @@
     {#<a href="{{ path('sesion_edit',{'id':sesion.id}) }}" class="btn btn-info" role="button">Modificar sesión</a>#}
 
 
-        {#<li>#}
-            {#{{ form_start(delete_form) }}#}
-            {#<input type="submit" value="Delete">#}
-            {#{{ form_end(delete_form) }}#}
-        {#</li>#}
+    {#<li>#}
+    {#{{ form_start(delete_form) }}#}
+    {#<input type="submit" value="Delete">#}
+    {#{{ form_end(delete_form) }}#}
+    {#</li>#}
     {##}
 
 {% endblock %}

@@ -1,0 +1,107 @@
+{# src/AppBundle/Resources/views/layout-pdf.html.twig #}
+<meta charset="UTF-8" />
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+
+    <style type = "text/css">
+        /* Printable area */
+        .print-area {
+            position:   relative;
+            top:        .5cm;
+            left:       .5cm;
+            right:      .5cm;
+            bottom:     5cm;
+            width:      19cm;
+            height:     27.6cm;
+            font-size: 10pt;
+        }
+        .titulo {
+            font-family: 'montserrat';
+            color:#bb151b;
+            font-weight: bold;
+        }
+        .subtitulo {
+            font-family: 'montserrat';
+            color:#bb151b;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" type="text/css"/>
+
+{% endblock %}
+
+    {# Layout for PDF files #}
+
+<div class="print-area">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p class="text-left"><img class="left" src="{{ asset('img/escudo_UNAM.jpg', absolute=true) }}" width="85px" height="100px" /></p>
+            </div>
+            <div class="col">
+                <p class="text-right"><img class="right" src="{{ asset('img/ccm.png', absolute=true) }}" width="240px" height="80px" /></p>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col">
+                <p class="text-right"><img class="right" src="{{ asset('img/linea.png', absolute=true) }}" /></p>
+
+            </div>
+        </div>
+
+        <p class="text-right titulo">SESIÓN DEL CONSEJO INTERNO</p>
+        <p class="subtitulo text-center"> Recomendaciones para el {{ sesion.name }} <br> {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</p>
+        <p><strong>Orden del día</strong></p>
+
+        {{ sesion.orden|nl2br}}
+
+        <p><u><em><strong>Licencias:</strong></em></u></p>
+
+
+
+    </div>
+
+
+    {% set i = 1 %}
+
+    {% for solicitud in sesion.solicitudes %}
+
+        <p >L{{ i }}. <strong><em>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</em></strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <ul>
+            {% for actividad in solicitud.actividades %}
+                {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
+                <li >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
+            {% endfor %}
+        </ul>
+
+        {#L1. Dr. Daniel Pellicer Covarrubias. Para realizar un viaje con objeto de efectuar dos visitas de carácter académico.#}
+        {#La primera al College of Science and Mathematics de la University of Massachusetts Boston y realizar investigación conjunta con el Dr. Gabriel K. Cunningham.#}
+        {#La segunda para visitar la Northeastern University y asistir a la sesión especial Polytopes and Discrete Geometry del AMS Sectional Meeting.#}
+        {#Viaje a la ciudad de Boston, MA, Estados Unidos, con duración de 9 días, el 15 al 23 de abril de 2018.#}
+        {#El Dr. Pellicer planea financiar su viaje con los recursos que se especifican en la siguiente tabla:#}
+
+        {#Observación: Incluyendo los días que el Dr. Pellicer está solicitando en estas recomendaciones,#}
+        {#él habrá utilizado 9 días de su disponibilidad de 45 días de licencia, se habrá ausentando del CCM un total de 9 días durante el 2018#}
+        {#y habrá erogado $1,800.00 de su asignación anual.#}
+
+        {#Dictamen:#}
+
+        {% set i = i + 1 %}
+
+    {% endfor %}
+</div>
+
+

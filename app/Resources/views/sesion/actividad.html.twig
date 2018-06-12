@@ -1,7 +1,7 @@
-Actividad: {{ actividad.tipo }}.
+Actividad: <em>{{ actividad.tipo }}. </em>
 
 {% if actividad.nombreEvento != null %}
-Nombre del evento: {{ actividad.nombreEvento }}.
+Nombre del evento: <em>{{ actividad.nombreEvento }}. </em>
 {% endif %}
 
 {#{% if actividad.motivo != null %}#}
@@ -45,8 +45,8 @@ Nombre del evento: {{ actividad.nombreEvento }}.
 {% if actividad.institucion != null %}
         Institución: {{ actividad.institucion }}
         {% if actividad.departamento != null %}
-            , {{ actividad.departamento }}
-        {% endif %}.
+            ,{{ actividad.departamento }}.
+        {% endif %}
 {% endif %}
 
 {% if actividad.lugar != null %}

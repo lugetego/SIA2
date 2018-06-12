@@ -24,6 +24,10 @@ class SesionController extends Controller
      */
     public function indexAction()
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $sesions = $em->getRepository('SiaBundle:Sesion')->findBy(array(),array('fecha'=>'DESC'));
@@ -41,8 +45,16 @@ class SesionController extends Controller
      */
     public function newAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $sesion = new Sesion();
         $form = $this->createForm('SiaBundle\Form\SesionType', $sesion);
+
+        $form->remove('orden');
+        $form->remove('varios');
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,6 +80,10 @@ class SesionController extends Controller
      */
     public function recomendacionesAction(Sesion $sesion)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->render('sesion/recomendaciones.html.twig', array(
             'sesion' => $sesion,
         ));
@@ -84,20 +100,35 @@ class SesionController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $html = $this->renderView('sesion/recomendaciones.html.twig', array(
+        $html = $this->renderView('sesion/recomendacionespdf.html.twig', array(
             'sesion'=>$sesion,
         ));
 
         $filename = sprintf($sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
 
+        $footer = $this->renderView('sesion/footer.html.twig');
+
+
+        $pdfOptions = array(
+
+            'margin-top'    => 10,
+            'margin-right'  => 10,
+            'margin-bottom' => 10,
+            'margin-left'   => 10,
+            'encoding' => 'utf-8',
+            'footer-html' => $footer,
+            'footer-center'     => ('Hoja [page] de [toPage]'),
+            'footer-font-size'=> 8,
+
+        );
+
         return new Response(
-            $this->get('knp_snappy.pdf')->getOutputFromHtml($html,array(
-                'encoding' => 'utf-8',
-            )),
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html, $pdfOptions),
             200,
             [
                 'Content-Type'        => 'application/pdf',
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+
             ]
         );
     }
@@ -110,6 +141,10 @@ class SesionController extends Controller
      */
     public function showAction(Sesion $sesion)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $deleteForm = $this->createDeleteForm($sesion);
 
         return $this->render('sesion/show.html.twig', array(
@@ -126,6 +161,10 @@ class SesionController extends Controller
      */
     public function editAction(Request $request, Sesion $sesion)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $deleteForm = $this->createDeleteForm($sesion);
         $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
         $editForm->handleRequest($request);
@@ -147,6 +186,73 @@ class SesionController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing sesion entity.
+     *
+     * @Route("/{slug}/orden", name="sesion_orden")
+     * @Method({"GET", "POST"})
+     */
+    public function ordenAction(Request $request, Sesion $sesion)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $deleteForm = $this->createDeleteForm($sesion);
+        $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
+        $editForm->remove('name');
+        $editForm->remove('fecha');
+        $editForm->remove('varios');
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sesion_recomendaciones', array('slug' => $sesion->getSlug()));
+        }
+
+        return $this->render('sesion/orden.html.twig', array(
+            'sesion' => $sesion,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing sesion entity.
+     *
+     * @Route("/{slug}/varios", name="sesion_varios")
+     * @Method({"GET", "POST"})
+     */
+    public function variosAction(Request $request, Sesion $sesion)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $deleteForm = $this->createDeleteForm($sesion);
+        $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
+        $editForm->remove('name');
+        $editForm->remove('fecha');
+        $editForm->remove('orden');
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sesion_recomendaciones', array('slug' => $sesion->getSlug()));
+        }
+
+        return $this->render('sesion/varios.html.twig', array(
+            'sesion' => $sesion,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+
+    /**
      * Deletes a sesion entity.
      *
      * @Route("/{id}", name="sesion_delete")
@@ -154,6 +260,10 @@ class SesionController extends Controller
      */
     public function deleteAction(Request $request, Sesion $sesion)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createDeleteForm($sesion);
         $form->handleRequest($request);
 
