@@ -61,7 +61,7 @@ class ActividadController extends Controller
                 // flow finished
                 $em = $this->getDoctrine()->getManager();
 
-                $solicitud->addActividade($formData);
+                $solicitud->addActividades($formData);
 
                 $em->persist($formData);
 
@@ -82,6 +82,58 @@ class ActividadController extends Controller
 
         ));
     }
+
+    /**
+     *
+     * @Route("/step-visitante/{id}", name="actividad_visitante_step",)
+     * @Method({"GET", "POST"})
+     */
+    public function createActividadVisitanteAction($id)
+    {
+        $formData = new Actividad(); // Your form data class. Has to be an object, won't work properly with an array.
+        $solicitud = $this->getDoctrine()
+            ->getRepository('SiaBundle:Solicitud')
+            ->find($id);
+
+        $flow = $this->get('Ccm.form.flow.createActividadVisitante'); // must match the flow's service id
+        $flow->bind($formData);
+
+        // form of the current step
+//        $form = $flow->createForm($formData,array('tipo'=>$tipo));
+        $form = $flow->createForm('SiaBundle\Form\CreateActividadVisitanteForm', $formData, array('tipo' => null));
+
+        if ($flow->isValid($form)) {
+            $flow->saveCurrentStepData($form);
+
+            if ($flow->nextStep()) {
+                // form for the next step
+                $form = $flow->createForm();
+            } else {
+                // flow finished
+                $em = $this->getDoctrine()->getManager();
+
+                $solicitud->addActividades($formData);
+
+                $em->persist($formData);
+
+                $em->flush();
+
+                $flow->reset(); // remove step data from the session
+
+                //return $this->redirect($this->generateUrl('solicitud_index')); // redirect when done
+                return $this->redirectToRoute('solicitud_show', array('id' => $id));
+
+            }
+        }
+        return $this->render('solicitud/createActividadVisitante.html.twig', array(
+            'form' => $form->createView(),
+            'flow' => $flow,
+            'id'=>$id,
+            'formdata' => $formData,
+
+        ));
+    }
+
 
 
     /**

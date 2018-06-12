@@ -61,7 +61,7 @@
         {% for solicitud in solicituds %}
             <tr>
                 {% if is_granted("ROLE_ADMIN") %}
-                    <td class="text-center">{{ solicitud.academico }}</td>
+                    <td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
                 {% endif %}
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
                 {#<td class="text-center">#}

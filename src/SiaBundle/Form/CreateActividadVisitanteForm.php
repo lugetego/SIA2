@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
-class CreateActividadForm extends AbstractType {
+class CreateActividadVisitanteForm extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
@@ -20,16 +20,7 @@ class CreateActividadForm extends AbstractType {
                         'label' => '*Tipo de Actividad',
                         'choices' => array(
                             'Coloquio' => 'Coloquio',
-                            'Conferencia' => 'Conferencia',
-                            'Congreso' => 'Congreso',
-                            'Curso' => 'Curso',
-                            'Distinción Académica' => 'Distinción Académica',
-                            'Feria' => 'Feria',
                             'Investigación' => 'Investigación',
-                            'Jornadas' => 'Jornadas',
-                            'Mesa redonda' => 'Mesa redonda',
-                            'Reunión de trabajo' => 'Reunión de trabajo',
-                            'Taller' => 'Taller',
                             'Seminario' => 'Seminario',
                             'Sinodal' => 'Sinodal'
                         ),
@@ -259,6 +250,7 @@ class CreateActividadForm extends AbstractType {
                             'html5' => false,
                             'required' => false,));
                 }
+
                 break;
         }
     }
@@ -271,7 +263,7 @@ class CreateActividadForm extends AbstractType {
     }
 
     public function getBlockPrefix() {
-        return 'createActividad';
+        return 'createActividadVisitante';
     }
 
 }

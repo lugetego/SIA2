@@ -484,7 +484,7 @@ class Solicitud
      * @param \SiaBundle\Entity\Actividad $actividades
      * @return Solicitud
      */
-    public function addActividade(\SiaBundle\Entity\Actividad $actividades)
+    public function addActividades(\SiaBundle\Entity\Actividad $actividades)
     {
         $this->actividades[] = $actividades;
         $actividades->setSolicitud($this);
@@ -497,7 +497,7 @@ class Solicitud
      *
      * @param \SiaBundle\Entity\Actividad $actividades
      */
-    public function removeActividade(\SiaBundle\Entity\Actividad $actividades)
+    public function removeActividades(\SiaBundle\Entity\Actividad $actividades)
     {
         $this->actividades->removeElement($actividades);
     }

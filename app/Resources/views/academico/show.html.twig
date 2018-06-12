@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h3 class="text-secondary my-5">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- Ejercicio {{ year }}</small></h3>
+    <h3 class="text-secondary mt-4">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- Ejercicio {{ year }}</small></h3>
 
     {#<div class="card-deck">#}
         {#<div class="card">#}
@@ -29,24 +29,62 @@
         {#</div>#}
     {#</div>#}
 
+    {% if year == 2018 %}
+        <div class="lead my-4 text-secondary">Ver histórico: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2017' }) }}">2017</a></div>
+    {% else %}
+        <div class="lead my-4 text-secondary">Ver año actual: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2018' }) }}">2018</a></div>
+    {% endif %}
 
-    <table  class="table table-condensed table-bordered text-secondary">
-        <thead>
-        <tr><th>Erogado Licencias</th><th>Días Licencia</th><th>Erogado Comisiones</th><th>Días Comisiones</th><th>Erogado Visitantes</th></tr>
-        </thead>
-        <tbody>
-        <tr><td><h4>${{ asignacionLicencia |number_format(2)}}</h4></td>
-            <td><h4>{{ diasLicencia }}</h4></td>
-            <td><h4>${{ asignacionComision |number_format(2)}}</h4></td>
-            <td><h4>{{ diasComision }}</h4></td>
-            <td><h4>${{ asignacionVisitante |number_format(2)}}</h4></td></tr>
-        </tbody>
-    </table>
+    <div class="card-deck mb-4 text-muted">
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-2">Erogado Licencias</div>
+                <h4>${{ asignacionLicencia |number_format(2)}}</h4>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-2">Días Licencia</div>
+                <h4>{{ diasLicencia }}</h4>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-2">Erogado Comisiones</div>
+                <h4>${{ asignacionComision |number_format(2)}}</h4>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-2">Días Comisiones</div>
+                <h4>{{ diasComision }}</h4>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="mb-2">Erogado Visitantes</div>
+                <h4>${{ asignacionVisitante |number_format(2)}}</h4>
+            </div>
+        </div>
+    </div>
+
+    {#<table  class="table table-condensed table-bordered text-secondary">#}
+        {#<thead>#}
+        {#<tr><th>Erogado Licencias</th><th>Días Licencia</th><th>Erogado Comisiones</th><th>Días Comisiones</th><th>Erogado Visitantes</th></tr>#}
+        {#</thead>#}
+        {#<tbody>#}
+        {#<tr><td><h4>${{ asignacionLicencia |number_format(2)}}</h4></td>#}
+            {#<td><h4>{{ diasLicencia }}</h4></td>#}
+            {#<td><h4>${{ asignacionComision |number_format(2)}}</h4></td>#}
+            {#<td><h4>{{ diasComision }}</h4></td>#}
+            {#<td><h4>${{ asignacionVisitante |number_format(2)}}</h4></td></tr>#}
+        {#</tbody>#}
+    {#</table>#}
 
     {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
     {% set saldo = asignacionAnual - totalErogado %}
 
-    <div class="row my-5">
+    <div class="row my-4">
         <div class="col-lg-3 lead text-info">
             <h3>Saldo: ${{ saldo |number_format(2)}}</h3>
         </div>
@@ -59,7 +97,7 @@
 
     <h4 class="text-secondary mb-4">Licencias</h4>
     {# Solicitudes #}
-    <table class="table table-sm table-bordered">
+    <table class="table">
         <thead>
         <tr><th>Tipo de solicitud</th><th>Financiamiento CCM</th><th>Fecha</th></tr>
         </thead>
