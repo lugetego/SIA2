@@ -23,6 +23,7 @@
         "doctrine/doctrine-bundle": "~1.4",
         "doctrine/orm": "^2.4.8",
         "friendsofsymfony/user-bundle": "~2.0@dev",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "incenteev/composer-parameter-handler": "~2.0",
         "knplabs/knp-snappy": "^0.4.3",
         "knplabs/knp-snappy-bundle": "^1.4",

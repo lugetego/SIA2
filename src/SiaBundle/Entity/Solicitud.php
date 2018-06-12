@@ -557,6 +557,20 @@ class Solicitud
     }
 
     /**
+     * @return boolean financiamiento CCM
+     */
+    public function hasFinanciamento()
+    {
+        foreach ($this->financiamiento as $fin) {
+            if($fin->getCcm || $fin->getPapit || $fin->getConacyt || $fin->getOtro) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @return Total de días solicitados
      */
     public function getDias()
