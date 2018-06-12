@@ -1,8 +1,62 @@
+{% extends 'base.html.twig' %}
 
-    <p class="text-secondary">Sesión de Consejo Interno - {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</p>
-    <h4 class="mb-5">{{ sesion.solicitudes| length }} solicitudes.</h4>
+{% block sidebar %}
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ path('dashboard') }}">
+            Dashboard <span class="sr-only">(current)</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('sesion_index') }}">
+            <span data-feather="file"></span>
+            Sesiones
+        </a>
+    </li>
+{% endblock %}
 
-    <h3>Acta de recomendaciones</h3>
+{% block body %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white boder-bottom">
+            <li  class="breadcrumb-item"><a href="{{ path('sesion_show',{'slug':sesion.slug}) }}">Sesión {{ sesion.name }}</a></li>
+            <li class=" breadcrumb-item active" aria-current="page">Recomendaciones {{ sesion.name }}
+                ({{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }})
+
+            </li>
+        </ol>
+    </nav>
+
+    <h3>Recomendaciones {{ sesion.name }} </h3>
+
+    {% set ordenmodaledit = 'ordeneditModal'~ sesion.id  %}
+
+    <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
+        <i class="fa fa-edit"></i>
+    </button>
+
+    <p><strong>Orden del día</strong></p>
+
+    <div>
+        {{ sesion.orden|nl2br }}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ ordenmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ ordenmodaledit }}Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ ordenmodaledit }}Label"> {{ sesion.name }} </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% render controller("SiaBundle:Sesion:orden", {'slug': sesion.slug}) %}
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <p><strong>Licencias</strong></p>
     {% set i = 1 %}
@@ -12,56 +66,40 @@
         <p>L{{ i }}. <strong>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
-            {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-            <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
+                {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
+                <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
-        <div class="card">
-            <ul class="list-group list-group-flush">
-
-                {#{% for actividad in solicitud.actividades %}#}
-                    {#{% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}#}
-                    {#<li class="list-group-item">#}
-                        {#<div>#}
-                            {#<i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}#}
-                        {#</div>#}
-                        {#<span class="label label-default">{{ actividad.institucion }}</span>#}
-                        {#<span class="label label-default">{{ actividad.departamento }}</span>#}
-                        {#<span class="label label-default">{{ actividad.lugar }}</span>#}
-                    {#</li>#}
-                    {##}
-                    {#<!-- Modal -->#}
-                    {#<div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">#}
-                        {#<div class="modal-dialog modal-lg" role="document">#}
-                            {#<div class="modal-content">#}
-                                {#<div class="modal-header">#}
-                                    {#<h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>#}
-                                    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>#}
-                                {#</div>#}
-                                {#<div class="modal-body">#}
-                                    {#{% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#{% endfor %}#}
-            </ul>
-        </div>
-
-
-        {#L1. Dr. Daniel Pellicer Covarrubias. Para realizar un viaje con objeto de efectuar dos visitas de carácter académico.#}
-        {#La primera al College of Science and Mathematics de la University of Massachusetts Boston y realizar investigación conjunta con el Dr. Gabriel K. Cunningham.#}
-        {#La segunda para visitar la Northeastern University y asistir a la sesión especial Polytopes and Discrete Geometry del AMS Sectional Meeting.#}
-        {#Viaje a la ciudad de Boston, MA, Estados Unidos, con duración de 9 días, el 15 al 23 de abril de 2018.#}
-        {#El Dr. Pellicer planea financiar su viaje con los recursos que se especifican en la siguiente tabla:#}
-
-{#Observación: Incluyendo los días que el Dr. Pellicer está solicitando en estas recomendaciones,#}
-        {#él habrá utilizado 9 días de su disponibilidad de 45 días de licencia, se habrá ausentando del CCM un total de 9 días durante el 2018#}
-        {#y habrá erogado $1,800.00 de su asignación anual.#}
-
-{#Dictamen:#}
-
-    {% set i = i + 1 %}
-
+        {% set i = i + 1 %}
     {% endfor %}
 
+    {% set variosmodaledit = 'varioseditModal'~ sesion.id  %}
+
+    <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
+        <i class="fa fa-edit"></i>
+    </button>
+
+    <p><strong>Varios</strong></p>
+
+    <div>
+        {{ sesion.varios|nl2br}}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ variosmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ variosmodaledit }}Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ variosmodaledit }}Label"> {{ sesion.name }} </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% render controller("SiaBundle:Sesion:varios", {'slug': sesion.slug}) %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

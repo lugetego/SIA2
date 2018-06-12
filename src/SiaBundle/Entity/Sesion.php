@@ -36,6 +36,20 @@ class Sesion
     protected $name;
 
     /**
+     * @var string $orden
+     *
+     * @ORM\Column(name="orden", type="text", nullable=true)
+     */
+    protected $orden;
+
+    /**
+     * @var string $varios
+     *
+     * @ORM\Column(name="varios", type="text", nullable=true)
+     */
+    protected $varios;
+
+    /**
      * @var array $solicitudes
      *
      * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Solicitud", mappedBy="sesion", cascade={"persist"})
@@ -203,6 +217,38 @@ class Sesion
 
     public function __toString() {
         return $this->slug;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrden()
+    {
+        return $this->orden;
+    }
+
+    /**
+     * @param string $orden
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVarios()
+    {
+        return $this->varios;
+    }
+
+    /**
+     * @param string $varios
+     */
+    public function setVarios($varios)
+    {
+        $this->varios = $varios;
     }
 
 }
