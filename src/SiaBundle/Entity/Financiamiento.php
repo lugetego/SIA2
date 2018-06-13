@@ -88,4 +88,12 @@ class Financiamiento {
         return;
     }
 
-} 
+    public function hasFinanciamiento()
+    {
+        if($this->getCcm() || $this->getConacyt() || $this->getPapiit() || $this->getOtro()) {
+            return true;
+        }
+
+        return false;
+    }
+}

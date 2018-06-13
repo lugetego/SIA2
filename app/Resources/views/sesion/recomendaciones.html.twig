@@ -57,7 +57,6 @@
         </div>
     </div>
 
-
     <p><strong>Licencias</strong></p>
     {% set i = 1 %}
 
@@ -71,80 +70,91 @@
             {% endfor %}
         </ul>
         {# Financiamiento #}
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <table class="table table-striped table-bordered table-sm">
-                    <thead>
-                    <tr>
-                        <th class="text-center">Fuente</th>
-                        <th class="text-center">CCM</th>
-                        <th class="text-center">PAPIIT</th>
-                        <th class="text-center">Conacyt</th>
-                        <th class="text-center">Otro</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% set ccm = 0 %}
-                    {% set papiit = 0 %}
-                    {% set conacyt = 0 %}
-                    {% set otro = 0 %}
+        {# Hay financiamiento ?#}
+        {% set solicitaFinanciamiento = 0 %}
 
-                    {% for fin in solicitud.financiamiento %}
-                        {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                            <tr>
-                                <td>{{ fin.nombre }}</td>
-                                <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
-                                <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
-                                <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
-                                <td class="text-right">{{ fin.otro  }}</td>
-                            </tr>
-                            {% set ccm = fin.ccm + ccm %}
-                            {% set papiit = fin.papiit + papiit %}
-                            {% set conacyt = fin.conacyt + conacyt %}
-                            {% set otro = fin.otro + otro %}
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td><h6><i class="fa fa-usd"></i> Total</td>
-                        <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
-                        <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
-                        <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
-                        <td class="text-right"><h6><strong></strong></h6></td>
-                    </tr>
-                    </tbody>
-                </table>
+        {% for fin in solicitud.financiamiento %}
+            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
+                {% set solicitaFinanciamiento = 1 %}
+            {% endif %}
+        {% endfor %}
+
+        {% if solicitaFinanciamiento %}
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Fuente</th>
+                            <th class="text-center">CCM</th>
+                            <th class="text-center">PAPIIT</th>
+                            <th class="text-center">Conacyt</th>
+                            <th class="text-center">Otro</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set ccm = 0 %}
+                        {% set papiit = 0 %}
+                        {% set conacyt = 0 %}
+                        {% set otro = 0 %}
+
+                        {% for fin in solicitud.financiamiento %}
+                            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
+                                <tr>
+                                    <td>{{ fin.nombre }}</td>
+                                    <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
+                                    <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
+                                    <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
+                                    <td class="text-right">{{ fin.otro  }}</td>
+                                </tr>
+                                {% set ccm = fin.ccm + ccm %}
+                                {% set papiit = fin.papiit + papiit %}
+                                {% set conacyt = fin.conacyt + conacyt %}
+                                {% set otro = fin.otro + otro %}
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td><h6><i class="fa fa-usd"></i> Total</td>
+                            <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
+                            <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
+                            <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
+                            <td class="text-right"><h6><strong></strong></h6></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        {% endif %}
         {#<div class="card">#}
-            {#<ul class="list-group list-group-flush">#}
+        {#<ul class="list-group list-group-flush">#}
 
-                {#{% for actividad in solicitud.actividades %}#}
-                    {#{% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}#}
-                    {#<li class="list-group-item">#}
-                        {#<div>#}
-                            {#<i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}#}
-                        {#</div>#}
-                        {#<span class="label label-default">{{ actividad.institucion }}</span>#}
-                        {#<span class="label label-default">{{ actividad.departamento }}</span>#}
-                        {#<span class="label label-default">{{ actividad.lugar }}</span>#}
-                    {#</li>#}
-                    {##}
-                    {#<!-- Modal -->#}
-                    {#<div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">#}
-                        {#<div class="modal-dialog modal-lg" role="document">#}
-                            {#<div class="modal-content">#}
-                                {#<div class="modal-header">#}
-                                    {#<h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>#}
-                                    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>#}
-                                {#</div>#}
-                                {#<div class="modal-body">#}
-                                    {#{% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}#}
-                                {#</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#{% endfor %}#}
-            {#</ul>#}
+        {#{% for actividad in solicitud.actividades %}#}
+        {#{% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}#}
+        {#<li class="list-group-item">#}
+        {#<div>#}
+        {#<i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}#}
+        {#</div>#}
+        {#<span class="label label-default">{{ actividad.institucion }}</span>#}
+        {#<span class="label label-default">{{ actividad.departamento }}</span>#}
+        {#<span class="label label-default">{{ actividad.lugar }}</span>#}
+        {#</li>#}
+        {##}
+        {#<!-- Modal -->#}
+        {#<div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">#}
+        {#<div class="modal-dialog modal-lg" role="document">#}
+        {#<div class="modal-content">#}
+        {#<div class="modal-header">#}
+        {#<h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>#}
+        {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>#}
+        {#</div>#}
+        {#<div class="modal-body">#}
+        {#{% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        {#{% endfor %}#}
+        {#</ul>#}
         {#</div>#}
         {% set i = i + 1 %}
     {% endfor %}
