@@ -26,15 +26,26 @@
         </ol>
     </nav>
 
-    <h3>Recomendaciones {{ sesion.name }} </h3>
+    <div class="row">
+        <div class="col-md6">
+            <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
+                <span data-feather="file"></span>
+                Recomendaciones {{ sesion.name }}
+            </a>
+        </div>
+        <div class="col-md6">
+            <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><i class="fa fa-file"></i> PDF</a>
+        </div>
+    </div>
 
     {% set ordenmodaledit = 'ordeneditModal'~ sesion.id  %}
 
-    <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
-        <i class="fa fa-edit"></i>
-    </button>
 
-    <p><strong>Orden del día</strong></p>
+
+    <br>
+    <p><strong>Orden del día</strong>  <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
+            <i class="fa fa-edit"></i>
+        </button></p>
 
     <div>
         {{ sesion.orden|nl2br }}
@@ -56,6 +67,7 @@
             </div>
         </div>
     </div>
+    <br>
 
     <p><strong>Licencias</strong></p>
     {% set i = 1 %}
@@ -125,51 +137,17 @@
                 </div>
             </div>
         {% endif %}
-        {#<div class="card">#}
-        {#<ul class="list-group list-group-flush">#}
 
-        {#{% for actividad in solicitud.actividades %}#}
-        {#{% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}#}
-        {#<li class="list-group-item">#}
-        {#<div>#}
-        {#<i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}#}
-        {#</div>#}
-        {#<span class="label label-default">{{ actividad.institucion }}</span>#}
-        {#<span class="label label-default">{{ actividad.departamento }}</span>#}
-        {#<span class="label label-default">{{ actividad.lugar }}</span>#}
-        {#</li>#}
-        {##}
-        {#<!-- Modal -->#}
-        {#<div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">#}
-        {#<div class="modal-dialog modal-lg" role="document">#}
-        {#<div class="modal-content">#}
-        {#<div class="modal-header">#}
-        {#<h4 class="modal-title" id="{{ actividadmodalshow }}Label">{{ actividad.tipo}}</h4>#}
-        {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aia-hidden="true">&times;</span></button>#}
-        {#</div>#}
-        {#<div class="modal-body">#}
-        {#{% render controller("SiaBundle:Actividad:show", {'id': actividad.id}) %}#}
-        {#</div>#}
-        {#</div>#}
-        {#</div>#}
-        {#</div>#}
-        {#{% endfor %}#}
-        {#</ul>#}
-        {#</div>#}
         {% set i = i + 1 %}
     {% endfor %}
 
     {% set variosmodaledit = 'varioseditModal'~ sesion.id  %}
 
-    <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
-        <i class="fa fa-edit"></i>
-    </button>
-
-    <p><strong>Varios</strong></p>
-
-    <div>
-        {{ sesion.varios|nl2br}}
-    </div>
+    <p><strong>Varios</strong>
+        <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
+            <i class="fa fa-edit"></i>
+        </button>
+    </p>
 
     <!-- Modal -->
     <div class="modal fade" id="{{ variosmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ variosmodaledit }}Label" aria-hidden="true">
