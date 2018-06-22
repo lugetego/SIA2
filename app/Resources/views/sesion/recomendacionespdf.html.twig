@@ -11,34 +11,6 @@
     <!-- Custom CSS -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
 
-    <style type = "text/css">
-        /* Printable area */
-        .print-area {
-            position:   relative;
-            top:        .5cm;
-            left:       .5cm;
-            right:      .5cm;
-            bottom:     5cm;
-            width:      19cm;
-            height:     27.6cm;
-            font-size: 10pt;
-        }
-        .titulo {
-            font-family: 'montserrat';
-            color:#bb151b;
-            font-weight: bold;
-        }
-        .subtitulo {
-            font-family: 'montserrat';
-            color:#bb151b;
-            font-weight: bold;
-            font-size: 10pt;
-        }
-
-
-    </style>
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" type="text/css"/>
-
 {% endblock %}
 
     {# Layout for PDF files #}
@@ -64,13 +36,12 @@
 
         <p class="text-right titulo">SESIÓN DEL CONSEJO INTERNO</p>
         <p class="subtitulo text-center"> Recomendaciones para el {{ sesion.name }} <br> {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "cccc, d MMMM Y") }}</p>
+
         <p><strong>Orden del día</strong></p>
 
-        {{ sesion.orden|nl2br}}
+        <p class="text-justify"><small>{{ sesion.orden|nl2br}}</small></p>
 
         <p><u><em><strong>Licencias:</strong></em></u></p>
-
-
 
     </div>
 
@@ -79,6 +50,7 @@
 
     {% for solicitud in sesion.solicitudes %}
 
+        <br>
         <p >L{{ i }}. <strong><em>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</em></strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
@@ -86,7 +58,7 @@
                 <li >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
-{# Financiamiento #}
+        {# Financiamiento #}
         {# Hay financiamiento ?#}
         {% set solicitaFinanciamiento = 0 %}
 
@@ -97,9 +69,8 @@
         {% endfor %}
 
         {% if solicitaFinanciamiento %}
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <table class="table table-striped table-bordered table-sm">
+            <div class="row col-md">
+                <table class="table table-striped table-bordered table-sm" >
                     <thead>
                     <tr>
                         <th class="text-center">Fuente</th>
@@ -131,16 +102,15 @@
                         {% endif %}
                     {% endfor %}
                     <tr>
-                        <td><h6><i class="fa fa-usd"></i> Total</td>
-                        <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
-                        <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
-                        <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
-                        <td class="text-right"><h6><strong></strong></h6></td>
+                        <td><i class="fa fa-usd"></i> Total</td>
+                        <td class="text-right"><strong>${{ ccm|number_format(2) }}</strong></td>
+                        <td class="text-right"><strong>${{ papiit|number_format(2)  }}</strong></td>
+                        <td class="text-right"><strong>${{ conacyt|number_format(2)  }}</strong></td>
+                        <td class="text-right"><strong></strong></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
         {% endif %}
         {#L1. Dr. Daniel Pellicer Covarrubias. Para realizar un viaje con objeto de efectuar dos visitas de carácter académico.#}
         {#La primera al College of Science and Mathematics de la University of Massachusetts Boston y realizar investigación conjunta con el Dr. Gabriel K. Cunningham.#}
@@ -157,6 +127,13 @@
         {% set i = i + 1 %}
 
     {% endfor %}
+
+    <div class="container">
+        <p><strong>Varios</strong></p>
+    </div>
+
+    <p class="text-justify"><small>{{ sesion.varios|nl2br}}</small></p>
+
 </div>
 
 

@@ -1,0 +1,42 @@
+/* Printable area */
+.print-area {
+    position:   relative;
+    top:        .5cm;
+    left:       .5cm;
+    right:      .5cm;
+    bottom:     5cm;
+    width:      19cm;
+    height:     27.6cm;
+    font-size: 10pt;
+
+}
+.titulo {
+    font-family: 'montserrat';
+    color:#bb151b;
+    font-weight: bold;
+}
+.subtitulo {
+    font-family: 'montserrat';
+    color:#bb151b;
+    font-weight: bold;
+    font-size: 10pt;
+}
+.avoid {
+    page-break-inside: avoid !important;
+    margin: 4px 0 4px 0;
+}
+
+table th {
+    text-align: center;
+}
+
+.table {
+    margin: auto;
+    width: 50% !important;
+    font-size: 8pt;
+
+}
+
+table thead {
+    display: table-row-group;
+}

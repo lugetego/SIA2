@@ -111,6 +111,7 @@ class SesionController extends Controller
 
         $pdfOptions = array(
 
+            'viewport-size'=> '1920x1080',
             'margin-top'    => 10,
             'margin-right'  => 10,
             'margin-bottom' => 10,
@@ -119,6 +120,13 @@ class SesionController extends Controller
             'footer-html' => $footer,
             'footer-center'     => ('Hoja [page] de [toPage]'),
             'footer-font-size'=> 8,
+            'page-width'=> 210,
+            'page-height'=> 333,
+            'user-style-sheet'=> $path = $this->get('kernel')->getRootDir() . '/../web/css/pdf.css'
+        ,
+
+
+
 
         );
 

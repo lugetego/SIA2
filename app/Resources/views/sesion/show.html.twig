@@ -36,11 +36,16 @@
         </ol>
     </nav>
 
-    <div>
+    <div class="row">
+        <div class="col-md6">
         <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
             <span data-feather="file"></span>
             Recomendaciones {{ sesion.name }}
         </a>
+        </div>
+        <div class="col-md6">
+        <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><i class="fa fa-file"></i> PDF</a>
+            </div>
     </div>
 
 
@@ -57,27 +62,27 @@
         <tbody>
 
         {% for solicitud in sesion.solicitudes %}
-            <tr>
-                <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
-                <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</td>
-                <td class="text-center">
-                    {% if solicitud.enviada == true %}
-                        <span class="badge badge-success">Enviada</span>
-                    {% else %}
-                        <span class="badge badge-warning">En proceso</span>
-                    {% endif %}
-                </td>
-                <td class="text-center">
-                    {% if solicitud.dictamen == true %}
-                        <span class="badge badge-success">Aprobada</span>
-                    {% elseif solicitud.dictamen is null %}
-                        <span class="badge badge-warning">Pendiente</span>
-                    {% elseif solicitud.dictamen == false %}
-                        <span class="badge badge-danger">No aprobada</span>
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
+    <tr>
+        <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td><td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
+        <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</td>
+        <td class="text-center">
+            {% if solicitud.enviada == true %}
+                <span class="badge badge-success">Enviada</span>
+            {% else %}
+                <span class="badge badge-warning">En proceso</span>
+            {% endif %}
+        </td>
+        <td class="text-center">
+            {% if solicitud.dictamen == true %}
+                <span class="badge badge-success">Aprobada</span>
+            {% elseif solicitud.dictamen is null %}
+                <span class="badge badge-warning">Pendiente</span>
+            {% elseif solicitud.dictamen == false %}
+                <span class="badge badge-danger">No aprobada</span>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
         </tbody>
 
     </table>
