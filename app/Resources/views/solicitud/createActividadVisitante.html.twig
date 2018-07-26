@@ -158,22 +158,24 @@
             </div>
 
             <div class="row">
-                <div class="col">
+                <div class="col-md-6">
                     {% if form.institucion is defined %}
                         <div class="form-group">
                             <div>{{ form_label(form.institucion) }}</div>
                             <div>{{ form_widget(form.institucion, {'attr': {'class': 'form-control form-control-sm'} } ) }}</div>
-                            <small id="passwordHelpBlock" class="form-text text-muted">Nombre de la institución que visitará</small>
+                            <small id="passwordHelpBlock" class="form-text text-muted">Nombre de la institución de origen del invitado</small>
                             <div>{{ form_errors(form.institucion) }}</div>
                         </div>
                     {% endif %}
                 </div>
-                <div class="col">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     {% if form.departamento is defined %}
                         <div class="form-group">
                             <div>{{ form_label(form.departamento) }}</div>
                             <div>{{ form_widget(form.departamento, {'attr': {'class': 'form-control form-control-sm'} } ) }}</div>
-                            <small id="passwordHelpBlock" class="form-text text-muted">Nombre del departamento que visitará (si es el caso)</small>
+                            <small id="passwordHelpBlock" class="form-text text-muted">Nombre del departamento (si es el caso)</small>
                             <div>{{ form_errors(form.departamento) }}</div>
                         </div>
                     {% endif %}
@@ -204,8 +206,6 @@
                     </div>
                 {% endif %}
             </div>
-
-
 
             {% if flow.getCurrentStepNumber() == 3 %}
 

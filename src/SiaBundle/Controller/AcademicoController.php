@@ -183,6 +183,7 @@ class AcademicoController extends Controller
         }
         return $erogadoLicencias;
     }
+
     /**
      * Erogado Comisiones
      * Regresa el total de la asignación anual solicitado por comisión

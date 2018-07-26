@@ -562,7 +562,7 @@ class Solicitud
     public function hasFinanciamento()
     {
         foreach ($this->financiamiento as $fin) {
-            if($fin->getCcm || $fin->getPapit || $fin->getConacyt || $fin->getOtro) {
+            if($fin->getCcm() || $fin->getPapiit() || $fin->getConacyt() || $fin->getOtro()) {
                 return true;
             }
         }
