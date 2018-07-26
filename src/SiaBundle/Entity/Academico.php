@@ -352,4 +352,23 @@ class Academico
     {
         $this->activo = $activo;
     }
+
+    /**
+     * Erogado Licencias
+     * Regresa el total de la asignación anual solicitado por licencia
+     *
+     */
+    public function erogadoLicencias()
+    {
+//        Condicionar año, status de licencia, fecha límite
+
+
+        $erogadoLicencias = 0;
+
+        foreach ($this->solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia')
+                $erogadoLicencias += $solicitud->getTotalAsignacion();
+        }
+        return $erogadoLicencias;
+    }
 }

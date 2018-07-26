@@ -40,4 +40,18 @@ class SolicitudRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findPending()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT s FROM SiaBundle:Solicitud s
+                     WHERE s.enviada IS NULL
+                     OR s.dictamen IS NULL
+                     or s.sesion IS NULL
+                ORDER BY s.created ASC'
+            )
+
+            ->getResult();
+    }
+
 }

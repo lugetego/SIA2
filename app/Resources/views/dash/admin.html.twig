@@ -55,25 +55,25 @@
     {#</div>#}
 
     <div class="row">
-    <div class="col-lg-8 col-md-8">
+        <div class="col-lg-8 col-md-8">
 
-    <table id="example" class="table table-hover table-bordered table-striped table-sm">
-    <thead>
-    <tr>
-    <th class="text-center">Académico</th>
-    <th>Acciones</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for academico in academicos %}
-    <tr>
-    <td><a href="{{ path('solicitud_step', {'_switch_user': academico.user.username}) }}">{{ academico.apellido }} {{ academico.nombre }} </a></td>
-    <td><a href="{{ path('solicitud_index', {'_switch_user': academico.user.username}) }}">Dash</a></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    </table>
-    </div>
+            <table id="example" class="table table-hover table-bordered table-striped table-sm">
+                <thead>
+                <tr>
+                    <th class="text-center">Académico</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for academico in academicos %}
+                    <tr>
+                        <td><a href="{{ path('solicitud_step', {'_switch_user': academico.user.username}) }}">{{ academico.apellido }} {{ academico.nombre }} </a></td>
+                        <td><a href="{{ path('solicitud_index', {'_switch_user': academico.user.username}) }}">Dash</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

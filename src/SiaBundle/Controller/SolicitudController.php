@@ -33,7 +33,6 @@ class SolicitudController extends Controller
      */
     public function indexAction()
     {
-
         if (false === $this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
@@ -44,18 +43,15 @@ class SolicitudController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-
             return $this->redirectToRoute('dashboard');
-
         }
 
-        $solicitudes = $em->getRepository('SiaBundle:Academico')->findByAcademico($user->getAcademico()->getId());
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')-> findAllByYear($user->getAcademico(), '2018');
 
         return $this->render('solicitud/index.html.twig', array(
             'solicituds' => $solicitudes,
 
         ));
-
     }
 
     /**
@@ -230,10 +226,13 @@ class SolicitudController extends Controller
 //         check for "view" access: calls all voters
         $this->denyAccessUnlessGranted('edit', $solicitud);
 
+        $hasFinanciamiento = $solicitud->hasFinanciamento();
+
         return $this->render('solicitud/show.html.twig', array(
             'solicitud' => $solicitud,
             'delete_form' => $deleteForm->createView(),
-            'actividades'=> $solicitud->getActividades()
+            'actividades'=> $solicitud->getActividades(),
+            'hasfinanciamiento' => $hasFinanciamiento
         ));
     }
 

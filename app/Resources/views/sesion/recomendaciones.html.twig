@@ -139,6 +139,10 @@
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
+        <p>Incluyendo los días que el Dr. {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
+él habrá utilizado 9 días de su disponibilidad de 45 días de licencia, se habrá ausentando del
+CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual.
+</p>
 
         {% set i = i + 1 %}
     {% endfor %}

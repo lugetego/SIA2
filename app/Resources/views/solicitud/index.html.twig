@@ -44,7 +44,7 @@
         <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
     {% endif %}
 
-    <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm">
+    <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
 
         <thead>
         <tr>
@@ -55,13 +55,16 @@
             <th class="text-center">Fechas</th>
             {#<th class="text-center">Dictamen</th>#}
             <th class="text-center">Estatus</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">Sesión</th>
+            <th class="text-center">Dictamen</th>
         </tr>
         </thead>
         <tbody>
         {% for solicitud in solicituds %}
             <tr>
                 {% if is_granted("ROLE_ADMIN") %}
-                    <td>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</td>
+                    <td><a href="{{ path('academico_show', {'slug' : solicitud.academico.slug }) }}">{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</a></td>
                 {% endif %}
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
                 {#<td class="text-center">#}
@@ -88,7 +91,21 @@
                         <span class="badge badge-warning">En proceso</span>
                     {% endif %}
                 </td>
-
+                <td>{{ solicitud.created|date }}</td>
+                <td class="text-center">
+                    {% if solicitud.sesion %}
+                        <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>
+                    {% else %}
+                        <i class="fa fa-ban text-secondary"></i>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if solicitud.dictamen %}
+                        <i class="fa fa-check text-success"></i>
+                    {% else %}
+                        <i class="fa fa-exclamation-triangle text-warning"></i>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

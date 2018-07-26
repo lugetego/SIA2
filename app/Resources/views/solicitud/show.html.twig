@@ -57,7 +57,7 @@
     {%  if solicitud.sesion %}
         <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>
     {% else %}
-        <p class="lead text-warning">La solicitud no tiene asignada Sesión de Consejo Interno</p>
+        <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene asignada Sesión de Consejo Interno</div>
     {% endif %}
 
 
@@ -149,9 +149,9 @@
 
     {% if solicitud.actividades|length == 0 %}
         <div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académicas en una Solicitud de {{ solicitud.tipo }}.</div>
-        <p class="lead text-secondary"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</p>
-    {% endif %}
+        <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</div>
 
+    {% endif %}
 
     <div class="card">
         <ul class="list-group list-group-flush">
@@ -162,6 +162,9 @@
                     <div>
                         <i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
                     </div>
+                    {% if actividad.anfitrion %}
+                        <span class="label label-default">{{ actividad.anfitrion }}, </span>
+                    {% endif %}
                     <span class="label label-default">{{ actividad.institucion }}</span>
                     <span class="label label-default">{{ actividad.departamento }}</span>
                     <span class="label label-default">{{ actividad.lugar }}</span>
@@ -201,7 +204,11 @@
     {% endif %}
 
     <hr>
-    <h3 class="text-secondary">Financiamiento a solicitar</h3>
+    <h3 class="text-secondary">Financiamiento</h3>
+
+    {% if hasfinanciamiento == false %}
+        <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene financiamiento.</div>
+    {% endif %}
 
     <!-- Modal -->
     <div class="modal fade" id="modalfinanciamiento" tabindex="-1" role="dialog" aria-labelledby="modalfinanciamientoLabel">
