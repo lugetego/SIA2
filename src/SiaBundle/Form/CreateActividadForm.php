@@ -149,7 +149,7 @@ class CreateActividadForm extends AbstractType {
                         ->add('tituloTrabajo', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Título del trabajo',
                             'required'=>false,
-                            'read_only'=>true,
+                            'read_only'=>false,
 
                         ))
                         ->add('plenaria', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
@@ -221,7 +221,7 @@ class CreateActividadForm extends AbstractType {
                         ->add('tituloTrabajo', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Título del trabajo',
                             'required'=>false,
-                            'read_only'=>true,
+                            'read_only'=>false,
 
                         ))
                         ->add('nacional', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(

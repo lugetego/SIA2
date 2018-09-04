@@ -236,7 +236,7 @@ class CreateActividadVisitanteForm extends AbstractType {
 //                            'choices_as_values' => false,
 //                        ))
                         ->add('institucion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
-                            'label'=>'Institución de origen',
+                            'label'=>'Institución de origen del invitado',
                             'required'=>false,
                         ))
                         ->add('departamento', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(

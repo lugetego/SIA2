@@ -40,8 +40,6 @@
 
     {% set ordenmodaledit = 'ordeneditModal'~ sesion.id  %}
 
-
-
     <br>
     <p><strong>Orden del día</strong>  <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
             <i class="fa fa-edit"></i>
@@ -154,6 +152,10 @@ CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico
             <i class="fa fa-edit"></i>
         </button>
     </p>
+
+    <div>
+        {{ sesion.varios|nl2br }}
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="{{ variosmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ variosmodaledit }}Label" aria-hidden="true">

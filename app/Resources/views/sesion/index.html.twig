@@ -10,7 +10,6 @@
 {% block sidebar %}
     <li class="nav-item">
         <a class="nav-link active" href="{{ path('dashboard') }}">
-
             Dashboard <span class="sr-only">(current)</span>
         </a>
     </li>
@@ -23,8 +22,8 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{{ path('sesion_new') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva sesión</a>
 
+    <a href="{{ path('sesion_new') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva sesión</a>
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>

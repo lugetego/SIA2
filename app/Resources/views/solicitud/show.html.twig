@@ -43,7 +43,7 @@
     {% endif %}
 
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
-    <h3 class="text-muted my-4 border-bottom"><strong>{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong></h3>
+    <h3 class="text-muted my-4 border-bottom"><strong><a href="{{ path('academico_show', { 'slug': solicitud.academico.slug }) }}">{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</a></strong></h3>
     <h2 class="text-info">{{ solicitud.tipo }} <small>
             {% if solicitud.ambito == true %}
                 Nacional

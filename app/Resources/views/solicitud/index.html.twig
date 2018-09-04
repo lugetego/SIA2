@@ -40,8 +40,13 @@
 
 
 {% block body %}
+
     {% if not is_granted("ROLE_ADMIN") %}
         <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    {% endif %}
+
+    {% if is_granted("ROLE_ADMIN") %}
+        <h2 class="my-4 text-secondary">Solicitudes</h2>
     {% endif %}
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
@@ -67,23 +72,16 @@
                     <td><a href="{{ path('academico_show', {'slug' : solicitud.academico.slug }) }}">{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</a></td>
                 {% endif %}
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
-                {#<td class="text-center">#}
-                {#{% if solicitud.ambito == true %}#}
-                {#<span class="badge badge-secondary">Nacional</span>#}
-                {#{% else %}#}
-                {#<span class="badge badge-dark">Internacional</span>#}
-                {#{% endif %}#}
-                {#</td>#}
-                <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
 
-                    {#<td class="text-center">{% if solicitud.dictamen == true %}#}
-                            {#<span class="badge badge-success">Aprobada</span>#}
-                        {#{% elseif solicitud.dictamen == null %}#}
-                            {#<span class="badge badge-warning">Pendiente</span>#}
-                        {#{% else %}#}
-                            {#<span class="badge badge-danger">No aprobada</span>#}
-                        {#{% endif %}#}
-                    {#</td>#}
+                {% if solicitud.tipo == "Visitante" %}
+                    <td>
+                    {% for actividad in solicitud.actividades %}
+                        {{ actividad.anfitrion }}
+                     {% endfor %}
+                    </td>
+                {% else %}
+                    <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
+                {% endif %}
 
                 <td class="text-center">{% if solicitud.enviada == true %}
                         <span class="badge badge-success">Enviada</span>
