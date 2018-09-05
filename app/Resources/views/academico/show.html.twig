@@ -6,29 +6,6 @@
 
     <h3 class="text-secondary mt-4">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- Ejercicio {{ year }}</small></h3>
 
-    {#<div class="card-deck">#}
-        {#<div class="card">#}
-            {#<div class="card-body">#}
-                {#<h5 class="card-title">Erogado Licencias</h5>#}
-                {#<h4>${{ asignacionLicencia |number_format(2)}}</h4>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="card">#}
-            {#<div class="card-body">#}
-                {#<h5 class="card-title">Card title</h5>#}
-                {#<p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>#}
-                {#<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>#}
-            {#</div>#}
-        {#</div>#}
-        {#<div class="card">#}
-            {#<div class="card-body">#}
-                {#<h5 class="card-title">Card title</h5>#}
-                {#<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>#}
-                {#<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
-
     {% if year == 2018 %}
         <div class="lead my-4 text-secondary">Ver histórico: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2017' }) }}">2017</a></div>
     {% else %}
@@ -44,7 +21,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="mb-2">Días Licencia</div>
+                <div class="mb-2">Días de Licencia</div>
                 <h4>{{ diasLicencia }}</h4>
             </div>
         </div>
@@ -56,7 +33,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="mb-2">Días Comisiones</div>
+                <div class="mb-2">Días de Comisión</div>
                 <h4>{{ diasComision }}</h4>
             </div>
         </div>
@@ -67,19 +44,6 @@
             </div>
         </div>
     </div>
-
-    {#<table  class="table table-condensed table-bordered text-secondary">#}
-        {#<thead>#}
-        {#<tr><th>Erogado Licencias</th><th>Días Licencia</th><th>Erogado Comisiones</th><th>Días Comisiones</th><th>Erogado Visitantes</th></tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {#<tr><td><h4>${{ asignacionLicencia |number_format(2)}}</h4></td>#}
-            {#<td><h4>{{ diasLicencia }}</h4></td>#}
-            {#<td><h4>${{ asignacionComision |number_format(2)}}</h4></td>#}
-            {#<td><h4>{{ diasComision }}</h4></td>#}
-            {#<td><h4>${{ asignacionVisitante |number_format(2)}}</h4></td></tr>#}
-        {#</tbody>#}
-    {#</table>#}
 
     {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
     {% set saldo = asignacionAnual - totalErogado %}
@@ -95,88 +59,100 @@
 
     <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
 
-    <h4 class="text-secondary mb-4">Licencias</h4>
-    {# Solicitudes #}
-    <table class="table">
+    <h3 class="mb-4 text-secondary">Solicitudes</h3>
+
+    <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
+
         <thead>
-        <tr><th>Tipo de solicitud</th><th>Financiamiento CCM</th><th>Fecha</th></tr>
+        <tr>
+            {% if is_granted("ROLE_ADMIN") %}
+                <th class="text-center">Académico</th>
+            {% endif %}
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Lugar/Invitado</th>
+            <th class="text-center">Fechas</th>
+            {#<th class="text-center">Dictamen</th>#}
+            <th class="text-center">Estatus</th>
+            {#<th class="text-center">Fecha</th>#}
+            <th class="text-center">Sesión</th>
+            <th class="text-center">Dictamen</th>
+        </tr>
         </thead>
         <tbody>
         {% for solicitud in solicitudes %}
-            {# Muestra solo licitudes del año vigente #}
-            {% if solicitud.fechaInicio >= '2018-01-01'  %}
-                <tr>
+            <tr>
+                {% if is_granted("ROLE_ADMIN") %}
+                    <td><a href="{{ path('academico_show', {'slug' : solicitud.academico.slug }) }}">{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</a></td>
+                {% endif %}
+                <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
+
+                {% if solicitud.tipo == "Visitante" %}
                     <td>
-                        <a href="{{ path('solicitud_show', {'id': solicitud.id }) }}">{{ solicitud.tipo }}</a>
+                        {% for actividad in solicitud.actividades %}
+                            {{ actividad.anfitrion }}
+                        {% endfor %}
                     </td>
-                    {% set ccm = 0 %}
-                    {% for financiamiento in solicitud.financiamiento %}
-                        {% set ccm = financiamiento.ccm + ccm %}
-                    {% endfor %}
-                    <td> ${{ ccm | number_format(2)}}</td>
+                {% else %}
                     <td>
-                        del {{ solicitud.fechaInicio | localizeddate('medium', 'none', null, null, "d LLL") }} al {{ solicitud.fechaFin| localizeddate('medium', 'none', null, null, "d LLL Y") }}
+                        {% for actividad in solicitud.actividades|slice(0,1) %}
+                            {{ actividad.lugar }}
+                        {% endfor %}
                     </td>
-                </tr>
-            {% endif %}
+                {% endif %}
+                <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
+
+                <td class="text-center">{% if solicitud.enviada == true %}
+                        <span class="badge badge-success">Enviada</span>
+                    {% else %}
+                        <span class="badge badge-warning">En proceso</span>
+                    {% endif %}
+                </td>
+                {#<td>{{ solicitud.created|date }}</td>#}
+                <td class="text-center">
+                    {% if solicitud.sesion %}
+                        <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>
+                    {% else %}
+                        <i class="fa fa-ban text-secondary"></i>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if solicitud.dictamen %}
+                        <i class="fa fa-check text-success"></i>
+                    {% else %}
+                        <i class="fa fa-exclamation-triangle text-warning"></i>
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    {#<h1>Academico</h1>#}
-
-    {#<table>#}
+    {#<h4 class="text-secondary mb-4">Licencias</h4>#}
+    {# Solicitudes #}
+    {#<table class="table">#}
+        {#<thead>#}
+        {#<tr><th>Tipo de solicitud</th><th>Financiamiento CCM</th><th>Fecha</th></tr>#}
+        {#</thead>#}
         {#<tbody>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<td>{{ academico.id }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Nombre</th>#}
-                {#<td>{{ academico.nombre }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Apellido</th>#}
-                {#<td>{{ academico.apellido }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Nacimiento</th>#}
-                {#<td>{% if academico.nacimiento %}{{ academico.nacimiento|date('Y-m-d') }}{% endif %}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Rfc</th>#}
-                {#<td>{{ academico.rfc }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Activo</th>#}
-                {#<td>{% if academico.activo %}Yes{% else %}No{% endif %}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Slug</th>#}
-                {#<td>{{ academico.slug }}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Created</th>#}
-                {#<td>{% if academico.created %}{{ academico.created|date('Y-m-d H:i:s') }}{% endif %}</td>#}
-            {#</tr>#}
-            {#<tr>#}
-                {#<th>Modified</th>#}
-                {#<td>{% if academico.modified %}{{ academico.modified|date('Y-m-d H:i:s') }}{% endif %}</td>#}
-            {#</tr>#}
+        {#{% for solicitud in solicitudes %}#}
+            {# Muestra solo licitudes del año vigente #}
+            {#{% if solicitud.fechaInicio >= '2018-01-01'  %}#}
+                {#<tr>#}
+                    {#<td>#}
+                        {#<a href="{{ path('solicitud_show', {'id': solicitud.id }) }}">{{ solicitud.tipo }}</a>#}
+                    {#</td>#}
+                    {#{% set ccm = 0 %}#}
+                    {#{% for financiamiento in solicitud.financiamiento %}#}
+                        {#{% set ccm = financiamiento.ccm + ccm %}#}
+                    {#{% endfor %}#}
+                    {#<td> ${{ ccm | number_format(2)}}</td>#}
+                    {#<td>#}
+                        {#del {{ solicitud.fechaInicio | localizeddate('medium', 'none', null, null, "d LLL") }} al {{ solicitud.fechaFin| localizeddate('medium', 'none', null, null, "d LLL Y") }}#}
+                    {#</td>#}
+                {#</tr>#}
+            {#{% endif %}#}
+        {#{% endfor %}#}
         {#</tbody>#}
     {#</table>#}
 
-    {#<ul>#}
-        {#<li>#}
-            {#<a href="{{ path('academico_index') }}">Back to the list</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#<a href="{{ path('academico_edit', { 'id': academico.id }) }}">Edit</a>#}
-        {#</li>#}
-        {#<li>#}
-            {#{{ form_start(delete_form) }}#}
-                {#<input type="submit" value="Delete">#}
-            {#{{ form_end(delete_form) }}#}
-        {#</li>#}
-    {#</ul>#}
 {% endblock %}

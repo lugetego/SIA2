@@ -57,7 +57,6 @@ class SolicitudType extends AbstractType
             'allow_add' => true
         ));
 
-
         if ( $tipo === 'Comisión') {
 
             $builder->add('cartaInvitacionFile', 'vich_file', array(
@@ -116,6 +115,16 @@ class SolicitudType extends AbstractType
                 'choices_as_values' => false,
                 'placeholder' => false
 
+            ))
+            ->add('erogadoAsignacion', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'choices'=>array(
+                    true=>'Si',
+                    false=>'No'),
+                'expanded'=>true,
+                'required'=>false,
+                'label'=>'Erogado de Asignación',
+                'choices_as_values' => false,
+                'placeholder' => false
             ))
         ;
     }

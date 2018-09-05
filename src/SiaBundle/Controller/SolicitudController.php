@@ -197,6 +197,7 @@ class SolicitudController extends Controller
         if ($form->isSubmitted() && $form->isValid()  ) {
 
             $em = $this->getDoctrine()->getManager();
+            $solicitud->setErogadoAsignacion(1);
             $em->persist($solicitud);
             $em->flush();
 
@@ -259,6 +260,7 @@ class SolicitudController extends Controller
             $editForm->remove('dictamen');
             $editForm->remove('aprobada');
             $editForm->remove('enviada');
+            $editForm->remove('erogadoAsignacion');
         }
 
         $editForm->handleRequest($request);

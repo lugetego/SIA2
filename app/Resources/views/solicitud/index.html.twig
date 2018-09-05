@@ -42,12 +42,10 @@
 {% block body %}
 
     {% if not is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+        <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-4" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
     {% endif %}
 
-    {% if is_granted("ROLE_ADMIN") %}
-        <h2 class="my-4 text-secondary">Solicitudes</h2>
-    {% endif %}
+    <h3 class="my-4 text-secondary">Solicitudes</h3>
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
 
@@ -57,10 +55,11 @@
                 <th class="text-center">Académico</th>
             {% endif %}
             <th class="text-center">Tipo</th>
+            <th class="text-center">Lugar</th>
             <th class="text-center">Fechas</th>
             {#<th class="text-center">Dictamen</th>#}
             <th class="text-center">Estatus</th>
-            <th class="text-center">Fecha</th>
+            {#<th class="text-center">Fecha</th>#}
             <th class="text-center">Sesión</th>
             <th class="text-center">Dictamen</th>
         </tr>
@@ -73,6 +72,10 @@
                 {% endif %}
                 <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
 
+                <td>{% for actividad in solicitud.actividades|slice(0,1) %}
+                        {{ actividad.lugar }}
+                    {% endfor %}
+                </td>
                 {% if solicitud.tipo == "Visitante" %}
                     <td>
                     {% for actividad in solicitud.actividades %}
@@ -89,7 +92,7 @@
                         <span class="badge badge-warning">En proceso</span>
                     {% endif %}
                 </td>
-                <td>{{ solicitud.created|date }}</td>
+                {#<td>{{ solicitud.created|date }}</td>#}
                 <td class="text-center">
                     {% if solicitud.sesion %}
                         <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>

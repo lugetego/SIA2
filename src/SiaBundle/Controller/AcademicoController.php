@@ -178,7 +178,7 @@ class AcademicoController extends Controller
         $erogadoLicencias = 0;
 
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia')
+            if($solicitud->getTipo() == 'Licencia' && $solicitud->isErogadoAsignacion())
                 $erogadoLicencias += $solicitud->getTotalAsignacion();
         }
         return $erogadoLicencias;
@@ -193,7 +193,7 @@ class AcademicoController extends Controller
     {
         $erogadoComisiones = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Comision')
+            if($solicitud->getTipo() == 'Comisión' && $solicitud->isErogadoAsignacion())
                 $erogadoComisiones += $solicitud->getTotalAsignacion();
         }
         return $erogadoComisiones;
@@ -207,7 +207,7 @@ class AcademicoController extends Controller
     {
         $erogadoVisitantes = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Visitante')
+            if($solicitud->getTipo() == 'Visitante' && $solicitud->isErogadoAsignacion())
                 $erogadoVisitantes += $solicitud->getTotalAsignacion();
         }
         return $erogadoVisitantes;
@@ -235,10 +235,9 @@ class AcademicoController extends Controller
     {
         $dias = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Comision')
+            if($solicitud->getTipo() == 'Comisión')
                 $dias += $solicitud->getDias();
         }
         return $dias;
     }
-
 }

@@ -182,6 +182,13 @@ class Solicitud
     private $notificada;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="erogado_asignacion", type="boolean", nullable=true)
+     */
+    private $erogadoAsignacion;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -694,6 +701,22 @@ class Solicitud
     public function setNotificada($notificada)
     {
         $this->notificada = $notificada;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isErogadoAsignacion()
+    {
+        return $this->erogadoAsignacion;
+    }
+
+    /**
+     * @param boolean $erogadoAsignacion
+     */
+    public function setErogadoAsignacion($erogadoAsignacion)
+    {
+        $this->erogadoAsignacion = $erogadoAsignacion;
     }
 
 }

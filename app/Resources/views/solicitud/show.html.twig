@@ -34,8 +34,6 @@
         <i class="fa fa-check" aria-hidden="true"></i> {{ flashMessage }}
         </div>{% endfor %}
 
-
-
     {% if solicitud.enviada == true %}
         <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
     {% else %}
@@ -59,8 +57,6 @@
     {% else %}
         <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene asignada Sesión de Consejo Interno</div>
     {% endif %}
-
-
 
     <p class="text-secondary">Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong></p>
 
@@ -91,47 +87,21 @@
         {% endif %}
     </div>
 
-    {#{% if solicitud.descripcion is defined %}#}
-    {#<div class="card border-light">#}
-    {#<div class="card-header"><strong>Descripción</strong></div>#}
-    {#<div class="card-body">#}
-    {#<p class="card-text">{{ solicitud.descripcion }}</p>#}
-    {#</div>#}
-    {#</div>#}
-    {#{% endif %}#}
+    {% if is_granted("ROLE_ADMIN") %}
 
-    {#<p><strong>Acta: {{ solicitud.sesion }}</strong></p>#}
+<p class="text-secondary">Erogado de la asignación anual {% if solicitud.erogadoAsignacion %} <i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-times text-danger"></i></i> {% endif %}</p>
 
-
-    {% if solicitud.enviada == false or is_granted("ROLE_ADMIN") %}
         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalsolicitud">
             <i class="fa fa-edit"></i> Modificar solicitud
         </button>
     {% endif %}
-
-
-    {#<!-- Modal -->#}
-    {#<div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel">#}
-    {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
-    {#<div class="modal-content">#}
-    {#<div class="modal-header">#}
-    {#<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>#}
-    {#<h4 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h4>#}
-    {#</div>#}
-    {#<div class="modal-body">#}
-    {#{% render controller("SiaBundle:Solicitud:edit", {'id': solicitud.id}) %}#}
-    {#</div>#}
-
-    {#</div>#}
-    {#</div>#}
-    {#</div>#}
 
     <!-- Modal -->
     <div class="modal fade" id="modalsolicitud" tabindex="-1" role="dialog" aria-labelledby="modalsolicitudLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalsolcitudLabel">{{ solicitud.tipo }}</h5>
+                    <h5 class="modal-title" id="modalsolcitudLabel">Tipo de solicitud: {{ solicitud.tipo }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
