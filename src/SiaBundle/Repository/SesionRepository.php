@@ -22,6 +22,7 @@ class SesionRepository extends EntityRepository
                 ORDER BY s.fecha DESC'
             )
             ->setParameter('fechaSolicitud', $fechaSolicitud)
+            ->setMaxResults(1)
             ->getSingleResult();
     }
 
