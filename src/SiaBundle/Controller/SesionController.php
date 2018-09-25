@@ -24,9 +24,8 @@ class SesionController extends Controller
      */
     public function indexAction()
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -45,9 +44,7 @@ class SesionController extends Controller
      */
     public function newAction(Request $request)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $sesion = new Sesion();
         $form = $this->createForm('SiaBundle\Form\SesionType', $sesion);
@@ -80,9 +77,8 @@ class SesionController extends Controller
      */
     public function recomendacionesAction(Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('sesion/recomendaciones.html.twig', array(
             'sesion' => $sesion,
@@ -96,9 +92,7 @@ class SesionController extends Controller
      */
     public function recomendacionespdfAction(Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $html = $this->renderView('sesion/recomendacionespdf.html.twig', array(
             'sesion'=>$sesion,
@@ -149,9 +143,8 @@ class SesionController extends Controller
      */
     public function showAction(Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $deleteForm = $this->createDeleteForm($sesion);
 
@@ -169,9 +162,7 @@ class SesionController extends Controller
      */
     public function editAction(Request $request, Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $deleteForm = $this->createDeleteForm($sesion);
         $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
@@ -201,9 +192,7 @@ class SesionController extends Controller
      */
     public function ordenAction(Request $request, Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $deleteForm = $this->createDeleteForm($sesion);
         $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
@@ -234,9 +223,7 @@ class SesionController extends Controller
      */
     public function variosAction(Request $request, Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $deleteForm = $this->createDeleteForm($sesion);
         $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
@@ -268,9 +255,7 @@ class SesionController extends Controller
      */
     public function deleteAction(Request $request, Sesion $sesion)
     {
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $form = $this->createDeleteForm($sesion);
         $form->handleRequest($request);

@@ -22,7 +22,7 @@ class AcademicoController extends Controller
      */
     public function indexAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -41,6 +41,9 @@ class AcademicoController extends Controller
      */
     public function newAction(Request $request)
     {
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $academico = new Academico();
         $form = $this->createForm('SiaBundle\Form\AcademicoType', $academico);
         $form->handleRequest($request);
@@ -68,11 +71,7 @@ class AcademicoController extends Controller
      */
     public function showAction(Academico $academico, $year = '2018')
     {
-
-//        $year = $this->container->getParameter('sia.year');
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted('view', $academico);
 
         $em = $this->getDoctrine()->getManager();
         $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, $year);
@@ -115,6 +114,8 @@ class AcademicoController extends Controller
      */
     public function editAction(Request $request, Academico $academico)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $deleteForm = $this->createDeleteForm($academico);
         $editForm = $this->createForm('SiaBundle\Form\AcademicoType', $academico);
         $editForm->handleRequest($request);

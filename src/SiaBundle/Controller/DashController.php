@@ -39,10 +39,6 @@ class DashController extends Controller
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN'))
         {
-//            $academicos = $em->getRepository('SiaBundle:Academico')->findAllOrderedByApellido();
-//                return $this->render('dash/admin.html.twig', array(
-//                    'academicos'=> $academicos,
-//                ));
             $academicos = $em->getRepository('SiaBundle:Academico')->findByActivo(true);
             $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findPending();
             return $this->render('solicitud/index.html.twig', array(
@@ -50,55 +46,8 @@ class DashController extends Controller
                 'academicos'=> $academicos,
             ));
         }
-
-//        elseif ($this->get('security.context')->isGranted('ROLE_TECNICO'))
-//        {
-//            $user = $this->get('security.context')->getToken()->getUser();
-//            $academico = $user->getAcademico();
-//            //$tecnicos = $academico->getTecnicos();
-//            //$enviado = $academico->isEnviado();
-//            $solicitudes = $academico->getSolicitudes();
-//
-//
-//            return $this->render('dash/tecnico.html.twig', array(
-//                'academico'=>$academico,
-//               // 'tecnicos'=> $tecnicos,
-//               // 'enviado'=>$enviado,
-//                'solicitudes'=>$solicitudes,
-//                'user'=>$user,
-//
-//            ));
-//        }
-
         else {
-
             return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
-//            $user = $this->get('security.context')->getToken()->getUser();
-//            $academico = $user->getAcademico();
-//            $solicitudes = $academico->getSolicitudes();
-//            // $estudiantes = $academico->getEstudiantes();
-//            // $cursos = $academico->getCursos();
-//            // $proyectos = $academico->getProyectos();
-//            // $eventos = $academico->getEventos();
-//            // $salidas = $academico->getSalidas();
-//            // $planes = $academico->getPlanes();
-//            // $posdocs = $academico->getPosdocs();
-//            // $enviado = $academico->isEnviado();
-//
-//            return $this->render('dash/index.html.twig', array(
-//                'academico'=> $academico,
-//                'solicitudes'=> $solicitudes,
-//                // 'estudiantes'=>$estudiantes,
-//                //'cursos'=>$cursos,
-//                //'proyectos'=>$proyectos,
-//                //'eventos'=>$eventos,
-//                //'salidas'=>$salidas,
-//                //'planes'=>$planes,
-//                //'posdocs'=>$posdocs,
-//                'user'=>$user,
-//                //'enviado'=>$enviado
-//
-//            ));
         }
 
     }
@@ -126,7 +75,6 @@ class DashController extends Controller
                 'academicos' => $academicos,
             ));
         }
-
         else {
             $user = $this->get('security.context')->getToken()->getUser();
             $academico = $user->getAcademico();
@@ -136,20 +84,8 @@ class DashController extends Controller
             return $this->render('dash/index.html.twig', array(
                 'academico'=> $academico,
                 'solicitudes'=> $solicitudes,
-                // 'estudiantes'=>$estudiantes,
-                //'cursos'=>$cursos,
-                //'proyectos'=>$proyectos,
-                //'eventos'=>$eventos,
-                //'salidas'=>$salidas,
-                //'planes'=>$planes,
-                //'posdocs'=>$posdocs,
                 'user'=>$user,
-                //'enviado'=>$enviado
-
             ));
         }
-
     }
-
-
 }

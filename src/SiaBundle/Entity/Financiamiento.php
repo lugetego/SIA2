@@ -20,11 +20,13 @@ class Financiamiento {
 
     /**
      * @Assert\NotBlank(groups={"solicitud"})
+     * @Assert\Type(type="float", message="The value is not a valid.")
      */
     private $papiit;
 
     /**
      * @Assert\NotBlank(groups={"solicitud"})
+     * @Assert\Type(type="float", message="The value is not a valid.")
      */
     private $conacyt;
 

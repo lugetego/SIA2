@@ -123,6 +123,7 @@ class SolicitudController extends Controller
                 // flow finished
                 $em = $this->getDoctrine()->getManager();
                 $formData->setAcademico($academico);
+                $formData->setErogadoAsignacion(TRUE);
                 $em->persist($formData);
                 $em->flush();
 
@@ -384,6 +385,7 @@ class SolicitudController extends Controller
         $editForm->remove('sesion');
         $editForm->remove('dictamen');
         $editForm->remove('enviada');
+        $editForm->remove('erogadoAsignacion');
 
         $editForm->handleRequest($request);
 

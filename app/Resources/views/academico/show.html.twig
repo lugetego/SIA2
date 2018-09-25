@@ -21,7 +21,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="mb-2">Días de Licencia</div>
+                <div class="mb-2">Días Utilizados de Licencia</div>
                 <h4>{{ diasLicencia }}</h4>
             </div>
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="mb-2">Días de Comisión</div>
+                <div class="mb-2">Días Utilizados de Comisión</div>
                 <h4>{{ diasComision }}</h4>
             </div>
         </div>
@@ -49,11 +49,13 @@
     {% set saldo = asignacionAnual - totalErogado %}
 
     <div class="row my-4">
-        <div class="col-lg-3 lead text-info">
-            <h3>Saldo: ${{ saldo |number_format(2)}}</h3>
+        <div class="col-lg-6 lead text-info">
+            <h4>Saldo disponible asignación anual: <strong>${{ saldo |number_format(2)}}</strong></h4>
         </div>
-        <div class="col-lg-3 lead text-info">
-            <h3>Días: {{ totalDias - diasLicencia - diasComision}}</h3>
+    </div>
+    <div class="row mb-4">
+        <div class="col-lg-6 lead text-info">
+            <h4>Total de días disponibles: <strong>{{ totalDias - diasLicencia - diasComision}}</strong></h4>
         </div>
     </div>
 

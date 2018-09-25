@@ -1,6 +1,5 @@
 
 {% block body %}
-    {# in src/MyCompany/MyBundle/Resources/views/Vehicle/createVehicle.html.twig #}
 
     <div class="row">
         <div class="col-md-12">
@@ -43,6 +42,7 @@
                                         {{ form_widget(fin.ccm, {'attr':{
                                             'class': 'form-control input-sm text-right',
                                             'ng-model': ccmid, 'ng-init': ccmid ~ ' = ' ~ solicitud.financiamiento[i].ccm,
+                                            'type': 'number', 'step' : '0.01',
                                         } }) }}
                                         {{ form_errors(fin.ccm) }}
                                     {% endif %}
@@ -54,9 +54,9 @@
                                     {% if fin.papiit is defined %}
 
                                         {{ form_widget(fin.papiit, { 'attr':{
-                                            'type': 'number',
                                             'class': 'form-control input-sm text-right',
                                             'ng-model': papiitid, 'ng-init': papiitid ~ ' = ' ~ solicitud.financiamiento[i].papiit,
+                                            'type': 'number', 'step' : '0.01',
                                         } }) }}
                                         {{ form_errors(fin.papiit) }}
                                     {% endif %}
@@ -70,6 +70,7 @@
                                     {{ form_widget(fin.conacyt, { 'attr':{
                                         'class': 'form-control input-sm text-right',
                                         'ng-model': conacytid, 'ng-init': conacytid ~ ' = ' ~ solicitud.financiamiento[i].conacyt,
+                                        'type': 'number', 'step' : '0.001',
                                     } }) }}
                                     {{ form_errors(fin.conacyt) }}</td>
 

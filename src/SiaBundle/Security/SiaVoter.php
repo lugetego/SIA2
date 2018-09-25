@@ -1,6 +1,8 @@
 <?php
 namespace SiaBundle\Security;
 
+use SiaBundle\Entity\Academico;
+use SiaBundle\Entity\Sesion;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,10 +33,8 @@ class SiaVoter extends Voter
         }
 
         // only vote on Post objects inside this voter
-        if (!$subject instanceof Solicitud
-            //!$subject instanceof Estudiantes &&
-            //!$subject instanceof Cursos &&
-            //!$subject instanceof Eventos &&
+        if (!$subject instanceof Solicitud &&
+            !$subject instanceof Academico
             //!$subject instanceof Proyectos &&
             //!$subject instanceof Salidas &&
             //!$subject instanceof Posdoc &&
@@ -52,8 +52,8 @@ class SiaVoter extends Voter
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
 
-        // ROLE_SUPER_ADMIN can do anything! The power!
-        if ($this->decisionManager->decide($token, array('ROLE_SUPER_ADMIN'))) {
+        // ROLE_ADMIN can do anything! The power!
+        if ($this->decisionManager->decide($token, array('ROLE_ADMIN'))) {
             return true;
         }
 
@@ -82,7 +82,15 @@ class SiaVoter extends Voter
     private function canView($post, User $user)
     {
 
-        if ($user->getAcademico()->getId() === $post->getAcademico()->getId()) {
+        if ($post instanceof Academico) {
+            if ($user->getAcademico()->getId() === $post->getId()) {
+
+                return true;
+            }
+
+            return false;
+        }
+        elseif ($user->getAcademico()->getId() === $post->getAcademico()->getId()) {
 
             return true;
         }

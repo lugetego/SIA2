@@ -25,9 +25,10 @@ class FinanciamientoType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('ccm', 'integer')
-            ->add('conacyt', 'integer')
-            ->add('papiit', 'integer')
+            ->add('ccm', 'Symfony\Component\Form\Extension\Core\Type\NumberType', array(
+                'attr' => array('type' => 'number', 'step' => '0.01')))
+            ->add('conacyt', 'Symfony\Component\Form\Extension\Core\Type\NumberType')
+            ->add('papiit', 'Symfony\Component\Form\Extension\Core\Type\NumberType')
             ->add('otro', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(
                     'Entidad convidante'=>'Entidad convidante',

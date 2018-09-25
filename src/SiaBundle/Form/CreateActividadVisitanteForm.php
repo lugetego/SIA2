@@ -20,6 +20,8 @@ class CreateActividadVisitanteForm extends AbstractType {
                         'label' => '*Tipo de Actividad',
                         'choices' => array(
                             'Coloquio' => 'Coloquio',
+                            'Congreso' => 'Congreso',
+                            'Divulgacion' => 'Divulgacion',
                             'Investigación' => 'Investigación',
                             'Seminario' => 'Seminario',
                             'Sinodal' => 'Sinodal'
@@ -244,7 +246,7 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'required'=>false,
                         ))
                         ->add('lugar', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
-                            'label'=>'Lugar (ciudad, estado, país)',
+                            'label'=>'Lugar (ciudad, estado, país de origen)',
                             'required'=>false,
                         ))
                         ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(

@@ -120,7 +120,6 @@
     {% if solicitud.actividades|length == 0 %}
         <div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académicas en una Solicitud de {{ solicitud.tipo }}.</div>
         <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</div>
-
     {% endif %}
 
     <div class="card">
@@ -130,20 +129,29 @@
                 {% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}
                 <li class="list-group-item">
                     <div>
-                        <i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}
+                        <a href="#" data-toggle="modal" data-target="#{{ actividadmodalshow }}"><i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}</a>
                     </div>
+                    {% if actividad.sinodalAlumno %}
+                        <span class="label label-default">{{ actividad.sinodalAlumno }}, </span>
+                    {% endif %}
                     {% if actividad.anfitrion %}
                         <span class="label label-default">{{ actividad.anfitrion }}, </span>
+                    {% endif %}
+                    {%  if actividad.nombreEvento %}
+                        <strong><span class="label label-default">{{ actividad.nombreEvento }}</span></strong><br>
+                    {% endif %}
+                    {% if actividad.tituloTrabajo %}
+                        <em><span class="label label-default">{{ actividad.tituloTrabajo }}</span></em><br>
                     {% endif %}
                     <span class="label label-default">{{ actividad.institucion }}</span>
                     <span class="label label-default">{{ actividad.departamento }}</span>
                     <span class="label label-default">{{ actividad.lugar }}</span>
-                    <span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span>
-                    <p class="pull-right">
-                        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#{{ actividadmodalshow }}">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </p>
+                    <br><em><span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span></em>
+                    {#<p class="pull-right">#}
+                        {#<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#{{ actividadmodalshow }}">#}
+                            {#<i class="fa fa-search" aria-hidden="true"></i>#}
+                        {#</button>#}
+                    {#</p>#}
                 </li>
                 <!-- Modal -->
                 <div class="modal fade" id="{{ actividadmodalshow }}" tabindex="-1" role="dialog" aria-labelledby="{{ actividadmodalshow }}Label">
@@ -161,6 +169,10 @@
                 </div>
             {% endfor %}
         </ul>
+    </div>
+
+    <div>
+
     </div>
 
     <br>
@@ -221,7 +233,7 @@
                             <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
                             <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
                             <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
-                            <td class="text-right">{{ fin.otro  }}</td>
+                            <td class="text-left">{{ fin.otro  }}</td>
                         </tr>
                         {% set ccm = fin.ccm + ccm %}
                         {% set papiit = fin.papiit + papiit %}
