@@ -189,6 +189,13 @@ class Solicitud
     private $erogadoAsignacion;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="cancelada", type="boolean", nullable=true)
+     */
+    private $cancelada;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -717,6 +724,22 @@ class Solicitud
     public function setErogadoAsignacion($erogadoAsignacion)
     {
         $this->erogadoAsignacion = $erogadoAsignacion;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCancelada()
+    {
+        return $this->cancelada;
+    }
+
+    /**
+     * @param boolean $cancelada
+     */
+    public function setCancelada($cancelada)
+    {
+        $this->cancelada = $cancelada;
     }
 
 }

@@ -126,6 +126,16 @@ class SolicitudType extends AbstractType
                 'choices_as_values' => false,
                 'placeholder' => false
             ))
+            ->add('cancelada', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                'choices'=>array(
+                    true=>'Si',
+                    false=>'No'),
+                'expanded'=>true,
+                'required'=>false,
+                'label'=>'Solicitud cancelada',
+                'choices_as_values' => false,
+                'placeholder' => false
+            ))
         ;
     }
 

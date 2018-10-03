@@ -42,6 +42,7 @@
 
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
     <h3 class="text-muted my-4 border-bottom"><strong><a href="{{ path('academico_show', { 'slug': solicitud.academico.slug }) }}">{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</a></strong></h3>
+
     <h2 class="text-info">{{ solicitud.tipo }} <small>
             {% if solicitud.ambito == true %}
                 Nacional
@@ -52,6 +53,10 @@
             {% endif %}
         </small>
     </h2>
+
+    {% if solicitud.isCancelada %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation"></i> <strong>Solicitud CANCELADA</strong></div>
+    {% endif %}
     {%  if solicitud.sesion %}
         <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>
     {% else %}
@@ -89,7 +94,7 @@
 
     {% if is_granted("ROLE_ADMIN") %}
 
-<p class="text-secondary">Erogado de la asignación anual {% if solicitud.erogadoAsignacion %} <i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-times text-danger"></i></i> {% endif %}</p>
+    <p class="text-secondary"> {% if solicitud.erogadoAsignacion %}<i class="fa fa-check text-success"></i> {% else %} <i class="fa fa-times text-danger"></i></i> {% endif %} Erogado de la asignación anual</p>
 
         <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalsolicitud">
             <i class="fa fa-edit"></i> Modificar solicitud
@@ -131,12 +136,11 @@
                     <div>
                         <a href="#" data-toggle="modal" data-target="#{{ actividadmodalshow }}"><i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}</a>
                     </div>
-                    {% if actividad.sinodalAlumno %}
-                        <span class="label label-default">{{ actividad.sinodalAlumno }}, </span>
-                    {% endif %}
                     {% if actividad.anfitrion %}
-                        <span class="label label-default">{{ actividad.anfitrion }}, </span>
+                        <span class="label label-default">{{ actividad.anfitrion }}</span><br>
                     {% endif %}
+
+
                     {%  if actividad.nombreEvento %}
                         <strong><span class="label label-default">{{ actividad.nombreEvento }}</span></strong><br>
                     {% endif %}
@@ -145,8 +149,13 @@
                     {% endif %}
                     <span class="label label-default">{{ actividad.institucion }}</span>
                     <span class="label label-default">{{ actividad.departamento }}</span>
-                    <span class="label label-default">{{ actividad.lugar }}</span>
+                    <br><span class="label label-default">{{ actividad.lugar }}</span>
+                    {% if actividad.sinodalAlumno %}
+                        <br>Estudiante: <span class="label label-default">{{ actividad.sinodalAlumno }}</span>
+                    {% endif %}
+                    {% if actividad.fechaActividad %}
                     <br><em><span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span></em>
+                    {% endif %}
                     {#<p class="pull-right">#}
                         {#<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#{{ actividadmodalshow }}">#}
                             {#<i class="fa fa-search" aria-hidden="true"></i>#}

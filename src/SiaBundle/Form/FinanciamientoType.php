@@ -26,15 +26,22 @@ class FinanciamientoType extends AbstractType
         $builder
             ->add('nombre')
             ->add('ccm', 'Symfony\Component\Form\Extension\Core\Type\NumberType', array(
-                'attr' => array('type' => 'number', 'step' => '0.01')))
-            ->add('conacyt', 'Symfony\Component\Form\Extension\Core\Type\NumberType')
-            ->add('papiit', 'Symfony\Component\Form\Extension\Core\Type\NumberType')
+                'grouping' => true,
+            ))
+            ->add('conacyt', 'Symfony\Component\Form\Extension\Core\Type\NumberType', array(
+                'grouping' => true,
+            ))
+            ->add('papiit', 'Symfony\Component\Form\Extension\Core\Type\NumberType', array(
+                'grouping' => true,
+            ))
             ->add('otro', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(
                     'Entidad convidante'=>'Entidad convidante',
                     'Recursos propios'=>'Recursos propios',
                     'Comité organizador'=>'Comité organizador',
-                    'Intercambio académico'=>'Intercambio académico'
+                    'Intercambio académico'=>'Intercambio académico',
+                    'Partida especial evento'=>'Partida especial evento',
+                    'PAPIME'=>'PAPIME'
                 ),
                 'placeholder'=>'Seleccionar',
                 'required'=>false,

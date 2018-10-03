@@ -58,7 +58,8 @@
                         <div class="text-danger">{{ form_errors(form.anfitrion) }}</div>
                     </div>
                 {% endif %}
-
+            </div>
+            <div class="row">
                 {% if form.sinodalAlumno is defined %}
                     <div class="form-group col-md-6">
                         <label>{{ form_label(form.sinodalAlumno) }}</label>
@@ -209,153 +210,180 @@
 
             {% if flow.getCurrentStepNumber() == 3 %}
 
-                <div class="row">
-                    <div class="col">
-                        <dl>
-                            <dt><strong>Tipo de actividad</strong></dt>
-                            <dd>{{ formdata.tipo }}</dd>
-                        </dl>
-                    </div>
-
-                    {% if formdata.nacional is defined and formdata.nacional == true or formdata.nacional == false %}
-                        <div class="col">
-                            <dl>
-                                <dt><strong>Ámbito de la solicitud:</strong></dt>
-                                <dd>
-                                    {% if formdata.nacional is not null %}
-                                        <span class="label label-success "><i class="fa fa-check-square"></i> Nacional</span>
-                                    {% elseif formdata.nacional is null %}
-                                        <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
-                                    {% elseif formdata.nacional == false %}
-                                        <span class="label label-danger"><i class="fa fa-times-circle"></i> Internacional</span>
-                                    {% endif %}
-                                </dd>
-                            </dl>
-                        </div>
+                <div class="card p-4">
+                    <strong>{{ formdata.tipo }}</strong>
+                    {% if formdata.anfitrion %}
+                        <span class="label label-default">{{ formdata.anfitrion }}</span><br>
                     {% endif %}
 
-                    {% if formdata.invitacion is not null %}
-                        <div class="col">
-                            <dl>
-                                <dt><strong>Por invitación</strong></dt>
-                                <dd>
-                                    {% if formdata.invitacion == true %}
-                                        <span class="label label-success "><i class="fa fa-check-square"></i> Si</span>
-                                    {% elseif formdata.invitacion is null %}
-                                        <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
-                                    {% elseif formdata.invitacion == false %}
-                                        <span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>
-                                    {% endif %}
-                                </dd>
-                            </dl>
-                        </div>
+                    {%  if formdata.nombreEvento %}
+                        <strong><span class="label label-default">{{ formdata.nombreEvento }}</span></strong><br>
                     {% endif %}
-
-                    {% if formdata.plenaria is not null %}
-                        <div class="col">
-                            <dl>
-                                <dt><strong>Conferencia plenaria</strong></dt>
-                                <dd>
-                                    {% if formdata.plenaria == true %}
-                                        <span class="label label-success "><i class="fa fa-check-square"></i> Si</span>
-                                    {% elseif formdata.plenaria is null %}
-                                        <span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>
-                                    {% elseif formdata.plenaria == false %}
-                                        <span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>
-                                    {% endif %}
-                                </dd>
-                            </dl>
-                        </div>
+                    {% if formdata.tituloTrabajo %}
+                        <em><span class="label label-default">{{ formdata.tituloTrabajo }}</span></em><br>
                     {% endif %}
-
-                    {% if formdata.anfitrion is not null %}
-                        <div class="col-md-4">
-                            <dl>
-                                <dt><strong>Nombre del anfitrión</strong></dt>
-                                <dd>{{ formdata.anfitrion }}</dd>
-                            </dl>
-                        </div>
+                    <span class="label label-default">{{ formdata.institucion }}</span>
+                    <span class="label label-default">{{ formdata.departamento }}</span>
+                    <br><span class="label label-default">{{ formdata.lugar }}</span>
+                    {% if formdata.sinodalAlumno %}
+                        <br><span class="label label-default">Estudiante: {{ formdata.sinodalAlumno }}</span>
                     {% endif %}
-                    {% if formdata.sinodalAlumno is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Nombre del alumno:</strong></dt>
-                                <dd>{{ formdata.sinodalAlumno }}</dd>
-                            </dl>
-                        </div>
+                    {% if formdata.sinodalGrado %}
+                        <span>{{  formdata.sinodalGrado }}</span>
                     {% endif %}
-                    {% if formdata.sinodalGrado is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Grado:</strong></dt>
-                                <dd>{{ formdata.sinodalGrado }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.motivo is not null  %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Motivo de la actividad</strong></dt>
-                                <dd>{% for key,value in formdata.motivo if value %}
-                                        {{ value |title}},
-                                    {% endfor %}
-                                </dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.nombreEvento is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Nombre del evento</strong></dt>
-                                <dd>{{ formdata.nombreEvento }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.tituloTrabajo is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Título del trabajo</strong></dt>
-                                <dd>{{ formdata.tituloTrabajo }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.institucion is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Institución</strong></dt>
-                                <dd>{{ formdata.institucion }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.departamento is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Departamento:</strong></dt>
-                                <dd>{{ formdata.departamento }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.lugar is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Lugar:</strong></dt>
-                                <dd>{{ formdata.lugar }}</dd>
-                            </dl>
-                        </div>
-                    {% endif %}
-                    {% if formdata.fechaActividad is not null %}
-                        <div class="col-lg-4">
-                            <dl>
-                                <dt><strong>Fecha de la actividad:</strong></dt>
-                                <dd>{{ formdata.fechaActividad|localizeddate('long', 'none') }}</dd>
-
-
-                            </dl>
-                        </div>
-
+                    {% if formdata.fechaActividad %}
+                    <br><em><span class="label label-default">{{ formdata.fechaActividad|localizeddate('long', 'none') }}</span></em>
                     {% endif %}
 
                 </div>
+
+                {#<div class="row">#}
+                    {#<div class="col">#}
+                        {#<dl>#}
+                            {#<dt><strong>Tipo de actividad</strong></dt>#}
+                            {#<dd>{{ formdata.tipo }}</dd>#}
+                        {#</dl>#}
+                    {#</div>#}
+
+                    {#{% if formdata.nacional is defined and formdata.nacional == true or formdata.nacional == false %}#}
+                        {#<div class="col">#}
+                            {#<dl>#}
+                                {#<dt><strong>Ámbito de la solicitud:</strong></dt>#}
+                                {#<dd>#}
+                                    {#{% if formdata.nacional is not null %}#}
+                                        {#<span class="label label-success "><i class="fa fa-check-square"></i> Nacional</span>#}
+                                    {#{% elseif formdata.nacional is null %}#}
+                                        {#<span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>#}
+                                    {#{% elseif formdata.nacional == false %}#}
+                                        {#<span class="label label-danger"><i class="fa fa-times-circle"></i> Internacional</span>#}
+                                    {#{% endif %}#}
+                                {#</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+
+                    {#{% if formdata.invitacion is not null %}#}
+                        {#<div class="col">#}
+                            {#<dl>#}
+                                {#<dt><strong>Por invitación</strong></dt>#}
+                                {#<dd>#}
+                                    {#{% if formdata.invitacion == true %}#}
+                                        {#<span class="label label-success "><i class="fa fa-check-square"></i> Si</span>#}
+                                    {#{% elseif formdata.invitacion is null %}#}
+                                        {#<span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>#}
+                                    {#{% elseif formdata.invitacion == false %}#}
+                                        {#<span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>#}
+                                    {#{% endif %}#}
+                                {#</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+
+                    {#{% if formdata.plenaria is not null %}#}
+                        {#<div class="col">#}
+                            {#<dl>#}
+                                {#<dt><strong>Conferencia plenaria</strong></dt>#}
+                                {#<dd>#}
+                                    {#{% if formdata.plenaria == true %}#}
+                                        {#<span class="label label-success "><i class="fa fa-check-square"></i> Si</span>#}
+                                    {#{% elseif formdata.plenaria is null %}#}
+                                        {#<span class="label label-warning "><i class="fa fa-check-exclamation"></i> <i class="fa fa-exclamation-circle"></i> Pendiente</span>#}
+                                    {#{% elseif formdata.plenaria == false %}#}
+                                        {#<span class="label label-danger"><i class="fa fa-times-circle"></i> No</span>#}
+                                    {#{% endif %}#}
+                                {#</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+
+                    {#{% if formdata.anfitrion is not null %}#}
+                        {#<div class="col-md-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Nombre del anfitrión</strong></dt>#}
+                                {#<dd>{{ formdata.anfitrion }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.sinodalAlumno is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Nombre del alumno:</strong></dt>#}
+                                {#<dd>{{ formdata.sinodalAlumno }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.sinodalGrado is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Grado:</strong></dt>#}
+                                {#<dd>{{ formdata.sinodalGrado }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.motivo is not null  %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Motivo de la actividad</strong></dt>#}
+                                {#<dd>{% for key,value in formdata.motivo if value %}#}
+                                        {#{{ value |title}},#}
+                                    {#{% endfor %}#}
+                                {#</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.nombreEvento is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Nombre del evento</strong></dt>#}
+                                {#<dd>{{ formdata.nombreEvento }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.tituloTrabajo is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Título del trabajo</strong></dt>#}
+                                {#<dd>{{ formdata.tituloTrabajo }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.institucion is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Institución</strong></dt>#}
+                                {#<dd>{{ formdata.institucion }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.departamento is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Departamento:</strong></dt>#}
+                                {#<dd>{{ formdata.departamento }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.lugar is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Lugar:</strong></dt>#}
+                                {#<dd>{{ formdata.lugar }}</dd>#}
+                            {#</dl>#}
+                        {#</div>#}
+                    {#{% endif %}#}
+                    {#{% if formdata.fechaActividad is not null %}#}
+                        {#<div class="col-lg-4">#}
+                            {#<dl>#}
+                                {#<dt><strong>Fecha de la actividad:</strong></dt>#}
+                                {#<dd>{{ formdata.fechaActividad|localizeddate('long', 'none') }}</dd>#}
+
+
+                            {#</dl>#}
+                        {#</div>#}
+
+                    {#{% endif %}#}
+
+                {#</div>#}
             {% endif %}
 
         </div>

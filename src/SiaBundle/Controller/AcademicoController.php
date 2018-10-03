@@ -83,11 +83,11 @@ class AcademicoController extends Controller
         $totalDias = $diasLicencia + $diasComision;
 
         // Calcula Totales
-        $totalAsignacionLicencia = $this->erogadoLicencias($solicitudes);
-        $totalAsignacionComision = $this->erogadoComisiones($solicitudes);
-        $totalAsignacionVisitante = $this->erogadoVisitantes($solicitudes);
-        $totalDiasLicencia = $this->diasSolicitadosLicencia($solicitudes);
-        $totalDiasComision = $this->diasSolicitadosComision($solicitudes);
+        $totalAsignacionLicencia = $this->erogadoAsignacion($solicitudes, 'Licencia');
+        $totalAsignacionComision = $this->erogadoAsignacion($solicitudes, 'Comisión');
+        $totalAsignacionVisitante = $this->erogadoAsignacion($solicitudes, 'Visitante');
+        $totalDiasLicencia = $this->diasSolicitados($solicitudes, 'Licencia');
+        $totalDiasComision = $this->diasSolicitados($solicitudes, 'Comisión');
 
         $deleteForm = $this->createDeleteForm($academico);
 
@@ -169,76 +169,109 @@ class AcademicoController extends Controller
         ;
     }
 
-    /**
-     * Erogado Licencias
-     * Regresa el total de la asignación anual solicitado por licencia
-     *
-     */
-    public function erogadoLicencias($solicitudes)
-    {
-        $erogadoLicencias = 0;
+//    /**
+//     * Erogado Licencias
+//     * Regresa el total de la asignación anual solicitado por licencia
+//     *
+//     */
+//    public function erogadoLicencias($solicitudes)
+//    {
+//        $erogadoLicencias = 0;
+//
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == 'Licencia' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
+//                $erogadoLicencias += $solicitud->getTotalAsignacion();
+//        }
+//        return $erogadoLicencias;
+//    }
+//
+//    /**
+//     * Erogado Comisiones
+//     * Regresa el total de la asignación anual solicitado por comisión
+//     *
+//     */
+//    public function erogadoComisiones($solicitudes)
+//    {
+//        $erogadoComisiones = 0;
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == 'Comisión' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
+//                $erogadoComisiones += $solicitud->getTotalAsignacion();
+//        }
+//        return $erogadoComisiones;
+//    }
+//    /**
+//     * Erogado Visitantes
+//     * Regresa el total de la asignación anual solicitado para visitantes
+//     *
+//     */
+//    public function ErogadoVisitantes($solicitudes)
+//    {
+//        $erogadoVisitantes = 0;
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == 'Visitante' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
+//                $erogadoVisitantes += $solicitud->getTotalAsignacion();
+//        }
+//        return $erogadoVisitantes;
+//    }
 
+    /**
+     * Erogado tipo
+     * Regresa el total de la asignación anual solicitado para un tipo de solicitud
+     *
+     */
+    public function ErogadoAsignacion($solicitudes, $tipo)
+    {
+        $erogado = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia' && $solicitud->isErogadoAsignacion())
-                $erogadoLicencias += $solicitud->getTotalAsignacion();
+            if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
+                $erogado += $solicitud->getTotalAsignacion();
         }
-        return $erogadoLicencias;
+        return $erogado;
     }
 
+//    /**
+//     * Dias Solicitados de licencia
+//     * Regresa el total de dias solicitados por licencia
+//     *
+//     */
+//    public function diasSolicitadosLicencia($solicitudes)
+//    {
+//        $dias = 0;
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == 'Licencia' && $solicitud->isDictamen() && !$solicitud->isCancelada())
+//                $dias += $solicitud->getDias();
+//        }
+//        return $dias;
+//    }
+//
+//    /**
+//     * Dias Solicitados de comisión
+//     * Regresa el total de dias solicitados por comision
+//     *
+//     */
+//    public function diasSolicitadosComision($solicitudes)
+//    {
+//        $dias = 0;
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == 'Comisión' && $solicitud->isDictamen() && !$solicitud->isCancelada())
+//                $dias += $solicitud->getDias();
+//        }
+//        return $dias;
+//    }
+
     /**
-     * Erogado Comisiones
-     * Regresa el total de la asignación anual solicitado por comisión
+     * Dias Solicitados
+     * Regresa el total de dias solicitados por tipo
      *
      */
-    public function erogadoComisiones($solicitudes)
-    {
-        $erogadoComisiones = 0;
-        foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Comisión' && $solicitud->isErogadoAsignacion())
-                $erogadoComisiones += $solicitud->getTotalAsignacion();
-        }
-        return $erogadoComisiones;
-    }
-    /**
-     * Erogado Visitantes
-     * Regresa el total de la asignación anual solicitado para visitantes
-     *
-     */
-    public function ErogadoVisitantes($solicitudes)
-    {
-        $erogadoVisitantes = 0;
-        foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Visitante' && $solicitud->isErogadoAsignacion())
-                $erogadoVisitantes += $solicitud->getTotalAsignacion();
-        }
-        return $erogadoVisitantes;
-    }
-    /**
-     * Dias Solicitados de licencia
-     * Regresa el total de dias solicitados por licencia
-     *
-     */
-    public function diasSolicitadosLicencia($solicitudes)
+    public function diasSolicitados($solicitudes, $tipo)
     {
         $dias = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia')
+            if($solicitud->getTipo() == $tipo && $solicitud->isDictamen() && !$solicitud->isCancelada())
                 $dias += $solicitud->getDias();
         }
         return $dias;
     }
-    /**
-     * Dias Solicitados de comisión
-     * Regresa el total de dias solicitados por comision
-     *
-     */
-    public function diasSolicitadosComision($solicitudes)
-    {
-        $dias = 0;
-        foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Comisión')
-                $dias += $solicitud->getDias();
-        }
-        return $dias;
-    }
+
 }

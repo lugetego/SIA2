@@ -79,7 +79,7 @@ class SolicitudController extends Controller
        $viaticos->setCcm(0);
        $viaticos->setPapiit(0);
        $viaticos->setConacyt(0);
-       $viaticos->setOtro(0);
+//       $viaticos->setOtro('');
        $formData->getFinanciamiento()->add($viaticos);
 
        $aereo = new Financiamiento();
@@ -87,7 +87,7 @@ class SolicitudController extends Controller
        $aereo->setCcm(0);
        $aereo->setPapiit(0);
        $aereo->setConacyt(0);
-       $aereo->setOtro(0);
+//       $aereo->setOtro('');
        $formData->getFinanciamiento()->add($aereo);
 
        $terrestre = new Financiamiento();
@@ -95,7 +95,7 @@ class SolicitudController extends Controller
        $terrestre->setCcm(0);
        $terrestre->setPapiit(0);
        $terrestre->setConacyt(0);
-       $terrestre->setOtro(0);
+//       $terrestre->setOtro('');
        $formData->getFinanciamiento()->add($terrestre);
 
        $inscripciones = new Financiamiento();
@@ -103,7 +103,7 @@ class SolicitudController extends Controller
        $inscripciones->setCcm(0);
        $inscripciones->setPapiit(0);
        $inscripciones->setConacyt(0);
-       $inscripciones->setOtro(0);
+//       $inscripciones->setOtro('');
        $formData->getFinanciamiento()->add($inscripciones);
 
         $flow = $this->get('Ccm.form.flow.createSolicitud'); // must match the flow's service id
@@ -123,7 +123,8 @@ class SolicitudController extends Controller
                 // flow finished
                 $em = $this->getDoctrine()->getManager();
                 $formData->setAcademico($academico);
-                $formData->setErogadoAsignacion(TRUE);
+                $formData->setErogadoAsignacion(true);
+                $formData->setCancelada(false);
                 $em->persist($formData);
                 $em->flush();
 
@@ -158,47 +159,14 @@ class SolicitudController extends Controller
 
         $solicitud = new Solicitud();
 
-        /*
-                $viaticos = new Financiamiento();
-                $viaticos->setNombre("Viáticos");
-                $viaticos->setCcm(0);
-                $viaticos->setPapiit(0);
-                $viaticos->setConacyt(0);
-                $viaticos->setOtro(0);
-                $solicitud->getFinanciamiento()->add($viaticos);
-
-                $aereo = new Financiamiento();
-                $aereo->setNombre("Pasaje aéreo");
-                $aereo->setCcm(0);
-                $aereo->setPapiit(0);
-                $aereo->setConacyt(0);
-                $aereo->setOtro(0);
-                $solicitud->getFinanciamiento()->add($aereo);
-
-                $terrestre = new Financiamiento();
-                $terrestre->setNombre("Pasaje terrestre");
-                $terrestre->setCcm(0);
-                $terrestre->setPapiit(0);
-                $terrestre->setConacyt(0);
-                $terrestre->setOtro(0);
-                $solicitud->getFinanciamiento()->add($terrestre);
-
-                $inscripciones = new Financiamiento();
-                $inscripciones->setNombre("Inscripciones");
-                $inscripciones->setCcm(0);
-                $inscripciones->setPapiit(0);
-                $inscripciones->setConacyt(0);
-                $inscripciones->setOtro(0);
-                $solicitud->getFinanciamiento()->add($inscripciones);*/
-
-
         $form = $this->createForm('SiaBundle\Form\SolicitudType', $solicitud);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()  ) {
 
             $em = $this->getDoctrine()->getManager();
-            $solicitud->setErogadoAsignacion(1);
+            $solicitud->setErogadoAsignacion(true);
+            $solicitud->setCancelada(false);
             $em->persist($solicitud);
             $em->flush();
 
@@ -219,14 +187,9 @@ class SolicitudController extends Controller
      */
     public function showAction(Solicitud $solicitud)
     {
-
-//        $securityContext = $this->container->get('security.token_storage');
-//        $user = $securityContext->getToken()->getUser();
-//
-        $deleteForm = $this->createDeleteForm($solicitud);
-
-//         check for "view" access: calls all voters
         $this->denyAccessUnlessGranted('edit', $solicitud);
+
+        $deleteForm = $this->createDeleteForm($solicitud);
 
         $hasFinanciamiento = $solicitud->hasFinanciamento();
 
@@ -262,6 +225,7 @@ class SolicitudController extends Controller
             $editForm->remove('aprobada');
             $editForm->remove('enviada');
             $editForm->remove('erogadoAsignacion');
+            $editForm->remove('cancelada');
         }
 
         $editForm->handleRequest($request);
@@ -386,6 +350,7 @@ class SolicitudController extends Controller
         $editForm->remove('dictamen');
         $editForm->remove('enviada');
         $editForm->remove('erogadoAsignacion');
+        $editForm->remove('cancelada');
 
         $editForm->handleRequest($request);
 

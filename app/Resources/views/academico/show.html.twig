@@ -48,24 +48,79 @@
     {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
     {% set saldo = asignacionAnual - totalErogado %}
 
-    <div class="row my-4">
-        <div class="col-lg-6 lead text-info">
-            <h4>Saldo disponible asignación anual: <strong>${{ saldo |number_format(2)}}</strong></h4>
-        </div>
-    </div>
+    {#<div class="row my-2">#}
+        {#<div class="col-lg-6 lead text-info">#}
+            {#<h4>Total erogado asignación anual: <strong>${{ totalErogado |number_format(2)}}</strong></h4>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row my-2">#}
+        {#<div class="col-lg-6 lead text-info">#}
+            {#<h4>Saldo disponible: <strong>${{ saldo |number_format(2)}}</strong></h4>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row mb-2">#}
+        {#<div class="col-lg-6 lead text-info">#}
+            {#<h4>Total de días disponibles de licencia: <strong>{{ totalDias/2 - diasLicencia }}</strong></h4>#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="row mb-4">#}
+        {#<div class="col-lg-6 lead text-info">#}
+            {#<h4>Total de días disponibles de comisión: <strong>{{ totalDias/2 - diasComision }}</strong></h4>#}
+        {#</div>#}
+    {#</div>#}
+
     <div class="row mb-4">
-        <div class="col-lg-6 lead text-info">
-            <h4>Total de días disponibles: <strong>{{ totalDias - diasLicencia - diasComision}}</strong></h4>
+        <div class="col-md-4 text-secondary">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Asignación anual</h5>
+                    <table class="table">
+                        <tbody>
+                             <tr>
+                                 <td>Total erogado licencias:</td>
+                                 <td class="text-right">${{ totalErogado |number_format(2)}}</td>
+                             </tr>
+                             <tr>
+                                 <td><strong>Saldo disponible:</strong></td>
+                                 <td class="text-right"><strong>${{ saldo |number_format(2)}}</strong></td>
+                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-secondary">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total de días disponibles</h5>
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td>Licencia:</td>
+                            <td class="text-right">{{ totalDias/2 - diasLicencia }}</td>
+                        </tr>
+                        <tr>
+                            <td>Comisión:</td>
+                            <td class="text-right">{{ totalDias/2 - diasComision }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
     <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
 
+    {#{% if is_granted("ROLE_ADMIN")  %}#}
+        {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}" class="btn btn-info mb-5" role="button">Finalizar sesión de {{app.user.username}}</a>#}
+    {#{% endif  %}#}
     <h3 class="mb-4 text-secondary">Solicitudes</h3>
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
 
         <thead>
+
         <tr>
             {% if is_granted("ROLE_ADMIN") %}
                 <th class="text-center">Académico</th>
@@ -83,47 +138,49 @@
         <tbody>
         {% for solicitud in solicitudes %}
             <tr>
-                {% if is_granted("ROLE_ADMIN") %}
-                    <td><a href="{{ path('academico_show', {'slug' : solicitud.academico.slug }) }}">{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</a></td>
-                {% endif %}
-                <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
+            {% if is_granted("ROLE_ADMIN") %}
+                <td><a href="{{ path('academico_show', {'slug' : solicitud.academico.slug }) }}">{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</a></td>
+            {% endif %}
+            <td><a href="{{ path('solicitud_show', { 'id': solicitud.id }) }}">{{ solicitud.tipo }}</a></td>
 
-                {% if solicitud.tipo == "Visitante" %}
-                    <td>
-                        {% for actividad in solicitud.actividades %}
-                            {{ actividad.anfitrion }}
-                        {% endfor %}
-                    </td>
+            {% if solicitud.tipo == "Visitante" %}
+                <td>
+                    {% for actividad in solicitud.actividades %}
+                        {{ actividad.anfitrion }}
+                    {% endfor %}
+                </td>
+            {% else %}
+                <td>
+                    {% for actividad in solicitud.actividades|slice(0,1) %}
+                        {{ actividad.lugar }}
+                    {% endfor %}
+                </td>
+            {% endif %}
+            <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
+
+            <td class="text-center">{% if solicitud.enviada == true %}
+                    <span class="badge badge-success">Enviada</span>
                 {% else %}
-                    <td>
-                        {% for actividad in solicitud.actividades|slice(0,1) %}
-                            {{ actividad.lugar }}
-                        {% endfor %}
-                    </td>
+                    <span class="badge badge-warning">En proceso</span>
                 {% endif %}
-                <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
-
-                <td class="text-center">{% if solicitud.enviada == true %}
-                        <span class="badge badge-success">Enviada</span>
-                    {% else %}
-                        <span class="badge badge-warning">En proceso</span>
-                    {% endif %}
-                </td>
-                {#<td>{{ solicitud.created|date }}</td>#}
-                <td class="text-center">
-                    {% if solicitud.sesion %}
-                        <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>
-                    {% else %}
-                        <i class="fa fa-ban text-secondary"></i>
-                    {% endif %}
-                </td>
-                <td class="text-center">
-                    {% if solicitud.dictamen %}
-                        <i class="fa fa-check text-success"></i>
-                    {% else %}
-                        <i class="fa fa-exclamation-triangle text-warning"></i>
-                    {% endif %}
-                </td>
+            </td>
+            {#<td>{{ solicitud.created|date }}</td>#}
+            <td class="text-center">
+                {% if solicitud.sesion %}
+                    <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>
+                {% else %}
+                    <i class="fa fa-ban text-secondary"></i>
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if solicitud.dictamen %}
+                    <i class="fa fa-check text-success"></i>
+                {% elseif solicitud.dictamen is null %}
+                    <i class="fa fa-exclamation-triangle text-warning"></i>
+                {% else %}
+                    <i class="fa fa-times text-danger"></i>
+                {% endif %}
+            </td>
             </tr>
         {% endfor %}
         </tbody>

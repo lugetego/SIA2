@@ -75,7 +75,10 @@ class CreateActividadVisitanteForm extends AbstractType {
                 elseif ($tipo === 'Sinodal')
                 {
                     $builder->remove('anfitrion')
-
+                        ->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
+                            'label'=>'Nombre del invitado',
+                            'required'=>false,
+                        ))
                         ->add('sinodalAlumno', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Nombre del alumno',
                             'required'=>false,
