@@ -168,6 +168,22 @@ class Solicitud
     private $enviada;
 
     /**
+     * @return mixed
+     */
+    public function getComplementaria()
+    {
+        return $this->complementaria;
+    }
+
+    /**
+     * @param mixed $complementaria
+     */
+    public function setComplementaria($complementaria)
+    {
+        $this->complementaria = $complementaria;
+    }
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="dictamen", type="boolean", nullable=true)
@@ -196,6 +212,12 @@ class Solicitud
     private $cancelada;
 
     /**
+     * One Solicitud has One Complementaria.
+     * @ORM\OneToOne(targetEntity="Complementaria", mappedBy="solicitud")
+     */
+    private $complementaria;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $created;
@@ -209,6 +231,8 @@ class Solicitud
      * Set created
      *
      * @param \DateTime $created
+     * @return Solicitud
+     *
      */
     public function setCreated($created)
     {
@@ -231,6 +255,7 @@ class Solicitud
      * Set modified
      *
      * @param \DateTime $modified
+     * @return Solicitud
      */
     public function setModified($modified)
     {
@@ -400,7 +425,6 @@ class Solicitud
         }
     }
 
-
     /**
      * Get planFile
      *
@@ -491,7 +515,6 @@ class Solicitud
         $this->financiamiento = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
     /**
      * Add actividades
      *
@@ -542,11 +565,6 @@ class Solicitud
      *
      * @param array
      */
-    //public function setFinanciamiento($financiamiento)
-    //{
-    //  $this->financiamiento = $financiamiento;
-    //}
-
     public function setFinanciamiento(array $financiamiento)
     {
         if (!empty($financiamiento) && $financiamiento === $this->financiamiento) {

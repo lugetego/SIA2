@@ -33,11 +33,10 @@
 <!-- Fixed navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-         <span class="navbar-brand mb-0 h1">Sistema de Información Académica</span>
+        <span class="navbar-brand mb-0 h1"><a class="navbar-brand" href="{{ path('dashboard') }}">Sistema de Información Académica</a></span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarCollapse">
             <ul class="navbar-nav">
                   <li class="nav-item dropdown">
@@ -54,22 +53,56 @@
     </div>
 </nav>
 
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 navbar-ligth bg-ligth sidebar pt-4">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    {% block sidebar %}
-
-                    {% endblock %}
-                </ul>
-            </div>
-        </nav>
-
-        <div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            {% block body %}{% endblock %}
-        </div><!-- /.container -->
+{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_PREVIOUS_ADMIN")%}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% if not is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('dashboard') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('academico') }}">Académicos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('sesion_index') }}">Sesiones de Consejo</a>
+                    </li>
+                {% endif  %}
+                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('dashboard', {'_switch_user': '_exit'}) }}"><strong>Finalizar sesión de {{app.user.username}}</strong></a>
+                    </li>
+                {% endif %}
+            </ul>
+       </div>
     </div>
+</nav>
+{% endif %}
+
+<div class="container-fluid mt-4">
+    {#<div class="row">#}
+    {#<nav class="col-md-2 navbar-ligth bg-ligth sidebar pt-4">#}
+    {#<div class="sidebar-sticky">#}
+    {#<ul class="nav flex-column">#}
+    {#{% block sidebar %}#}
+
+    {#{% endblock %}#}
+    {#</ul>#}
+    {#</div>#}
+    {#</nav>#}
+
+    {#<div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">#}
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+    {% block body %}{% endblock %}
+        </div>
+    </div>
+    {#</div><!-- /.container -->#}
+</div>
     {% block javascripts %}
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

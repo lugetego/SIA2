@@ -38,7 +38,6 @@ class SolicitudController extends Controller
         }
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        // $solicitudes = $user->getAcademico()->getSolicitudes();
 
         $em = $this->getDoctrine()->getManager();
 
@@ -287,7 +286,8 @@ class SolicitudController extends Controller
         ;
         $mailer->send($message);
 
-        return $this->redirectToRoute('solicitud_index');
+//        return $this->redirectToRoute('academico_show', {});
+        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
 
     }
 
@@ -325,7 +325,8 @@ class SolicitudController extends Controller
         ;
         $mailer->send($message);
 
-        return $this->redirectToRoute('solicitud_index');
+//        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
+        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
 
     }
 
@@ -377,6 +378,8 @@ class SolicitudController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+
 
     /**
      * Deletes a solicitud entity.

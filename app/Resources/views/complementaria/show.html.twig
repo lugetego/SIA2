@@ -1,0 +1,279 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2 class="text-secondary mt-4">Solicitud complementaria</h2>
+
+    {% if solicitud.enviada == true %}
+        <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
+    {% else %}
+        <h5><span class="badge badge-pill badge-warning float-right">Solicitud no enviada</span></h5>
+    {% endif %}
+
+    {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
+    <h4 class="text-muted my-4 border-bottom"><strong><a href="{{ path('academico_show', { 'slug': solicitud.academico.slug }) }}">{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</a></strong></h4>
+
+    {#<div class="card">#}
+        {#<div class="card-body">#}
+            {#<h3 class="text-secondary card-title">Datos de la solicitud original:</h3>#}
+            {#<a href="{{ path('solicitud_show', {'id': solicitud.id}) }}"><h3 class="text-info">{{ solicitud.tipo }} <small>#}
+                    {#{% if solicitud.ambito == true %}#}
+                        {#Nacional#}
+                    {#{% elseif solicitud.ambito is null %}#}
+                        {#Pendiente#}
+                    {#{% elseif solicitud.ambito == false %}#}
+                        {#Internacional#}
+                    {#{% endif %}#}
+                {#</small>#}
+            {#</h3></a>#}
+
+            {#{% if solicitud.isCancelada %}#}
+                {#<div class="alert alert-danger"><i class="fa fa-exclamation"></i> <strong>Solicitud CANCELADA</strong></div>#}
+            {#{% endif %}#}
+
+            {#{%  if solicitud.sesion %}#}
+                {#{% if is_granted("ROLE_ADMIN") %}#}
+                    {#<p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>#}
+                {#{% else %}#}
+                    {#<p class="lead text-muted">Sesión de Consejo: {{ solicitud.sesion|title }} <small>({{ solicitud.sesion.fecha|localizeddate('long', 'none') }})</small></p>#}
+                {#{% endif %}#}
+            {#{% else %}#}
+                {#<div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene asignada Sesión de Consejo Interno</div>#}
+            {#{% endif %}#}
+
+            {#<p class="lead text-secondary">Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong></p>#}
+
+            {#<div class="row">#}
+                {#{% if solicitud.cartaSolicitudName != null %}#}
+                    {#<div class="col-lg-4">#}
+                        {#<dl>#}
+                            {#<dt>Carta Solicitud</dt>#}
+                            {#<dd><a href="{{ vich_uploader_asset(solicitud, 'cartaSolicitudFile') }}"  target="_blank"/>{{ solicitud.cartaSolicitudName }}</a></dd>#}
+                        {#</dl>#}
+                    {#</div>#}
+                {#{% endif %}#}
+                {#{% if solicitud.cartaInvitacionName != null  %}#}
+                    {#<div class="col-lg-4">#}
+                        {#<dl>#}
+                            {#<dt>Carta invitación</dt>#}
+                            {#<dd><a href="{{ vich_uploader_asset(solicitud, 'cartaInvitacionFile') }}"  target="_blank"/>{{ solicitud.cartaInvitacionName }}</a></dd>#}
+                        {#</dl>#}
+                    {#</div>#}
+                {#{% endif %}#}
+                {#{% if solicitud.planName  != null  %}#}
+                    {#<div class="col-lg-4">#}
+                        {#<dl>#}
+                            {#<dt>Plan de trabajo</dt>#}
+                            {#<dd><a href="{{ vich_uploader_asset(solicitud, 'planFile') }}"  target="_blank"/>{{ solicitud.planName }}</a></dd>#}
+                        {#</dl>#}
+                    {#</div>#}
+                {#{% endif %}#}
+            {#</div>#}
+
+            {#<h3 class="text-secondary">Actividades a realizar</h3>#}
+
+            {#{% if solicitud.actividades|length == 0 %}#}
+                {#<div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académicas en una Solicitud de {{ solicitud.tipo }}.</div>#}
+                {#<div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tienen actividades académicas.</div>#}
+            {#{% endif %}#}
+
+            {#<div class="card">#}
+                {#<ul class="list-group list-group-flush">#}
+
+                    {#{% for actividad in actividades %}#}
+                        {#{% set actividadmodalshow = 'actividadshowModal'~ actividad.id  %}#}
+                        {#<li class="list-group-item">#}
+                            {#<div>#}
+                                {#<a href="#" data-toggle="modal" data-target="#{{ actividadmodalshow }}"><i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}</a>#}
+                            {#</div>#}
+                            {#{% if actividad.anfitrion %}#}
+                                {#<span class="label label-default">{{ actividad.anfitrion }}</span><br>#}
+                            {#{% endif %}#}
+
+
+                            {#{%  if actividad.nombreEvento %}#}
+                                {#<strong><span class="label label-default">{{ actividad.nombreEvento }}</span></strong><br>#}
+                            {#{% endif %}#}
+                            {#{% if actividad.tituloTrabajo %}#}
+                                {#<em><span class="label label-default">{{ actividad.tituloTrabajo }}</span></em><br>#}
+                            {#{% endif %}#}
+                            {#<span class="label label-default">{{ actividad.institucion }}</span>#}
+                            {#<span class="label label-default">{{ actividad.departamento }}</span>#}
+                            {#<br><span class="label label-default">{{ actividad.lugar }}</span>#}
+                            {#{% if actividad.sinodalAlumno %}#}
+                                {#<br>Estudiante: <span class="label label-default">{{ actividad.sinodalAlumno }}</span>#}
+                            {#{% endif %}#}
+                            {#{% if actividad.fechaActividad %}#}
+                                {#<br><em><span class="label label-default">{{ actividad.fechaActividad|localizeddate('long', 'none') }}</span></em>#}
+                            {#{% endif %}#}
+                        {#</li>#}
+
+                    {#{% endfor %}#}
+                {#</ul>#}
+            {#</div>#}
+            {#<hr>#}
+            {#<h3 class="text-secondary">Financiamiento</h3>#}
+            {#<h3 class="text-secondary">Financiamiento </h3>#}
+
+            {#{% if hasfinanciamiento == false %}#}
+                {#<div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene financiamiento.</div>#}
+            {#{% endif %}#}
+
+            {#<div class="row">#}
+                {#<div class="col-lg-8">#}
+                    {#<div class="table-responsive">#}
+                        {#<table class="table table-striped table-bordered table-hover">#}
+                            {#<thead>#}
+                            {#<tr>#}
+                                {#<th class="text-center">Fuente</th>#}
+                                {#<th class="text-center">CCM</th>#}
+                                {#<th class="text-center">PAPIIT</th>#}
+                                {#<th class="text-center">Conacyt</th>#}
+                                {#<th class="text-center">Otro</th>#}
+                            {#</tr>#}
+                            {#</thead>#}
+                            {#<tbody>#}
+                            {#{% set ccm = 0 %}#}
+                            {#{% set papiit = 0 %}#}
+                            {#{% set conacyt = 0 %}#}
+                            {#{% set otro = 0 %}#}
+
+                            {#{% for fin in solicitud.financiamiento %}#}
+                                {#<tr>#}
+                                    {#<td>{{ fin.nombre }}</td>#}
+                                    {#<td class="text-right">${{ fin.ccm|number_format(2)  }}</td>#}
+                                    {#<td class="text-right">${{ fin.papiit|number_format(2)  }}</td>#}
+                                    {#<td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>#}
+                                    {#<td class="text-left">{{ fin.otro  }}</td>#}
+                                {#</tr>#}
+                                {#{% set ccm = fin.ccm + ccm %}#}
+                                {#{% set papiit = fin.papiit + papiit %}#}
+                                {#{% set conacyt = fin.conacyt + conacyt %}#}
+                                {#{% set otro = fin.otro + otro %}#}
+
+                            {#{% endfor %}#}
+                            {#<tr>#}
+                                {#<td><h3><i class="fa fa-usd"></i> Total</h3></td>#}
+                                {#<td class="text-right"><h3><strong>${{ ccm|number_format(2) }}</strong></h3></td>#}
+                                {#<td class="text-right"><h3><strong>${{ papiit|number_format(2)  }}</strong></h3></td>#}
+                                {#<td class="text-right"><h3><strong>${{ conacyt|number_format(2)  }}</strong></h3></td>#}
+                                {#<td class="text-right"><h3><strong></strong></h3></td>#}
+                            {#</tr>#}
+                            {#</tbody>#}
+                        {#</table>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+    <div class="card my-4">
+        <div class="card-body">
+            <h3 class="text-secondary card-title">Solicitud complementaria: <a href="#financiamientomodal" data-toggle="modal" data-toggle="modal" data-target="#modalfinanciamiento"><i class="fa fa-edit"></i></a></h3>
+            <p class="lead text-secondary">Del <strong>{{ complementaria.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ complementaria.fechaFin|localizeddate('long', 'none') }}</strong></p>
+            <hr>
+            <h3 class="text-secondary">Financiamiento</h3>
+            {#<h3 class="text-secondary">Financiamiento </h3>#}
+
+            {% if hasfinanciamiento == false %}
+                <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud complementaria no tiene financiamiento.</div>
+            {% endif %}
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalfinanciamiento" tabindex="-1" role="dialog" aria-labelledby="modalfinanciamientoLabel">
+                <div class="modal-dialog modal-xlg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalfinanciamientoLabel">Financiamiento</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            {% render controller("SiaBundle:Complementaria:financiamiento", {'id': complementaria.id}) %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center">Fuente</th>
+                                <th class="text-center">CCM</th>
+                                <th class="text-center">PAPIIT</th>
+                                <th class="text-center">Conacyt</th>
+                                <th class="text-center">Otro</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% set ccm = 0 %}
+                            {% set papiit = 0 %}
+                            {% set conacyt = 0 %}
+                            {% set otro = 0 %}
+
+                            {% for fin in complementaria.financiamiento %}
+                                <tr>
+                                    <td>{{ fin.nombre }}</td>
+                                    <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
+                                    <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
+                                    <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
+                                    <td class="text-left">{{ fin.otro  }}</td>
+                                </tr>
+                                {% set ccm = fin.ccm + ccm %}
+                                {% set papiit = fin.papiit + papiit %}
+                                {% set conacyt = fin.conacyt + conacyt %}
+                                {% set otro = fin.otro + otro %}
+
+                            {% endfor %}
+                            <tr>
+                                <td><h3><i class="fa fa-usd"></i> Total</h3></td>
+                                <td class="text-right"><h3><strong>${{ ccm|number_format(2) }}</strong></h3></td>
+                                <td class="text-right"><h3><strong>${{ papiit|number_format(2)  }}</strong></h3></td>
+                                <td class="text-right"><h3><strong>${{ conacyt|number_format(2)  }}</strong></h3></td>
+                                <td class="text-right"><h3><strong></strong></h3></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-datepicker.es.min.js') }}"></script>
+    <script src="{{ asset('js/moment.js') }}"></script>
+    <script src="{{ asset('js/dates.js')}}"></script>
+
+    <script>
+
+        $(".date-picker").datepicker();
+
+        $(document).ready(function() {
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'es',
+                orientation: "auto bottom"
+
+            });
+
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.js-datepicker2').datepicker({
+                format: 'yyyy-MM-dd',
+                language: 'es',
+                orientation: "auto bottom"
+            });
+        });
+    </script>
+{% endblock %}
+

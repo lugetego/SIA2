@@ -4,7 +4,11 @@
 
 {% block body %}
 
-    <h3 class="text-secondary mt-4">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- Ejercicio {{ year }}</small></h3>
+    <h3 class="text-secondary mt-5">{{ academico.nombre|title }} {{ academico.apellido|title }} <small>- Ejercicio {{ year }}</small></h3>
+
+    {% if is_granted("ROLE_ADMIN")  %}
+        <a class="btn btn-sm btn-info" role="button" href="{{ path('dashboard', {'_switch_user': academico.user.username}) }}">Switch user {{ academico.user.username }}</a>
+    {% endif %}
 
     {% if year == 2018 %}
         <div class="lead my-4 text-secondary">Ver histórico: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2017' }) }}">2017</a></div>
@@ -45,32 +49,12 @@
         </div>
     </div>
 
+
     {% set totalErogado = asignacionLicencia + asignacionComision + asignacionVisitante %}
     {% set saldo = asignacionAnual - totalErogado %}
 
-    {#<div class="row my-2">#}
-        {#<div class="col-lg-6 lead text-info">#}
-            {#<h4>Total erogado asignación anual: <strong>${{ totalErogado |number_format(2)}}</strong></h4>#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="row my-2">#}
-        {#<div class="col-lg-6 lead text-info">#}
-            {#<h4>Saldo disponible: <strong>${{ saldo |number_format(2)}}</strong></h4>#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="row mb-2">#}
-        {#<div class="col-lg-6 lead text-info">#}
-            {#<h4>Total de días disponibles de licencia: <strong>{{ totalDias/2 - diasLicencia }}</strong></h4>#}
-        {#</div>#}
-    {#</div>#}
-    {#<div class="row mb-4">#}
-        {#<div class="col-lg-6 lead text-info">#}
-            {#<h4>Total de días disponibles de comisión: <strong>{{ totalDias/2 - diasComision }}</strong></h4>#}
-        {#</div>#}
-    {#</div>#}
-
     <div class="row mb-4">
-        <div class="col-md-4 text-secondary">
+        <div class="col-md-5 text-secondary">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Asignación anual</h5>
@@ -81,27 +65,27 @@
                                  <td class="text-right">${{ totalErogado |number_format(2)}}</td>
                              </tr>
                              <tr>
-                                 <td><strong>Saldo disponible:</strong></td>
-                                 <td class="text-right"><strong>${{ saldo |number_format(2)}}</strong></td>
+                                 <td><h5><strong>Saldo disponible:</strong></h5></td>
+                                 <td class="text-right"><h5><strong>${{ saldo |number_format(2)}}</strong></h5></td>
                              </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 text-secondary">
+        <div class="col-md-5 text-secondary">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total de días disponibles</h5>
                     <table class="table">
                         <tbody>
                         <tr>
-                            <td>Licencia:</td>
-                            <td class="text-right">{{ totalDias/2 - diasLicencia }}</td>
+                            <td><strong>Licencia:</strong></td>
+                            <td class="text-right"><strong>{{ totalDias/2 - diasLicencia }}</strong></td>
                         </tr>
                         <tr>
-                            <td>Comisión:</td>
-                            <td class="text-right">{{ totalDias/2 - diasComision }}</td>
+                            <td><strong>Comisión:</strong></td>
+                            <td class="text-right"><strong>{{ totalDias/2 - diasComision }}</strong></td>
                         </tr>
                         </tbody>
                     </table>
@@ -110,12 +94,10 @@
         </div>
     </div>
 
-    <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Crear nueva solicitud</a>
+    <a href="{{ path('solicitud_step') }}" class="btn btn-info mb-5" role="button"><i class="fa fa-plus"></i> Nueva solicitud</a>
 
-    {#{% if is_granted("ROLE_ADMIN")  %}#}
-        {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}" class="btn btn-info mb-5" role="button">Finalizar sesión de {{app.user.username}}</a>#}
-    {#{% endif  %}#}
-    <h3 class="mb-4 text-secondary">Solicitudes</h3>
+
+    <h4 class="mb-4 text-secondary">Solicitudes <span class="badge badge-pill badge-info">{{ solicitudes|length }}</span></h4>
 
     <table id="tablaSolicitudes" class="table table-hover table-bordered table-striped table-sm text-small">
 
@@ -165,9 +147,10 @@
                 {% endif %}
             </td>
             {#<td>{{ solicitud.created|date }}</td>#}
-            <td class="text-center">
+            <td class="text-left">
                 {% if solicitud.sesion %}
-                    <a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>
+                    {#<a href="{{ path('sesion_show', {'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion }}</a>#}
+                    {{ solicitud.sesion|title }} - {{ solicitud.sesion.fecha|localizeddate('long', 'none') }}
                 {% else %}
                     <i class="fa fa-ban text-secondary"></i>
                 {% endif %}
@@ -185,33 +168,5 @@
         {% endfor %}
         </tbody>
     </table>
-
-    {#<h4 class="text-secondary mb-4">Licencias</h4>#}
-    {# Solicitudes #}
-    {#<table class="table">#}
-        {#<thead>#}
-        {#<tr><th>Tipo de solicitud</th><th>Financiamiento CCM</th><th>Fecha</th></tr>#}
-        {#</thead>#}
-        {#<tbody>#}
-        {#{% for solicitud in solicitudes %}#}
-            {# Muestra solo licitudes del año vigente #}
-            {#{% if solicitud.fechaInicio >= '2018-01-01'  %}#}
-                {#<tr>#}
-                    {#<td>#}
-                        {#<a href="{{ path('solicitud_show', {'id': solicitud.id }) }}">{{ solicitud.tipo }}</a>#}
-                    {#</td>#}
-                    {#{% set ccm = 0 %}#}
-                    {#{% for financiamiento in solicitud.financiamiento %}#}
-                        {#{% set ccm = financiamiento.ccm + ccm %}#}
-                    {#{% endfor %}#}
-                    {#<td> ${{ ccm | number_format(2)}}</td>#}
-                    {#<td>#}
-                        {#del {{ solicitud.fechaInicio | localizeddate('medium', 'none', null, null, "d LLL") }} al {{ solicitud.fechaFin| localizeddate('medium', 'none', null, null, "d LLL Y") }}#}
-                    {#</td>#}
-                {#</tr>#}
-            {#{% endif %}#}
-        {#{% endfor %}#}
-        {#</tbody>#}
-    {#</table>#}
 
 {% endblock %}

@@ -59,6 +59,15 @@ class Sesion
     private $solicitudes;
 
     /**
+     * @var array $complementarias
+     *
+     * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Complementaria", mappedBy="sesion", cascade={"persist"})
+     *
+     * The mappedBy attribute designates the field in the entity that is the owner of the relationship.
+     */
+    private $complementarias;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
@@ -111,6 +120,7 @@ class Sesion
     public function __construct()
     {
         $this->solicitudes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->complementarias = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -202,7 +212,40 @@ class Sesion
         return $this->solicitudes;
     }
 
-        /**
+    /**
+     * Add complementarias
+     *
+     * @param \SiaBundle\Entity\Complementaria $complementarias
+     * @return Sesiones
+     */
+    public function addComplementarias(\SiaBundle\Entity\Complementaria $complementarias)
+    {
+        $this->complementarias[] = $complementarias;
+
+        return $this;
+    }
+
+    /**
+     * Remove complementarias
+     *
+     * @param \SiaBundle\Entity\Complementaria $complementarias
+     */
+    public function removeComplementarias(\SiaBundle\Entity\Complementaria $complementarias)
+    {
+        $this->complementarias->removeElement($complementarias);
+    }
+
+    /**
+     * Get complementarias
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComplementarias()
+    {
+        return $this->complementarias;
+    }
+
+    /**
      * Get slug
      *
      * @return string

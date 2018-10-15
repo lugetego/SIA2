@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Complementarias list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fechainicio</th>
+                <th>Fechafin</th>
+                <th>Financiamiento</th>
+                <th>Dictamen</th>
+                <th>Createdat</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for complementarium in complementarias %}
+            <tr>
+                <td><a href="{{ path('complementaria_show', { 'id': complementarium.id }) }}">{{ complementarium.id }}</a></td>
+                <td>{% if complementarium.fechaInicio %}{{ complementarium.fechaInicio|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if complementarium.fechaFin %}{{ complementarium.fechaFin|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if complementarium.financiamiento %}{{ complementarium.financiamiento|join(', ') }}{% endif %}</td>
+                <td>{% if complementarium.dictamen %}Yes{% else %}No{% endif %}</td>
+                <td>{% if complementarium.createdAt %}{{ complementarium.createdAt|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('complementaria_show', { 'id': complementarium.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('complementaria_edit', { 'id': complementarium.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('complementaria_new') }}">Create a new complementarium</a>
+        </li>
+    </ul>
+{% endblock %}

@@ -21,10 +21,9 @@
 {% endblock %}
 
 {% block body %}
-
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white boder-bottom">
-            <li  class="breadcrumb-item"><a href="{{ path('solicitud_index') }}">Solicitudes</a></li>
+            <li  class="breadcrumb-item"><a href="{{ path('dashboard') }}">Solicitudes</a></li>
             {#<li class="breadcrumb-item active" aria-current="page" ><a href="#">{{ solicitud.id }}</a></li>#}
             <li class="breadcrumb-item active" aria-current="page">{{ solicitud.id }} - {{ solicitud.tipo }}</li>
         </ol>
@@ -35,7 +34,15 @@
         </div>{% endfor %}
 
     {% if solicitud.enviada == true %}
-        <h4><span class="badge badge-pill badge-success float-right">Solicitud enviada</span></h4>
+        <h5>Solicitud <span class="badge badge-pill badge-success float-right">Enviada</span>
+            {% if solicitud.dictamen %}
+                <span class="badge badge-pill badge-success float-right">Aprobada</span>
+                {% elseif solicitud.dictamen is null %}
+                    <span class="badge badge-pill badge-warning float-right">En proceso</span>
+                {% else %}
+                <span class="badge badge-pill badge-danger float-right">No aprobada</span>
+            {% endif %}
+        </h5>
     {% else %}
         <h5><span class="badge badge-pill badge-warning float-right">Solicitud no enviada</span></h5>
     {% endif %}
@@ -57,8 +64,14 @@
     {% if solicitud.isCancelada %}
         <div class="alert alert-danger"><i class="fa fa-exclamation"></i> <strong>Solicitud CANCELADA</strong></div>
     {% endif %}
+
+
     {%  if solicitud.sesion %}
-        <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>
+        {% if is_granted("ROLE_ADMIN") %}
+            <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>
+        {% else %}
+            <p class="lead text-muted">Sesión de Consejo: {{ solicitud.sesion|title }} <small>({{ solicitud.sesion.fecha|localizeddate('long', 'none') }})</small></p>
+        {% endif %}
     {% else %}
         <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene asignada Sesión de Consejo Interno</div>
     {% endif %}
@@ -118,9 +131,17 @@
         </div>
     </div>
 
+    {#{% if solicitud.enviada and solicitud.dictamen %}#}
+        {#{% if solicitud.complementaria %}#}
+            {#<p class="lead border p-4"><a href="{{ path('complementaria_show', {'id' : solicitud.complementaria.id }) }}">Esta solicitud tiene una solicitud complementaria</a></p>#}
+        {#{% else %}#}
+            {#<a href="{{ path('complementaria_new', {'id': solicitud.id}) }}">Solicitud complementaria</a>#}
+        {#{% endif %}#}
+    {#{% endif %}#}
+
     <hr>
 
-    <h3 class="text-secondary">Actividades a realizar</h3>
+    <h3 class="text-secondary">Actividades</h3>
 
     {% if solicitud.actividades|length == 0 %}
         <div class="alert alert-info"><i class="fa fa-bullhorn"></i> Puede agregar una o más actividades académicas en una Solicitud de {{ solicitud.tipo }}.</div>
@@ -251,7 +272,7 @@
 
                     {% endfor %}
                     <tr>
-                        <td><h4><i class="fa fa-usd"></i> Total</td>
+                        <td><h4><i class="fa fa-usd"></i> Total</h4></td>
                         <td class="text-right"><h4><strong>${{ ccm|number_format(2) }}</strong></h4></td>
                         <td class="text-right"><h4><strong>${{ papiit|number_format(2)  }}</strong></h4></td>
                         <td class="text-right"><h4><strong>${{ conacyt|number_format(2)  }}</strong></h4></td>
@@ -262,7 +283,6 @@
             </div>
         </div>
     </div>
-
 
     {% if solicitud.enviada == false or is_granted("ROLE_ADMIN")%}
         <button type="button" class="btn btn-outline-primary btn-sm mb-5" data-toggle="modal" data-target="#modalfinanciamiento">
