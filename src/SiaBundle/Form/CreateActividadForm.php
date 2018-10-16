@@ -72,7 +72,7 @@ class CreateActividadForm extends AbstractType {
                         ->add('tituloTrabajo', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Título del trabajo',
                             'required'=>true,
-                            'read_only'=>true,
+                            'read_only'=>false,
                         ))
                         ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
                             'widget' => 'single_text',
