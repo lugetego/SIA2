@@ -54,4 +54,31 @@ class SolicitudRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findVisitantes()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT s FROM SiaBundle:Solicitud s
+                  WHERE s.tipo = :tipo AND SUBSTRING(s.fechaInicio,1,4) = :year 
+                  ORDER BY s.fechaInicio ASC"
+            )
+            ->setParameter('tipo', 'Visitante')
+            ->setParameter('year', '2018')
+            ->getResult();
+    }
+
+    public function findEventos($tipo)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT a FROM SiaBundle:Actividad a
+                  JOIN a.solicitud s 
+                  WHERE a.tipo = :tipo AND SUBSTRING(s.fechaInicio,1,4) = :year 
+                  ORDER BY s.fechaInicio ASC"
+            )
+            ->setParameter('tipo', $tipo)
+            ->setParameter('year', '2018')
+            ->getResult();
+    }
+
 }

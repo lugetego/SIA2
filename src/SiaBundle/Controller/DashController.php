@@ -52,8 +52,6 @@ class DashController extends Controller
 
     }
 
-
-
     /**
      * Lists all academicos .
      *
@@ -87,5 +85,67 @@ class DashController extends Controller
                 'user'=>$user,
             ));
         }
+    }
+
+    /**
+     * Visitantes
+     *
+     * @Route("/visitantes", name="visitantes")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function visitantesAction()
+    {
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')){
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $visitantes = $em->getRepository('SiaBundle:Solicitud')->findVisitantes(true);
+//        $coloquios = $em->getRepository('SiaBundle:Solicitud')->findColoquios();
+//        $conferencias = $em->getRepository('SiaBundle:Solicitud')->findConferencias();
+//        $congresos = $em->getRepository('SiaBundle:Solicitud')->findCongresos();
+//        $cursos = $em->getRepository('SiaBundle:Solicitud')->findCursos();
+//        $seminarios= $em->getRepository('SiaBundle:Solicitud')->findSeminarios();
+
+        return $this->render('dash/visitantes.html.twig', array(
+            'visitantes'=> $visitantes,
+//            'coloquios'=> $coloquios,
+//            'conferencias'=> $conferencias,
+//            'congresos'=> $congresos,
+//            'cursos'=> $cursos,
+//            'seminarios'=> $seminarios,
+        ));
+    }
+
+    /**
+     * Visitantes
+     *
+     * @Route("/eventos-academicos", name="eventos-academicos")
+     * @Method({"GET"})
+     * @Template()
+     */
+    public function eventosAction()
+    {
+        if (!$this->get('security.context')->isGranted('ROLE_ADMIN')){
+            throw $this->createAccessDeniedException();
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $coloquios = $em->getRepository('SiaBundle:Solicitud')->findEventos('Coloquio');
+//        $conferencias = $em->getRepository('SiaBundle:Solicitud')->findEventos('Conferencia');
+//        $congresos = $em->getRepository('SiaBundle:Solicitud')->findEventos('Congreso');
+//        $cursos = $em->getRepository('SiaBundle:Solicitud')->findEvento('Curso');
+//        $seminarios= $em->getRepository('SiaBundle:Solicitud')->findEvento('Seminario');
+
+        return $this->render('dash/eventos.html.twig', array(
+            'coloquios'=> $coloquios,
+//            'conferencias'=> $conferencias,
+//            'congresos'=> $congresos,
+//            'cursos'=> $cursos,
+//            'seminarios'=> $seminarios,
+        ));
     }
 }

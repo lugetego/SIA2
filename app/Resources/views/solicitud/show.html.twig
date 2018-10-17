@@ -34,7 +34,7 @@
         </div>{% endfor %}
 
     {% if solicitud.enviada == true %}
-        <h5>Solicitud <span class="badge badge-pill badge-success float-right">Enviada</span>
+        <h5 class="text-secondary"><span class="badge badge-pill badge-success float-right">Enviada</span>
             {% if solicitud.dictamen %}
                 <span class="badge badge-pill badge-success float-right">Aprobada</span>
                 {% elseif solicitud.dictamen is null %}
@@ -50,7 +50,7 @@
     {#<a href="{{ path('dashboard', {'_switch_user': '_exit'}) }}">Exit dash</a>#}
     <h3 class="text-muted my-4 border-bottom"><strong><a href="{{ path('academico_show', { 'slug': solicitud.academico.slug }) }}">{{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</a></strong></h3>
 
-    <h2 class="text-info">{{ solicitud.tipo }} <small>
+    <h4 class="text-info">Solicitud de {{ solicitud.tipo }} <small>
             {% if solicitud.ambito == true %}
                 Nacional
             {% elseif solicitud.ambito is null %}
@@ -59,7 +59,7 @@
                 Internacional
             {% endif %}
         </small>
-    </h2>
+    </h4>
 
     {% if solicitud.isCancelada %}
         <div class="alert alert-danger"><i class="fa fa-exclamation"></i> <strong>Solicitud CANCELADA</strong></div>
