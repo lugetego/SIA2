@@ -13,8 +13,8 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        {#<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->#}
+        {#<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">#}
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <!-- Custom CSS -->
@@ -97,7 +97,7 @@
 
     {#<div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">#}
     <div class="row">
-        <div class="col-md-10 offset-md-1">
+        <div class="col-xl-10 offset-xl-1 col-lg-12">
     {% block body %}{% endblock %}
         </div>
     </div>
