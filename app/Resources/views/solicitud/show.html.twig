@@ -73,7 +73,7 @@
             <p class="lead text-muted">Sesión de Consejo: {{ solicitud.sesion|title }} <small>({{ solicitud.sesion.fecha|localizeddate('long', 'none') }})</small></p>
         {% endif %}
     {% else %}
-        <div class="alert alert-warning"><i class="fa fa-exclamation"></i> La solicitud no tiene asignada Sesión de Consejo Interno</div>
+        <p class="lead text-muted">Próxima Sesión de Consejo Interno: {{ proxSesion.fecha|localizeddate('long', 'none') }}</p>
     {% endif %}
 
     <p class="text-secondary">Del <strong>{{ solicitud.fechaInicio|localizeddate('long', 'none') }}</strong> al <strong>{{ solicitud.fechaFin|localizeddate('long', 'none') }}</strong></p>
@@ -160,7 +160,6 @@
                     {% if actividad.anfitrion %}
                         <span class="label label-default">{{ actividad.anfitrion }}</span><br>
                     {% endif %}
-
 
                     {%  if actividad.nombreEvento %}
                         <strong><span class="label label-default">{{ actividad.nombreEvento }}</span></strong><br>

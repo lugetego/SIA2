@@ -124,9 +124,8 @@ class CreateActividadForm extends AbstractType {
                             'widget' => 'single_text',
                             'html5' => false,
                             'required' => false,));
-
                 }
-                elseif ($tipo === 'Conferencia')
+                elseif ($tipo === 'Conferencia' or $tipo === 'Congreso')
                 {
                     $builder
                         ->add('motivo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',array(
@@ -197,7 +196,6 @@ class CreateActividadForm extends AbstractType {
                             'html5' => false,
                             'required' => false));
                 }
-
                 elseif( $tipo != '') {
 
                     $builder

@@ -168,6 +168,13 @@ class Solicitud
     private $enviada;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaEnviada", type="date", nullable=true)
+     */
+    private $fechaEnviada;
+
+    /**
      * @return mixed
      */
     public function getComplementaria()
@@ -694,6 +701,22 @@ class Solicitud
     public function setEnviada($enviada)
     {
         $this->enviada = $enviada;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getFechaEnviada()
+    {
+        return $this->fechaEnviada;
+    }
+
+    /**
+     * @param \DateTime $fechaEnviada
+     */
+    public function setFechaEnviada($fechaEnviada)
+    {
+        $this->fechaEnviada = $fechaEnviada;
     }
 
     /**

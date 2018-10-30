@@ -190,13 +190,26 @@ class SolicitudController extends Controller
 
         $deleteForm = $this->createDeleteForm($solicitud);
 
+        $em = $this->getDoctrine()->getManager();
+        $now = new \DateTime('NOW');
+        $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($now);
+
+        $interval = $now->diff($proxSesion->getFecha());
+        // echo $interval->format('%Y-%m-%d %H:%i:%s');
+        // Cierre de recepción de solicitudes
+
+        if($interval->days < 1){
+            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
+        }
+
         $hasFinanciamiento = $solicitud->hasFinanciamento();
 
         return $this->render('solicitud/show.html.twig', array(
             'solicitud' => $solicitud,
             'delete_form' => $deleteForm->createView(),
             'actividades'=> $solicitud->getActividades(),
-            'hasfinanciamiento' => $hasFinanciamiento
+            'hasfinanciamiento' => $hasFinanciamiento,
+            'proxSesion' => $proxSesion,
         ));
     }
 
@@ -268,7 +281,11 @@ class SolicitudController extends Controller
         $academico = $user->getAcademico();
 
         $solicitud->setEnviada(true);
+        $solicitud->setFechaEnviada($fechaSolicitud);
+
         $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaSolicitud);
+//      Límite para enviar la solicitud a la siguiente sesión
+
         $solicitud->setSesion($proxSesion);
         $em->persist($solicitud);
         $em->flush();

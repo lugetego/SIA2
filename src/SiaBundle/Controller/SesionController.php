@@ -27,12 +27,16 @@ class SesionController extends Controller
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $today = new \DateTime('NOW');
         $em = $this->getDoctrine()->getManager();
 
         $sesions = $em->getRepository('SiaBundle:Sesion')->findBy(array(),array('fecha'=>'DESC'));
 
+        $proximaSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($today);
+
         return $this->render(':sesion:index.html.twig', array(
             'sesions' => $sesions,
+            'proximaSesion' => $proximaSesion,
         ));
     }
 
@@ -77,11 +81,18 @@ class SesionController extends Controller
      */
     public function recomendacionesAction(Sesion $sesion)
     {
-
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+        $licencias = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Licencia', $sesion);
+        $comisiones = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Comisión', $sesion);
+        $visitantes = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Visitante', $sesion);
 
         return $this->render('sesion/recomendaciones.html.twig', array(
             'sesion' => $sesion,
+            'licencias' => $licencias,
+            'comisiones' => $comisiones,
+            'visitantes' => $visitantes,
         ));
     }
 
@@ -118,9 +129,6 @@ class SesionController extends Controller
             'page-height'=> 333,
             'user-style-sheet'=> $path = $this->get('kernel')->getRootDir() . '/../web/css/pdf.css'
         ,
-
-
-
 
         );
 

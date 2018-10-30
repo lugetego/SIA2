@@ -18,12 +18,26 @@ class SesionRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT s FROM SiaBundle:Sesion s
-                     WHERE s.fecha >= :fechaSolicitud
-                ORDER BY s.fecha DESC'
+                     WHERE s.fecha > :fechaSolicitud
+                ORDER BY s.fecha ASC '
             )
             ->setParameter('fechaSolicitud', $fechaSolicitud)
             ->setMaxResults(1)
             ->getSingleResult();
+    }
+
+    public function findSolicitudes($tipo, $sesion)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT s FROM SiaBundle:Solicitud s
+                  JOIN s.sesion se
+                  WHERE s.tipo = :tipo AND se = :sesion 
+                  ORDER BY s.fechaEnviada ASC"
+            )
+            ->setParameter('tipo', $tipo)
+            ->setParameter('sesion', $sesion)
+            ->getResult();
     }
 
 }

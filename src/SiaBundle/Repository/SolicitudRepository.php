@@ -50,7 +50,6 @@ class SolicitudRepository extends EntityRepository
                      or s.sesion IS NULL
                 ORDER BY s.created ASC'
             )
-
             ->getResult();
     }
 
