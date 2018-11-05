@@ -131,13 +131,13 @@
         </div>
     </div>
 
-    {#{% if solicitud.enviada and solicitud.dictamen %}#}
-        {#{% if solicitud.complementaria %}#}
-            {#<p class="lead border p-4"><a href="{{ path('complementaria_show', {'id' : solicitud.complementaria.id }) }}">Esta solicitud tiene una solicitud complementaria</a></p>#}
-        {#{% else %}#}
-            {#<a href="{{ path('complementaria_new', {'id': solicitud.id}) }}">Solicitud complementaria</a>#}
-        {#{% endif %}#}
-    {#{% endif %}#}
+    {% if solicitud.enviada and solicitud.dictamen %}
+        {% if solicitud.complementaria %}
+            <p class="lead border p-4"><a href="{{ path('complementaria_show', {'id' : solicitud.complementaria.id }) }}">Esta solicitud tiene una solicitud complementaria</a></p>
+        {% else %}
+            <a href="{{ path('complementaria_new', {'id': solicitud.id}) }}"><i class="fa fa-pencil"></i> Solicitud complementaria</a>
+        {% endif %}
+    {% endif %}
 
     <hr>
 

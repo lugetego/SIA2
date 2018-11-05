@@ -47,7 +47,10 @@ class ComplementariaController extends Controller
         $complementaria->setSolicitud($solicitud);
         $complementaria->setFechaInicio($solicitud->getFechaInicio());
         $complementaria->setFechaFin($solicitud->getFechaFin());
-        $complementaria->setFinanciamiento($solicitud->getFinanciamiento());
+
+        if($solicitud->hasFinanciamento()) {
+            $complementaria->setFinanciamiento($solicitud->getFinanciamiento());
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($complementaria);

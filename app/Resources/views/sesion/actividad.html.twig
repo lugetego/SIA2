@@ -1,4 +1,4 @@
-<em>{{ actividad.tipo }}. </em>
+<em>{{ actividad.tipo }}: </em>
 
 {% if actividad.nombreEvento != null %}
 <em>{{ actividad.nombreEvento }}. </em>
@@ -12,9 +12,9 @@
 
 {% if actividad.tituloTrabajo != null %}
     {%  if actividad.tipo == 'Investigación'%}
-        Tema: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+        realizar investigación sobre: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {% else %}
-        Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+        y participar con la plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {% endif %}
 {% endif %}
 

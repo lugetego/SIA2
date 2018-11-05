@@ -1,6 +1,25 @@
-Estimado {{ academico.nombre }} {{ academico.apellido }},
+Estimado {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }},
 
-Tu solicitud ha sido enviada a la Secretaría Académica y será revisada por el Consejo Interno.
+Su solicitud ha sido recibida en la Secretaría Académica y será revisada por el Consejo Interno.
+
+{{ solicitud.tipo }}
+
+Del{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}
+
+{#Actividades a realizar:#}
+
+{#{% if solicitud.tipo == 'Visitante' %}#}
+    {#{% for actividad in solicitud.actividades %}#}
+        {#{% include 'sesion/actividadVisitante.html.twig' with {'actividad': actividad } %}</li>#}
+    {#{% endfor %}#}
+{#{% else %}#}
+    {#{% for actividad in solicitud.actividades %}#}
+        {#{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}#}
+    {#{% endfor %}#}
+{#{% endif %}#}
+
+http://http://gaspacho.matmor.unam.mx/sia/solicitud/{{ solicitud.id }}
+
 
 Secretaría Académica
 Centro de Ciencias Matemáticas

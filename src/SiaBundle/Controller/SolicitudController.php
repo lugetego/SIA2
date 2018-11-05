@@ -271,7 +271,7 @@ class SolicitudController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $fechaSolicitud = new \DateTime('NOW');
-        $fechaSolicitud= $fechaSolicitud->format("Y-m-d");
+//        $fechaEnvio = $fechaSolicitud->format("Y-m-d");
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
@@ -296,10 +296,11 @@ class SolicitudController extends Controller
         $message = \Swift_Message::newInstance()
             ->setSubject('Solicitud '.$solicitud->getId())
             ->setFrom('webmaster@matmor.unam.mx')
-//            ->setTo(array($user->getEmail() ))
-            ->setTo('gerardo@matmor.unam.mx')
-//            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
-            ->setBody($this->renderView('solicitud/mail.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+//            ->setTo('miguel@matmor.unam.mx')
+            ->setTo(array($user->getEmail()))
+            ->setCc('vorozco@matmor.unam.mx')
+            ->setBcc(array('webmaster@matmor.unam.mx'))
+            ->setBody($this->renderView('solicitud/mail.txt.twig', array('solicitud' => $solicitud)))
         ;
         $mailer->send($message);
 
