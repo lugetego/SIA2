@@ -68,7 +68,7 @@
 
     {%  if solicitud.sesion %}
         {% if is_granted("ROLE_ADMIN") %}
-            <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a></p>
+            <p class="lead text-muted">Sesión de Consejo <a href="{{ path('sesion_show', { 'slug': solicitud.sesion.slug }) }}">{{ solicitud.sesion|title }}</a> <small>({{ solicitud.sesion.fecha|localizeddate('long', 'none') }})</small></p>
         {% else %}
             <p class="lead text-muted">Sesión de Consejo: {{ solicitud.sesion|title }} <small>({{ solicitud.sesion.fecha|localizeddate('long', 'none') }})</small></p>
         {% endif %}
@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    {% if solicitud.enviada and solicitud.dictamen %}
+    {% if solicitud.enviada and solicitud.dictamen and is_granted("ROLE_ADMIN") %}
         {% if solicitud.complementaria %}
             <p class="lead border p-4"><a href="{{ path('complementaria_show', {'id' : solicitud.complementaria.id }) }}">Esta solicitud tiene una solicitud complementaria</a></p>
         {% else %}

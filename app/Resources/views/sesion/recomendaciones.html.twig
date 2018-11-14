@@ -30,23 +30,23 @@
         <div class="col-md6">
             <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
                 <span data-feather="file"></span>
-                Recomendaciones {{ sesion.name }}
+                <strong>Ver las recomendaciones en línea {{ sesion.name }}</strong>
             </a>
         </div>
         <div class="col-md6">
-            <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><i class="fa fa-file"></i> PDF</a>
+            <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><strong><i class="fa fa-file"></i> Generar archivo PDF</strong></a>
         </div>
     </div>
 
     {% set ordenmodaledit = 'ordeneditModal'~ sesion.id  %}
 
     <br>
-    <p><strong>Orden del día</strong>  <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
+    <h5 class="border-bottom pb-2"><strong>Orden del día</strong>  <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ ordenmodaledit }}">
             <i class="fa fa-edit"></i>
-        </button></p>
+        </button></h5>
 
     <div>
-        {{ sesion.orden|nl2br }}
+        {{ sesion.orden|raw }}
     </div>
 
     <!-- Modal -->
@@ -72,7 +72,7 @@
 
     {% for solicitud in licencias %}
 
-        <p>L{{ i }}. <strong>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
@@ -137,9 +137,9 @@
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
-        <p>Incluyendo los días que {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-habrá utilizado 9 días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual.
+        <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
+habrá utilizado {{ solicitud.dias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
+CCM un total de {{ solicitud.dias }} días durante el 2018 y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual.
 </p>
 
         {% set i = i + 1 %}
@@ -150,7 +150,7 @@ CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico
 
     {% for solicitud in comisiones %}
 
-        <p>C{{ i }}. <strong>{{ solicitud.academico.apellido }} {{ solicitud.academico.nombre }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
@@ -215,9 +215,9 @@ CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
-        <p>Incluyendo los días que {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-            habrá utilizado 9 días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual.
+        <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
+            habrá utilizado {{ solicitud.dias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
+            CCM un total de {{ solicitud.dias }} días durante el 2018 y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual.
         </p>
 
         {% set i = i + 1 %}
@@ -296,16 +296,45 @@ CCM un total de 9 días durante el 2018 y habrá erogado ${{ solicitud.academico
         {% set i = i + 1 %}
     {% endfor %}
 
+    {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}
+
+    <h5 class="border-top pt-2"><strong>Estudiantes</strong>
+        <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ alumnosmodaledit }}">
+            <i class="fa fa-edit"></i>
+        </button>
+    </h5>
+
+    <div>
+        {{ sesion.estudiantes|raw }}
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ alumnosmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ alumnosmodaledit }}Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="{{ alumnosmodaledit }}Label"> {{ sesion.name }} </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {% render controller("SiaBundle:Sesion:estudiantes", {'slug': sesion.slug}) %}
+                </div>
+            </div>
+        </div>
+    </div>
+
     {% set variosmodaledit = 'varioseditModal'~ sesion.id  %}
 
-    <p><strong>Varios</strong>
+    <h5 class="border-top pt-2"><strong>Varios</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>
-    </p>
+    </h5>
 
     <div>
-        {{ sesion.varios|nl2br }}
+        {{ sesion.varios|raw }}
     </div>
 
     <!-- Modal -->

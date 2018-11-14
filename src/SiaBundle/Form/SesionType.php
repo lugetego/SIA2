@@ -23,14 +23,18 @@ class SesionType extends AbstractType
                 array(
                     'label'=>'Nombre',
                     'required'=>true,))
-            ->add('orden','Symfony\Component\Form\Extension\Core\Type\TextareaType',
-                array(
-                    'label'=>'Orden del día',
-                    'required'=>false,))
-            ->add('varios','Symfony\Component\Form\Extension\Core\Type\TextareaType',
-                array(
-                    'label'=>'Varios',
-                    'required'=>false,))
+            ->add('orden', 'ckeditor', array(
+                'config_name' => 'sesion_config',
+                'required' => false,
+            ))
+            ->add('estudiantes', 'ckeditor', array(
+                'config_name' => 'sesion_config',
+                'required' => false,
+            ))
+            ->add('varios', 'ckeditor', array(
+                'config_name' => 'sesion_config',
+                'required' => false,
+            ))
         ;
     }
 

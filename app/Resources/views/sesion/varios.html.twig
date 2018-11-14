@@ -1,7 +1,6 @@
 <div class="form-group">
     {{ form_start(edit_form, {'action': path('sesion_varios', { 'slug': sesion.slug})}) }}
     <div class="row">
-
         {% if edit_form.varios is defined %}
             <div class="form-group col-md-12">
                 {{ form_label(edit_form.varios) }}
@@ -9,7 +8,6 @@
                 <div class="text-danger">{{ form_errors(edit_form.varios) }}</div>
             </div>
         {% endif %}
-
     </div>
     <input type="submit" value="Guardar" class="btn btn-primary my-4"/>
     {{ form_end(edit_form) }}

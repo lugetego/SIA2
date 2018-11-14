@@ -53,6 +53,17 @@ class Academico
     protected $nacimiento;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    protected $titulo;
+
+    /**
+     * @ORM\Column(type="string", length=2)
+     */
+    protected $genero;
+
+
+    /**
      * @ORM\Column(type="string", length=13)
      * @Assert\NotBlank()
      */
@@ -199,6 +210,38 @@ class Academico
     /**
      * @return mixed
      */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * @param mixed $titulo
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGenero()
+    {
+        return $this->genero;
+    }
+
+    /**
+     * @param mixed $genero
+     */
+    public function setGenero($genero)
+    {
+        $this->genero = $genero;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getNacimiento()
     {
         return $this->nacimiento;
@@ -336,7 +379,6 @@ class Academico
         return $this->slug;
     }
 
-
     /**
      * @return boolean
      */
@@ -370,5 +412,23 @@ class Academico
                 $erogadoLicencias += $solicitud->getTotalAsignacion();
         }
         return $erogadoLicencias;
+    }
+
+    /**
+     * Días Licencias
+     * Regresa el total días solicitados por licencia
+     *
+     */
+    public function diasLicencias()
+    {
+//        Condicionar año, status de licencia, fecha límite
+
+        $diasLicencia = 0;
+
+        foreach ($this->solicitudes as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia')
+                $diasLicencia += $solicitud->getDias();
+        }
+        return $diasLicencia;
     }
 }

@@ -133,3 +133,9 @@ knp_snappy:
         enabled:    false
         binary:     /usr/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
         options:    []
+
+ivory_ck_editor:
+    configs:
+        sesion_config:
+            toolbar: standard
+            language: es

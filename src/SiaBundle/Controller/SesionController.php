@@ -105,14 +105,21 @@ class SesionController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
+        $em = $this->getDoctrine()->getManager();
+        $licencias = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Licencia', $sesion);
+        $comisiones = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Comisión', $sesion);
+        $visitantes = $em->getRepository('SiaBundle:Sesion')->findSolicitudes('Visitante', $sesion);
+
         $html = $this->renderView('sesion/recomendacionespdf.html.twig', array(
             'sesion'=>$sesion,
+            'licencias' => $licencias,
+            'comisiones' => $comisiones,
+            'visitantes' => $visitantes,
         ));
 
         $filename = sprintf($sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
 
         $footer = $this->renderView('sesion/footer.html.twig');
-
 
         $pdfOptions = array(
 
@@ -129,7 +136,6 @@ class SesionController extends Controller
             'page-height'=> 333,
             'user-style-sheet'=> $path = $this->get('kernel')->getRootDir() . '/../web/css/pdf.css'
         ,
-
         );
 
         return new Response(
@@ -138,7 +144,6 @@ class SesionController extends Controller
             [
                 'Content-Type'        => 'application/pdf',
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
-
             ]
         );
     }
@@ -207,6 +212,7 @@ class SesionController extends Controller
         $editForm->remove('name');
         $editForm->remove('fecha');
         $editForm->remove('varios');
+        $editForm->remove('estudiantes');
 
         $editForm->handleRequest($request);
 
@@ -217,6 +223,38 @@ class SesionController extends Controller
         }
 
         return $this->render('sesion/orden.html.twig', array(
+            'sesion' => $sesion,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing sesion entity.
+     *
+     * @Route("/{slug}/estudiantes", name="sesion_estudiantes")
+     * @Method({"GET", "POST"})
+     */
+    public function estudiantesAction(Request $request, Sesion $sesion)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $deleteForm = $this->createDeleteForm($sesion);
+        $editForm = $this->createForm('SiaBundle\Form\SesionType', $sesion);
+        $editForm->remove('name');
+        $editForm->remove('fecha');
+        $editForm->remove('orden');
+        $editForm->remove('varios');
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('sesion_recomendaciones', array('slug' => $sesion->getSlug()));
+        }
+
+        return $this->render('sesion/varios.html.twig', array(
             'sesion' => $sesion,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -238,6 +276,7 @@ class SesionController extends Controller
         $editForm->remove('name');
         $editForm->remove('fecha');
         $editForm->remove('orden');
+        $editForm->remove('estudiantes');
 
         $editForm->handleRequest($request);
 

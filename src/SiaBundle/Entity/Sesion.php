@@ -43,6 +43,13 @@ class Sesion
     protected $orden;
 
     /**
+     * @var string $estudiantes
+     *
+     * @ORM\Column(name="estudiantes", type="text", nullable=true)
+     */
+    protected $estudiantes;
+
+    /**
      * @var string $varios
      *
      * @ORM\Column(name="varios", type="text", nullable=true)
@@ -276,6 +283,22 @@ class Sesion
     public function setOrden($orden)
     {
         $this->orden = $orden;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEstudiantes()
+    {
+        return $this->estudiantes;
+    }
+
+    /**
+     * @param string $estudiantes
+     */
+    public function setEstudiantes($estudiantes)
+    {
+        $this->estudiantes = $estudiantes;
     }
 
     /**

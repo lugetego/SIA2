@@ -291,15 +291,17 @@ class SolicitudController extends Controller
         $em->flush();
 
         // Obtiene correo y msg de la forma de contacto
+        $subject = 'Solicitud '. $solicitud->getAcademico()->getNombre() . ' '. $solicitud->getTipo() .' ' . $solicitud->getAcademico()->getApellido();
+
         $mailer = $this->get('mailer');
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('Solicitud '.$solicitud->getId())
+            ->setSubject($subject)
             ->setFrom('webmaster@matmor.unam.mx')
 //            ->setTo('miguel@matmor.unam.mx')
             ->setTo(array($user->getEmail()))
             ->setCc('vorozco@matmor.unam.mx')
-            ->setBcc(array('webmaster@matmor.unam.mx'))
+            ->setBcc(array('rudos@matmor.unam.mx'))
             ->setBody($this->renderView('solicitud/mail.txt.twig', array('solicitud' => $solicitud)))
         ;
         $mailer->send($message);

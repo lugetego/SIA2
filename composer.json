@@ -22,6 +22,7 @@
         "craue/formflow-bundle": "~3.0@dev",
         "doctrine/doctrine-bundle": "~1.4",
         "doctrine/orm": "^2.4.8",
+        "egeloen/ckeditor-bundle": "^4.0",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "h4cc/wkhtmltopdf-amd64": "0.12.x",
         "incenteev/composer-parameter-handler": "~2.0",

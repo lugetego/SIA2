@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "fa33d11e5afc7ea2cd2b425da5e6f841",
-    "content-hash": "c6b096c0cfbed234286b9f3e2dd50b50",
+    "content-hash": "24176eb72873011ad8cd1e887bc49494",
     "packages": [
         {
             "name": "beberlei/DoctrineExtensions",
@@ -67,7 +66,7 @@
                 "doctrine",
                 "orm"
             ],
-            "time": "2018-05-28 08:54:30"
+            "time": "2018-05-28T08:54:30+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -111,7 +110,7 @@
                 "slug",
                 "transliterator"
             ],
-            "time": "2017-04-04 11:38:05"
+            "time": "2017-04-04T11:38:05+00:00"
         },
         {
             "name": "craue/formflow-bundle",
@@ -180,7 +179,7 @@
                 "symfony4",
                 "wizard"
             ],
-            "time": "2018-01-03 08:25:18"
+            "time": "2018-01-03T08:25:18+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -248,7 +247,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2015-08-31 12:32:49"
+            "time": "2015-08-31T12:32:49+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -318,7 +317,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-12-19 05:03:47"
+            "time": "2015-12-19T05:03:47+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -384,7 +383,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "doctrine/common",
@@ -457,7 +456,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2015-12-25 13:10:16"
+            "time": "2015-12-25T13:10:16+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -528,7 +527,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2017-07-22 20:44:48"
+            "time": "2017-07-22T20:44:48+00:00"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -609,7 +608,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2016-08-10 15:35:22"
+            "time": "2016-08-10T15:35:22+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -697,7 +696,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2018-03-27 09:22:12"
+            "time": "2018-03-27T09:22:12+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -764,7 +763,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -818,7 +817,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -872,7 +871,7 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -948,7 +947,118 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-12-17 02:57:51"
+            "time": "2017-12-17T02:57:51+00:00"
+        },
+        {
+            "name": "egeloen/ckeditor-bundle",
+            "version": "4.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egeloen/IvoryCKEditorBundle.git",
+                "reference": "c974b85b79ca9186809eb8625e53544b388b0411"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egeloen/IvoryCKEditorBundle/zipball/c974b85b79ca9186809eb8625e53544b388b0411",
+                "reference": "c974b85b79ca9186809eb8625e53544b388b0411",
+                "shasum": ""
+            },
+            "require": {
+                "egeloen/json-builder": "^1.0|^2.0",
+                "php": ">=5.3.3",
+                "symfony/dependency-injection": "^2.2|^3.0",
+                "symfony/form": "^2.2|^3.0",
+                "symfony/framework-bundle": "^2.2|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0|^5.0",
+                "symfony/phpunit-bridge": "^2.7|^3.0",
+                "symfony/yaml": "^2.0.5|^3.0",
+                "twig/twig": "^1.12"
+            },
+            "suggest": {
+                "egeloen/form-extra-bundle": "Allows to load CKEditor asynchronously",
+                "twig/twig": "Allows to use Twig templates"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ivory\\CKEditorBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                }
+            ],
+            "description": "Provides a CKEditor integration for your Symfony2 Project.",
+            "keywords": [
+                "CKEditor"
+            ],
+            "time": "2016-10-28T16:59:01+00:00"
+        },
+        {
+            "name": "egeloen/json-builder",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egeloen/ivory-json-builder.git",
+                "reference": "c6afb2c53ac1070144d5d3330d5f86567b132d23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egeloen/ivory-json-builder/zipball/c6afb2c53ac1070144d5d3330d5f86567b132d23",
+                "reference": "c6afb2c53ac1070144d5d3330d5f86567b132d23",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "symfony/property-access": "~2.2|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~0.6",
+                "symfony/phpunit-bridge": "~2.7|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ivory\\JsonBuilder\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric GELOEN",
+                    "email": "geloen.eric@gmail.com"
+                }
+            ],
+            "description": "JSON builder with escaping control for PHP 5.3+",
+            "keywords": [
+                "Escape",
+                "builder",
+                "json"
+            ],
+            "time": "2015-12-06T13:20:24+00:00"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1015,7 +1125,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2015-09-15 13:15:07"
+            "time": "2015-09-15T13:15:07+00:00"
         },
         {
             "name": "gedmo/doctrine-extensions",
@@ -1096,7 +1206,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2018-05-08 12:28:40"
+            "time": "2018-05-08T12:28:40+00:00"
         },
         {
             "name": "h4cc/wkhtmltopdf-amd64",
@@ -1141,7 +1251,7 @@
                 "thumbnail",
                 "wkhtmltopdf"
             ],
-            "time": "2018-01-15 06:57:33"
+            "time": "2018-01-15T06:57:33+00:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1192,7 +1302,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2018-02-13 18:05:56"
+            "time": "2018-02-13T18:05:56+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -1234,7 +1344,7 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20 16:49:30"
+            "time": "2014-11-20T16:49:30+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1284,7 +1394,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2014-01-12 16:20:24"
+            "time": "2014-01-12T16:20:24+00:00"
         },
         {
             "name": "jms/metadata",
@@ -1335,7 +1445,7 @@
                 "xml",
                 "yaml"
             ],
-            "time": "2016-12-05 10:18:33"
+            "time": "2016-12-05T10:18:33+00:00"
         },
         {
             "name": "knplabs/knp-snappy",
@@ -1400,7 +1510,7 @@
                 "thumbnail",
                 "wkhtmltopdf"
             ],
-            "time": "2015-11-17 13:16:27"
+            "time": "2015-11-17T13:16:27+00:00"
         },
         {
             "name": "knplabs/knp-snappy-bundle",
@@ -1457,7 +1567,7 @@
                 "pdf",
                 "snappy"
             ],
-            "time": "2015-11-11 17:40:14"
+            "time": "2015-11-11T17:40:14+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -1534,7 +1644,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2016-11-11 18:43:20"
+            "time": "2016-11-11T18:43:20+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1612,7 +1722,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2017-06-19 01:22:40"
+            "time": "2017-06-19T01:22:40+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1661,7 +1771,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-06-08 15:26:40"
+            "time": "2018-06-08T15:26:40+00:00"
         },
         {
             "name": "psr/log",
@@ -1708,7 +1818,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -1768,7 +1878,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2018-06-07 06:21:00"
+            "time": "2018-06-07T06:21:00+00:00"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -1838,7 +1948,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-12-14 19:03:23"
+            "time": "2017-12-14T19:03:23+00:00"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -1882,7 +1992,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2017-03-29 09:29:53"
+            "time": "2017-03-29T09:29:53+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -1947,7 +2057,7 @@
                 "translatable",
                 "tree"
             ],
-            "time": "2017-12-24 16:06:50"
+            "time": "2017-12-24T16:06:50+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2001,7 +2111,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-01-23 07:37:21"
+            "time": "2018-01-23T07:37:21+00:00"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -2072,7 +2182,7 @@
                 "minification"
             ],
             "abandoned": "symfony/webpack-encore-pack",
-            "time": "2017-07-14 07:26:46"
+            "time": "2017-07-14T07:26:46+00:00"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -2135,7 +2245,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2018-03-05 14:51:36"
+            "time": "2018-03-05T14:51:36+00:00"
         },
         {
             "name": "symfony/polyfill-apcu",
@@ -2191,7 +2301,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2246,7 +2356,7 @@
                 "polyfill",
                 "portable"
             ],
-            "time": "2018-04-30 19:57:29"
+            "time": "2018-04-30T19:57:29+00:00"
         },
         {
             "name": "symfony/polyfill-intl-icu",
@@ -2304,7 +2414,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-25 14:53:50"
+            "time": "2018-04-25T14:53:50+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2363,7 +2473,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -2421,7 +2531,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -2477,7 +2587,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -2533,7 +2643,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-php70",
@@ -2592,7 +2702,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-util",
@@ -2644,7 +2754,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2018-04-26 10:06:28"
+            "time": "2018-04-26T10:06:28+00:00"
         },
         {
             "name": "symfony/security-acl",
@@ -2705,7 +2815,7 @@
             ],
             "description": "Symfony Security Component - ACL (Access Control List)",
             "homepage": "https://symfony.com",
-            "time": "2015-12-28 09:39:09"
+            "time": "2015-12-28T09:39:09+00:00"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2764,7 +2874,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2017-10-19 01:06:41"
+            "time": "2017-10-19T01:06:41+00:00"
         },
         {
             "name": "symfony/symfony",
@@ -2904,7 +3014,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2018-05-25 12:03:11"
+            "time": "2018-05-25T12:03:11+00:00"
         },
         {
             "name": "twig/extensions",
@@ -2960,7 +3070,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2017-06-08 18:19:53"
+            "time": "2017-06-08T18:19:53+00:00"
         },
         {
             "name": "twig/twig",
@@ -3025,7 +3135,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-03-20 04:25:58"
+            "time": "2018-03-20T04:25:58+00:00"
         },
         {
             "name": "vich/uploader-bundle",
@@ -3096,7 +3206,7 @@
                 "file uploads",
                 "upload"
             ],
-            "time": "2014-12-12 10:26:46"
+            "time": "2014-12-12T10:26:46+00:00"
         }
     ],
     "packages-dev": [
@@ -3152,7 +3262,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2017-12-07 15:36:41"
+            "time": "2017-12-07T15:36:41+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -3210,7 +3320,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2018-04-25 14:40:02"
+            "time": "2018-04-25T14:40:02+00:00"
         }
     ],
     "aliases": [],

@@ -2,7 +2,7 @@
 Centro de Ciencias Matemáticas para llevar a cabo {{ actividad.tipo }} {% if actividad.tituloTrabajo %}con título {{ actividad.tituloTrabajo }}{% endif %} con
 {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }}. Estadía con duración de
 {{ actividad.solicitud.dias }} días, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.
-{{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }}
+{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }}
 con los recursos que se especifican en la siguiente tabla:
 
 

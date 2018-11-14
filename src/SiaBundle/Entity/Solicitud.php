@@ -614,7 +614,6 @@ class Solicitud
      */
     public function getDias()
     {
-
 //    $datetime1 = new DateTime('2009-10-11');
 //    $datetime2 = new DateTime('2009-10-13');
 //    $interval = $datetime1->diff($datetime2);
