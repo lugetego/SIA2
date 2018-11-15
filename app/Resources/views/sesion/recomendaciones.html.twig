@@ -138,8 +138,8 @@
 
         <p>{{ solicitud.descripcion }}</p>
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-habrá utilizado {{ solicitud.academico.diasLicencias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-CCM un total de {{ solicitud.academico.diasLicencias }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
+habrá utilizado {{ solicitud.totalDias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
+CCM un total de {{ solicitud.totalDias }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
 </p><br>
 
         {% set i = i + 1 %}
@@ -216,8 +216,8 @@ CCM un total de {{ solicitud.academico.diasLicencias }} días durante el 2018{% 
 
         <p>{{ solicitud.descripcion }}</p>
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-            habrá utilizado {{ solicitud.academico.diasLicencias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de {{ solicitud.academico.diasLicencias }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
+            habrá utilizado {{ solicitud.totalDias }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
+            CCM un total de {{ solicitud.totalDias }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
         </p>
 
         {% set i = i + 1 %}

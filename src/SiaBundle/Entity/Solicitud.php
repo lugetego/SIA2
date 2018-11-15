@@ -782,4 +782,22 @@ class Solicitud
         $this->cancelada = $cancelada;
     }
 
+    /**
+     * @return Total de días solicitados hasta esta solicitud
+     */
+    public function totalDias()
+    {
+        $diasLicencias = 0;
+
+        $now = new \DateTime('now');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasLicencias += $solicitud->getDias();
+        }
+
+        return $diasLicencias;
+    }
+
+
 }

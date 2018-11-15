@@ -7,7 +7,7 @@
     bottom:     5cm;
     width:      19cm;
     height:     27.6cm;
-    font-size: 10pt;
+    font-size: 12pt;
 
 }
 .titulo {
@@ -39,4 +39,8 @@ table th {
 
 table thead {
     display: table-row-group;
+}
+
+.p {
+    font-size: 12pt;
 }

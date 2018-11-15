@@ -416,11 +416,11 @@ class Academico
     }
 
     /**
-     * Erogado Licencias
-     * Regresa el total de la asignación anual solicitado por licencia
+     * Días Licencias
+     * Regresa el total de días solicitados por licencia
      *
      */
-    public function diasLicencias()
+    public function diasLicenciaRecomendaciones()
     {
 //        Condicionar año, status de licencia, fecha límite
 
