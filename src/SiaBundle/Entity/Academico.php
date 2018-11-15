@@ -423,6 +423,7 @@ class Academico
     public function diasLicencias()
     {
 //        Condicionar año, status de licencia, fecha límite
+        // Está revisando licencias de todos los años
 
         $diasLicencia = 0;
 
