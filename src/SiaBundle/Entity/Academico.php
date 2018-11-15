@@ -404,11 +404,12 @@ class Academico
     {
 //        Condicionar año, status de licencia, fecha límite
 
-
         $erogadoLicencias = 0;
 
+        $now = new \DateTime('now');
+
         foreach ($this->solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia')
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
                 $erogadoLicencias += $solicitud->getTotalAsignacion();
         }
         return $erogadoLicencias;
@@ -425,8 +426,10 @@ class Academico
 
         $diasLicencia = 0;
 
+        $now = new \DateTime('now');
+
         foreach ($this->solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia')
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
                 $diasLicencia += $solicitud->getDias();
         }
         return $diasLicencia;
