@@ -1,11 +1,11 @@
 <div class="form-group">
-    {{ form_start(edit_form, {'action': path('sesion_orden', { 'slug': sesion.slug})}) }}
+    {{ form_start(edit_form, {'action': path('sesion_estudiantes', { 'slug': sesion.slug})}) }}
     <div class="row">
         {% if edit_form.estudiantes is defined %}
             <div class="form-group col-md-12">
-                {{ form_label(edit_form.orden) }}
-                {{ form_widget(edit_form.orden,{'attr': {'class': 'form-control input-sm', 'placeholder':'Estudiantes','rows':'20'} } ) }}
-                <div class="text-danger">{{ form_errors(edit_form.orden) }}</div>
+                {{ form_label(edit_form.estudiantes) }}
+                {{ form_widget(edit_form.estudiantes,{'attr': {'class': 'form-control input-sm', 'placeholder':'Estudiantes','rows':'20'} } ) }}
+                <div class="text-danger">{{ form_errors(edit_form.estudiantes) }}</div>
             </div>
         {% endif %}
     </div>

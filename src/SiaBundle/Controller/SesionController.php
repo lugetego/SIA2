@@ -254,7 +254,7 @@ class SesionController extends Controller
             return $this->redirectToRoute('sesion_recomendaciones', array('slug' => $sesion->getSlug()));
         }
 
-        return $this->render('sesion/varios.html.twig', array(
+        return $this->render('sesion/estudiantes.html.twig', array(
             'sesion' => $sesion,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

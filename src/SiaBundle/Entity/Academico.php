@@ -409,7 +409,7 @@ class Academico
         $now = new \DateTime('now');
 
         foreach ($this->solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
                 $erogadoLicencias += $solicitud->getTotalAsignacion();
         }
         return $erogadoLicencias;

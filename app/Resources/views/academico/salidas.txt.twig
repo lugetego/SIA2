@@ -1,0 +1,14 @@
+Salidas {{ academico.nombre }} {{ academico.apellido }} <br><br>
+
+{% for solicitud in solicitudes %}
+{#INSERT INTO `salidas` (`informe_id`, `tipo`, `pais`, `ciudad`, `estado`, `universidad`, `profesor`, `propositos`,`actividad`,`trabajo`, `inicio`, `fin`) VALUES#}
+
+    {% for actividad in solicitud.actividades %}
+        {{ solicitud.tipo }} | {{ actividad.lugar }} | {{ actividad.institucion }} | {{ actividad.anfitrion }} | {{ actividad.tipo }} | {% include 'sesion/salida.html.twig' with {'actividad': actividad } %} | {{ solicitud.fechaInicio|date('Y-m-d') }} | {{ solicitud.fechaFin|date('Y-m-d') }}
+        <br>
+    {% endfor %}
+
+{% endfor %}
+<br><br>
+Visitantes
+<br><br>

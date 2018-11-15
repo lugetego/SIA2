@@ -134,6 +134,25 @@ class AcademicoController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing academico entity.
+     *
+     * @Route("/{slug}/salidas", name="academico_salidas")
+     * @Method({"GET", "POST"})
+     */
+    public function salidasAction(Request $request, Academico $academico)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, '2018');
+
+        return $this->render('academico/salidas.txt.twig', array(
+            'academico' => $academico,
+            'solicitudes' => $solicitudes,
+        ));
+    }
+
+    /**
      * Deletes a academico entity.
      *
      * @Route("/{slug}", name="academico_delete")
@@ -169,50 +188,6 @@ class AcademicoController extends Controller
         ;
     }
 
-//    /**
-//     * Erogado Licencias
-//     * Regresa el total de la asignación anual solicitado por licencia
-//     *
-//     */
-//    public function erogadoLicencias($solicitudes)
-//    {
-//        $erogadoLicencias = 0;
-//
-//        foreach ($solicitudes as $solicitud) {
-//            if($solicitud->getTipo() == 'Licencia' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
-//                $erogadoLicencias += $solicitud->getTotalAsignacion();
-//        }
-//        return $erogadoLicencias;
-//    }
-//
-//    /**
-//     * Erogado Comisiones
-//     * Regresa el total de la asignación anual solicitado por comisión
-//     *
-//     */
-//    public function erogadoComisiones($solicitudes)
-//    {
-//        $erogadoComisiones = 0;
-//        foreach ($solicitudes as $solicitud) {
-//            if($solicitud->getTipo() == 'Comisión' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
-//                $erogadoComisiones += $solicitud->getTotalAsignacion();
-//        }
-//        return $erogadoComisiones;
-//    }
-//    /**
-//     * Erogado Visitantes
-//     * Regresa el total de la asignación anual solicitado para visitantes
-//     *
-//     */
-//    public function ErogadoVisitantes($solicitudes)
-//    {
-//        $erogadoVisitantes = 0;
-//        foreach ($solicitudes as $solicitud) {
-//            if($solicitud->getTipo() == 'Visitante' && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
-//                $erogadoVisitantes += $solicitud->getTotalAsignacion();
-//        }
-//        return $erogadoVisitantes;
-//    }
 
     /**
      * Erogado tipo
@@ -223,41 +198,11 @@ class AcademicoController extends Controller
     {
         $erogado = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isDictamen() && !$solicitud->isCancelada())
+            if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isEnviada() && !$solicitud->isCancelada())
                 $erogado += $solicitud->getTotalAsignacion();
         }
         return $erogado;
     }
-
-//    /**
-//     * Dias Solicitados de licencia
-//     * Regresa el total de dias solicitados por licencia
-//     *
-//     */
-//    public function diasSolicitadosLicencia($solicitudes)
-//    {
-//        $dias = 0;
-//        foreach ($solicitudes as $solicitud) {
-//            if($solicitud->getTipo() == 'Licencia' && $solicitud->isDictamen() && !$solicitud->isCancelada())
-//                $dias += $solicitud->getDias();
-//        }
-//        return $dias;
-//    }
-//
-//    /**
-//     * Dias Solicitados de comisión
-//     * Regresa el total de dias solicitados por comision
-//     *
-//     */
-//    public function diasSolicitadosComision($solicitudes)
-//    {
-//        $dias = 0;
-//        foreach ($solicitudes as $solicitud) {
-//            if($solicitud->getTipo() == 'Comisión' && $solicitud->isDictamen() && !$solicitud->isCancelada())
-//                $dias += $solicitud->getDias();
-//        }
-//        return $dias;
-//    }
 
     /**
      * Dias Solicitados
@@ -268,7 +213,7 @@ class AcademicoController extends Controller
     {
         $dias = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == $tipo && $solicitud->isDictamen() && !$solicitud->isCancelada())
+            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada())
                 $dias += $solicitud->getDias();
         }
         return $dias;
