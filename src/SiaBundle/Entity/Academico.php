@@ -416,23 +416,22 @@ class Academico
     }
 
     /**
-     * Días Licencias
-     * Regresa el total días solicitados por licencia
+     * Erogado Licencias
+     * Regresa el total de la asignación anual solicitado por licencia
      *
      */
     public function diasLicencias()
     {
 //        Condicionar año, status de licencia, fecha límite
-        // Está revisando licencias de todos los años
 
-        $diasLicencia = 0;
+        $diasLicencias = 0;
 
         $now = new \DateTime('now');
 
         foreach ($this->solicitudes as $solicitud) {
             if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
-                $diasLicencia += $solicitud->getDias();
+                $diasLicencias += $solicitud->getDias();
         }
-        return $diasLicencia;
+        return $diasLicencias;
     }
 }

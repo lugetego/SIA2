@@ -188,7 +188,6 @@ class AcademicoController extends Controller
         ;
     }
 
-
     /**
      * Erogado tipo
      * Regresa el total de la asignación anual solicitado para un tipo de solicitud
@@ -218,5 +217,25 @@ class AcademicoController extends Controller
         }
         return $dias;
     }
+
+    /**
+     * Dias Licencia
+     * Regresa el total de dias solicitados por licencia en el año
+     * Se utiliza en las recomendaciones
+     *
+     */
+    public function diasLicencia()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($this, $year);
+
+        $dias = 0;
+        foreach ($solicitudes as $solicitud) {
+            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada())
+                $dias += $solicitud->getDias();
+        }
+        return $dias;
+    }
+
 
 }
