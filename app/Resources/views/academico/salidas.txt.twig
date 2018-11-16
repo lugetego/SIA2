@@ -5,7 +5,7 @@ Salidas {{ academico.nombre }} {{ academico.apellido }} <br><br>
 
     {% for actividad in solicitud.actividades %}
 
-INSERT INTO `salidas` (`informe_id`, `tipo`, `pais`, `ciudad`, `estado`, `universidad`, `profesor`, `propositos`,`actividad`,`trabajo`, `inicio`, `fin`) VALUES ('#', '{{ solicitud.tipo }}', '{{ actividad.lugar }}', '{{ actividad.lugar }}', '{{ actividad.lugar }}', ' {{ actividad.institucion }}', '{{ actividad.anfitrion }}', '{{ actividad.tipo }}', '{% include 'sesion/salida.html.twig' with {'actividad': actividad } %}', '{{ solicitud.fechaInicio|date('Y-m-d') }}', '{{ solicitud.fechaFin|date('Y-m-d') }}');
+INSERT INTO `salidas` (`informe_id`, `tipo`, `pais`, `ciudad`, `estado`, `universidad`, `profesor`, `propositos`,`actividad`,`trabajo`, `inicio`, `fin`) VALUES ('#', '{{ solicitud.tipo }}', '{{ actividad.lugar }}', '{{ actividad.lugar }}', '{{ actividad.lugar }}', ' {{ actividad.institucion }}', '{{ actividad.anfitrion }}', '{{ actividad.tipo }}', '{% include 'sesion/salida.html.twig' with {'actividad': actividad } %}', '{{ actividad.tituloTrabajo }}', '{{ solicitud.fechaInicio|date('Y-m-d') }}', '{{ solicitud.fechaFin|date('Y-m-d') }}');
         <br>
     {% endfor %}
 
