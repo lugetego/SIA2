@@ -5,9 +5,9 @@
 
 {% if actividad.tituloTrabajo != null %}
     {%  if actividad.tipo == 'Investigación'%}
-        Realizar investigación sobre: {{ actividad.tituloTrabajo }}.
+        investigación sobre: {{ actividad.tituloTrabajo }}.
     {% else %}
-        Y participar con la plática: {{ actividad.tituloTrabajo }}.
+        participación con la plática: {{ actividad.tituloTrabajo }}.
     {% endif %}
 {% endif %}
 
