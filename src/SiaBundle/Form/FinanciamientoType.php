@@ -41,7 +41,8 @@ class FinanciamientoType extends AbstractType
                     'Comité organizador'=>'Comité organizador',
                     'Intercambio académico'=>'Intercambio académico',
                     'Partida especial evento'=>'Partida especial evento',
-                    'PAPIME'=>'PAPIME'
+                    'PAPIME'=>'PAPIME',
+                    'No especifica'=>'No especifica'
                 ),
                 'placeholder'=>'Seleccionar',
                 'required'=>false,

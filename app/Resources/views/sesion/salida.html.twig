@@ -5,9 +5,9 @@
 
 {% if actividad.tituloTrabajo != null %}
     {%  if actividad.tipo == 'Investigación'%}
-        realizar investigación sobre: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+        Realizar investigación sobre: {{ actividad.tituloTrabajo }}.
     {% else %}
-        Y participar con la plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+        Y participar con la plática: {{ actividad.tituloTrabajo }}.
     {% endif %}
 {% endif %}
 
@@ -16,7 +16,7 @@
 {% endif %}
 
 {% if actividad.anfitrion != null %}
-    Anfitrión: {{ actividad.anfitrion }}.
+    con {{ actividad.anfitrion }}.
 {% endif %}
 
 {% if actividad.sinodalGrado != null %}
@@ -32,6 +32,6 @@
 {#{% endif %}#}
 
 {% if actividad.plenaria != null %}
-        {% if actividad.plenaria %} Es una plática plenaria.{% endif %}
+        {% if actividad.plenaria %} Plática plenaria.{% endif %}
 {% endif %}
 

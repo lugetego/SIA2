@@ -610,21 +610,6 @@ class Solicitud
     }
 
     /**
-     * @return Total de días solicitados
-     */
-    public function getDias()
-    {
-//    $datetime1 = new DateTime('2009-10-11');
-//    $datetime2 = new DateTime('2009-10-13');
-//    $interval = $datetime1->diff($datetime2);
-//    echo $interval->format('%R%a days');
-
-        $dias = $this->fechaFin->diff($this->fechaInicio);
-
-        return $dias->format('%d') + 1;
-    }
-
-    /**
      * Set academico
      *
      * @param \SiaBundle\Entity\academico $academico
@@ -783,21 +768,63 @@ class Solicitud
     }
 
     /**
+     * @return Total de días solicitados
+     */
+    public function getDias()
+    {
+        $dias = $this->fechaFin->diff($this->fechaInicio);
+
+        return $dias->format('%d') + 1;
+    }
+
+    /**
      * @return Total de días solicitados hasta esta solicitud
      */
-    public function totalDias()
+    public function totalDiasLicencia()
     {
-        $diasLicencias = 0;
+        $diasLicencia = 0;
 
         $now = new \DateTime('now');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-                $diasLicencias += $solicitud->getDias();
+            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasLicencia += $solicitud->getDias();
         }
 
-        return $diasLicencias;
+        return $diasLicencia;
     }
 
+    /**
+     * @return Total de días solicitados hasta esta solicitud
+     */
+    public function totalDiasComision()
+    {
+        $diasComision = 0;
 
+        $now = new \DateTime('now');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasComision += $solicitud->getDias();
+        }
+
+        return $diasComision;
+    }
+
+    /**
+     * @return Total de días solicitados hasta esta solicitud
+     */
+    public function totalDiasAusente()
+    {
+        $diasAusente = 0;
+
+        $now = new \DateTime('now');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasAusente += $solicitud->getDias();
+        }
+
+        return $diasAusente;
+    }
 }

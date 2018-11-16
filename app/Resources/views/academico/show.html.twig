@@ -111,6 +111,7 @@
             <th class="text-center">Lugar/Invitado</th>
             <th class="text-center">Fechas</th>
             {#<th class="text-center">Dictamen</th>#}
+            <th class="text-center">Días</th>
             <th class="text-center">Estatus</th>
             {#<th class="text-center">Fecha</th>#}
             <th class="text-center">Sesión</th>
@@ -139,7 +140,7 @@
                 </td>
             {% endif %}
             <td>{{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin|localizeddate('long', 'none') }}</td>
-
+            <td class="text-center">{{ solicitud.getDias }}</td>
             <td class="text-center">{% if solicitud.enviada == true %}
                     <span class="badge badge-success">Enviada</span>
                 {% else %}
