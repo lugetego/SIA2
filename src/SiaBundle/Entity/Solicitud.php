@@ -784,10 +784,16 @@ class Solicitud
     {
         $diasLicencia = 0;
 
-        $now = new \DateTime('now');
+        $year = $solicitud->getFechaInicio()->format('Y');
+
+        // Si el tipo de solicitud es Licencia
+        // Y ha sido enviada (puede no tener dictamen)
+        // Suma solo licencias del año de la salida
+        // Y suma solo hasta esta solicitud
+
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasLicencia += $solicitud->getDias();
         }
 
@@ -801,10 +807,10 @@ class Solicitud
     {
         $diasComision = 0;
 
-        $now = new \DateTime('now');
+        $year = $solicitud->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasComision += $solicitud->getDias();
         }
 
@@ -818,10 +824,10 @@ class Solicitud
     {
         $diasAusente = 0;
 
-        $now = new \DateTime('now');
+        $year = $solicitud->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasAusente += $solicitud->getDias();
         }
 
