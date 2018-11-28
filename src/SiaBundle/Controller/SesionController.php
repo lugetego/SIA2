@@ -97,6 +97,21 @@ class SesionController extends Controller
     }
 
     /**
+     * Aprueba las solicitudes de una sesión
+     *
+     * @Route("/{slug}/aprueba-solicitudes/", name="sesion_apueba")
+     * @Method("GET")
+     */
+    public function apruebaSolicitudesAction(Sesion $sesion)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        //
+
+        $this->redirect('');
+    }
+
+    /**
      * Export to PDF
      *
      * @Route("/{slug}/recomendaciones/pdf", name="sesion_recomendaciones_pdf")

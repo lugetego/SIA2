@@ -399,7 +399,42 @@ class SolicitudController extends Controller
         ));
     }
 
+    /**
+     * Dictamen de la solicitud
+     *
+     * @Route("/{id}/dictamen-email", name="solicitud_dictamen-email")
+     */
+    public function dictamenEmailAction(Request $request, Solicitud $solicitud)
+    {
 
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($solicitud->getDictamen() != false) {
+            $solicitud->setDictamen(true);
+            $em->persist($solicitud);
+            $em->flush();
+        }
+
+
+        // Obtiene correo y msg de la forma de contacto
+        $mailer = $this->get('mailer');
+
+//        $message = \Swift_Message::newInstance()
+//            ->setSubject('Solicitud '.$solicitud->getId())
+//            ->setFrom('webmaster@matmor.unam.mx')
+////            ->setTo(array($user->getEmail() ))
+//            ->setTo('gerardo@matmor.unam.mx')
+////            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
+//            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+//        ;
+//        $mailer->send($message);
+
+//        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
+        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
+
+    }
 
     /**
      * Deletes a solicitud entity.

@@ -36,6 +36,7 @@
         </ol>
     </nav>
 
+    <h2 class="text-secondary">Sesión de Consejo {{ sesion.name }}</h2>
     <div class="row mb-4">
         <div class="col-md6">
         <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
@@ -46,6 +47,12 @@
         <div class="col-md6">
         <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><i class="fa fa-file"></i> PDF</a>
             </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col">
+            <a class="btn btn-primary btn-sm" href="#" role="button">Aprobar solicitudes</a> <a class="btn btn-primary btn-sm" href="#" role="button">Enviar Notificaiones</a>
+        </div>
     </div>
 
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">

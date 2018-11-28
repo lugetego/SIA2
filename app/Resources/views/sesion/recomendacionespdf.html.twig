@@ -33,7 +33,7 @@
         </div>
 
         <p class="text-right titulo">SESIÓN DEL CONSEJO INTERNO</p>
-        <p class="subtitulo text-center"> Recomendaciones para el {{ sesion.name }} <br> {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, "d MMMM Y") }}</p>
+        <p class="subtitulo text-center"> Recomendaciones para el {{ sesion.name }} <br> {{ sesion.fecha|localizeddate('none', 'none', 'es_MX', null, 'd \d\e MMMM \d\e Y') }}</p>
         <p><strong>Orden del día</strong></p>
         <p class="text-justify"><small>{{ sesion.orden|raw}}</small></p>
         <p><strong>Licencias:</strong></p>

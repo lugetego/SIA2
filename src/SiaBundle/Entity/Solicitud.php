@@ -812,7 +812,7 @@ class Solicitud
     }
 
     /**
-     * @return Total de días solicitados hasta esta solicitud
+     * @return Total de días auscente hasta esta solicitud
      */
     public function totalDiasAusente()
     {
