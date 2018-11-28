@@ -784,7 +784,7 @@ class Solicitud
     {
         $diasLicencia = 0;
 
-        $year = $solicitud->getFechaInicio()->format('Y');
+        $year = $this->getFechaInicio()->format('Y');
 
         // Si el tipo de solicitud es Licencia
         // Y ha sido enviada (puede no tener dictamen)
@@ -807,7 +807,7 @@ class Solicitud
     {
         $diasComision = 0;
 
-        $year = $solicitud->getFechaInicio()->format('Y');
+        $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
             if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
@@ -824,7 +824,7 @@ class Solicitud
     {
         $diasAusente = 0;
 
-        $year = $solicitud->getFechaInicio()->format('Y');
+        $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
             if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
