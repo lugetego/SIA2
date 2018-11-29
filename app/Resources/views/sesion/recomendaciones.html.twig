@@ -138,9 +138,11 @@
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
+        {% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}
+        {% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
 habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
+CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ totalErogado|number_format(2) }} de su asignación anual{% endif %}.
 </p><br>
 
         {% set i = i + 1 %}
@@ -216,9 +218,11 @@ CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.f
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
+        {% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}
+        {% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
             habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de {{ solicitud.totalDiasAusente }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.academico.erogadoLicencias|number_format(2) }} de su asignación anual{% endif %}.
+            CCM un total de {{ solicitud.totalDiasAusente }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ totalErogado|number_format(2) }} de su asignación anual{% endif %}.
         </p>
 
         {% set i = i + 1 %}

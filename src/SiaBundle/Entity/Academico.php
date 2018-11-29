@@ -400,16 +400,16 @@ class Academico
      * Regresa el total de la asignación anual solicitado por licencia
      *
      */
-    public function erogadoLicencias()
+    public function erogadoLicencias($year = "2018")
     {
 //        Condicionar año, status de licencia, fecha límite
 
         $erogadoLicencias = 0;
 
-        $now = new \DateTime('now');
+//        $now = new \DateTime('now');
 
         foreach ($this->solicitudes as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia' and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $now->format('Y') == $solicitud->getFechaInicio()->format('Y'))
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y'))
                 $erogadoLicencias += $solicitud->getTotalAsignacion();
         }
         return $erogadoLicencias;
@@ -423,7 +423,6 @@ class Academico
     public function diasLicenciaRecomendaciones()
     {
 //        Condicionar año, status de licencia, fecha límite
-
         $diasLicencias = 0;
 
         $now = new \DateTime('now');
