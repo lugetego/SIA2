@@ -107,6 +107,29 @@ class SesionController extends Controller
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         //
+        $em = $this->getDoctrine()->getManager();
+
+        $solicitudes = $em->getRepository('SiaBundle:Sesion')->findAllSolicitudes($sesion);
+
+        foreach($solicitudes as $solicitud) {
+
+            $i = 0;
+            if($solicitud->getEviada() && $solicitud->getDictamen() != false){
+                $solicitud->setDictament(true);
+                $em->persist($solicitud);
+                $i++;
+            }
+
+            $em->flush();
+
+                        $this->addFlash(
+                'notice',
+                'La solicitud se ha modificado'
+            );
+
+        }
+
+
 
         $this->redirect('');
     }

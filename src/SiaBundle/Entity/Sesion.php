@@ -60,6 +60,7 @@ class Sesion
      * @var array $solicitudes
      *
      * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Solicitud", mappedBy="sesion", cascade={"persist"})
+     * @ORM\OrderBy({"fechaInicio" = "ASC"})
      *
      * The mappedBy attribute designates the field in the entity that is the owner of the relationship.
      */

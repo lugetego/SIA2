@@ -250,7 +250,6 @@ class SolicitudController extends Controller
                 'La solicitud se ha modificado'
             );
 
-
             return $this->redirectToRoute('solicitud_show', array('id' => $solicitud->getId()));
         }
 
@@ -312,45 +311,6 @@ class SolicitudController extends Controller
     }
 
     /**
-     * Notificación solicitud
-     *
-     * @Route("/{id}/notificacion", name="solicitud_notificacion")
-     */
-    public function noticeAction(Request $request, Solicitud $solicitud)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $user = $this->get('security.context')->getToken()->getUser();
-        $academico = $user->getAcademico();
-
-        $solicitud->setNotificada(true);
-        $em->persist($solicitud);
-        $em->flush();
-
-        // Obtiene correo y msg de la forma de contacto
-        $mailer = $this->get('mailer');
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Solicitud '.$solicitud->getId())
-            ->setFrom('webmaster@matmor.unam.mx')
-//            ->setTo(array($user->getEmail() ))
-            ->setTo('gerardo@matmor.unam.mx')
-//            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
-            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
-        ;
-        $mailer->send($message);
-
-//        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
-        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
-
-    }
-
-    /**
      * Displays a form to edit an existing solicitud entity.
      *
      * @Route("/{id}/financiamiento", name="solicitud_financiamiento")
@@ -400,39 +360,67 @@ class SolicitudController extends Controller
     }
 
     /**
+     * Notificación solicitud
+     *
+     * @Route("/{id}/notificacion", name="solicitud_notificacion")
+     */
+    public function noticeAction(Request $request, Solicitud $solicitud)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->get('security.context')->getToken()->getUser();
+        $academico = $user->getAcademico();
+
+        $solicitud->setNotificada(true);
+        $em->persist($solicitud);
+        $em->flush();
+
+        // Obtiene correo y msg de la forma de contacto
+        $mailer = $this->get('mailer');
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Solicitud '.$solicitud->getId())
+            ->setFrom('webmaster@matmor.unam.mx')
+//            ->setTo(array($user->getEmail() ))
+            ->setTo('gerardo@matmor.unam.mx')
+//            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
+            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+        ;
+        $mailer->send($message);
+
+//        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
+        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
+
+    }
+
+    /**
+     * Debería ser solo método no controlador!!!
+     *
      * Dictamen de la solicitud
      *
      * @Route("/{id}/dictamen-email", name="solicitud_dictamen-email")
      */
     public function dictamenEmailAction(Request $request, Solicitud $solicitud)
     {
-
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
 
-        if($solicitud->getDictamen() != false) {
-            $solicitud->setDictamen(true);
-            $em->persist($solicitud);
-            $em->flush();
+        if($solicitud->getDictamen() == false) {
+            return false;
         }
 
+        $solicitud->setDictamen(true);
+        $em->persist($solicitud);
+        $em->flush();
 
-        // Obtiene correo y msg de la forma de contacto
-        $mailer = $this->get('mailer');
-
-//        $message = \Swift_Message::newInstance()
-//            ->setSubject('Solicitud '.$solicitud->getId())
-//            ->setFrom('webmaster@matmor.unam.mx')
-////            ->setTo(array($user->getEmail() ))
-//            ->setTo('gerardo@matmor.unam.mx')
-////            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
-//            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
-//        ;
-//        $mailer->send($message);
-
-//        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
-        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
+        return true;
+        // return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
 
     }
 

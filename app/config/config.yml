@@ -139,3 +139,11 @@ ivory_ck_editor:
         sesion_config:
             toolbar: standard
             language: es
+#    plugins:
+#        financ:
+#            path:     "/bundles/ivoryckeditor/plugins/financ/dialogs"
+#            filename: "financ.js"
+#    configs:
+#        my_config:
+#            extraPlugins: "financ"
+#            toolbar:   ...
