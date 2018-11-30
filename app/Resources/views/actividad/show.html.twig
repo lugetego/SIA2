@@ -126,10 +126,11 @@
     <div class="row">
         <div class="col-md-7 offset-md-5">
 
-            {{ form_start(delete_form) }}
             <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-            {% if solicitud.enviada== false %}
-                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este registro?')" >
+            {{ form_start(delete_form) }}
+
+            {% if solicitud.enviada == false or is_granted("ROLE_ADMIN") %}
+                <input class="btn btn-danger" type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de eliminar la actividad?')" >
             {% endif %}
             {{ form_end(delete_form) }}
 

@@ -833,4 +833,22 @@ class Solicitud
 
         return $diasAusente;
     }
+
+    /**
+     * Para las recomendaciones
+     * @return Total Erogado
+     */
+    public function totalErogado()
+    {
+
+        $totalErogado = 0;
+        $year = $this->getFechaInicio()->format('Y');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $totalErogado += $solicitud->getTotalAsignacion();
+        }
+
+        return $totalErogado;
+    }
 }

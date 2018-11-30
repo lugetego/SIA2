@@ -373,8 +373,7 @@ class SolicitudController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $user = $this->get('security.context')->getToken()->getUser();
-        $academico = $user->getAcademico();
+        $academico = $solicitud->getAcademico();
 
         $solicitud->setNotificada(true);
         $em->persist($solicitud);
@@ -389,12 +388,12 @@ class SolicitudController extends Controller
 //            ->setTo(array($user->getEmail() ))
             ->setTo('gerardo@matmor.unam.mx')
 //            ->setBcc(array('webmaster@matmor.unam.mx','vorozco@matmor.unam.mx'))
-            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud,'academico'=>$academico)))
+            ->setBody($this->renderView('solicitud/notificacion.txt.twig', array('entity' => $solicitud)))
         ;
         $mailer->send($message);
 
 //        return $this->redirectToRoute('academico_show', array('slug'=>$academico->getSlug()));
-        return $this->redirectToRoute('academico_show', array('slug' => $this->getUser()->getAcademico()->getSlug()));
+        return $this->redirectToRoute('academico_show', array('slug' => $academico->getSlug()));
 
     }
 
