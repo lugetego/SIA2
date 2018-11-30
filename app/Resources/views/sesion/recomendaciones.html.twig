@@ -218,6 +218,7 @@ CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.f
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
+        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}
         {% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
@@ -297,7 +298,7 @@ CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.f
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
-
+        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% set i = i + 1 %}
     {% endfor %}
 
