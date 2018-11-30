@@ -74,6 +74,8 @@ class AcademicoController extends Controller
         $this->denyAccessUnlessGranted('view', $academico);
 
         $em = $this->getDoctrine()->getManager();
+
+        // Se reciben solicitudes del año en curso o posteriores
         $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, $year);
 
         $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
@@ -83,11 +85,13 @@ class AcademicoController extends Controller
         $totalDias = $diasLicencia + $diasComision;
 
         // Calcula Totales
-        $totalAsignacionLicencia = $this->erogadoAsignacion($solicitudes, 'Licencia');
-        $totalAsignacionComision = $this->erogadoAsignacion($solicitudes, 'Comisión');
-        $totalAsignacionVisitante = $this->erogadoAsignacion($solicitudes, 'Visitante');
-        $totalDiasLicencia = $this->diasSolicitados($solicitudes, 'Licencia');
-        $totalDiasComision = $this->diasSolicitados($solicitudes, 'Comisión');
+        // Envío el año para no contar éstas
+
+        $totalAsignacionLicencia = $this->erogadoAsignacion($solicitudes, 'Licencia', $year);
+        $totalAsignacionComision = $this->erogadoAsignacion($solicitudes, 'Comisión', $year);
+        $totalAsignacionVisitante = $this->erogadoAsignacion($solicitudes, 'Visitante', $year);
+        $totalDiasLicencia = $this->diasSolicitados($solicitudes, 'Licencia', $year);
+        $totalDiasComision = $this->diasSolicitados($solicitudes, 'Comisión', $year);
 
         $deleteForm = $this->createDeleteForm($academico);
 
@@ -193,11 +197,14 @@ class AcademicoController extends Controller
      * Regresa el total de la asignación anual solicitado para un tipo de solicitud
      *
      */
-    public function ErogadoAsignacion($solicitudes, $tipo)
+    public function ErogadoAsignacion($solicitudes, $tipo, $year)
     {
         $erogado = 0;
+        // Solo éste año
+
+
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isEnviada() && !$solicitud->isCancelada())
+            if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isEnviada() && !$solicitud->isCancelada() && $year == $solicitud->getFechaInicio()->format('Y'))
                 $erogado += $solicitud->getTotalAsignacion();
         }
         return $erogado;
@@ -208,34 +215,36 @@ class AcademicoController extends Controller
      * Regresa el total de dias solicitados por tipo
      *
      */
-    public function diasSolicitados($solicitudes, $tipo)
+    public function diasSolicitados($solicitudes, $tipo, $year)
     {
+
         $dias = 0;
         foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada())
+            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada() && $year == $solicitud->getFechaInicio()->format('Y'))
                 $dias += $solicitud->getDias();
         }
         return $dias;
     }
 
-    /**
-     * Dias Licencia
-     * Regresa el total de dias solicitados por licencia en el año
-     * Se utiliza en las recomendaciones
-     *
-     */
-    public function diasLicencia()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($this, $year);
-
-        $dias = 0;
-        foreach ($solicitudes as $solicitud) {
-            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada())
-                $dias += $solicitud->getDias();
-        }
-        return $dias;
-    }
-
+//    /**
+//     * Dias Licencia
+//     * Regresa el total de dias solicitados por licencia en el año
+//     * Se utiliza en las recomendaciones
+//     *
+//     */
+//    public function diasLicencia($year)
+//    {
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($this, $year);
+//
+//        $dias = 0;
+//
+//        foreach ($solicitudes as $solicitud) {
+//            if($solicitud->getTipo() == $tipo && $solicitud->isEnviada() && !$solicitud->isCancelada())
+//                $dias += $solicitud->getDias();
+//        }
+//        return $dias;
+//    }
 
 }

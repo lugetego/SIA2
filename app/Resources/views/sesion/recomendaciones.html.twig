@@ -27,13 +27,13 @@
     </nav>
 
     <div class="row">
-        <div class="col-md6">
+        <div class="col-md-6">
             <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
                 <span data-feather="file"></span>
                 <strong>Ver las recomendaciones en línea {{ sesion.name }}</strong>
             </a>
         </div>
-        <div class="col-md6">
+        <div class="col-md-6">
             <a class="nav-link" href="{{ path('sesion_recomendaciones_pdf',{'slug':sesion.slug}) }}"><strong><i class="fa fa-file"></i> Generar archivo PDF</strong></a>
         </div>
     </div>
@@ -304,11 +304,11 @@ CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.f
 
     {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}
 
-    <h5 class="border-top pt-2"><strong>Estudiantes</strong>
+    <h3 class="border-top pt-2"><strong>Estudiantes</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ alumnosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>
-    </h5>
+    </h3>
 
     <div>
         {{ sesion.estudiantes|raw }}
@@ -333,11 +333,11 @@ CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.f
 
     {% set variosmodaledit = 'varioseditModal'~ sesion.id  %}
 
-    <h5 class="border-top pt-2"><strong>Varios</strong>
+    <h3 class="border-top pt-2"><strong>Varios</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>
-    </h5>
+    </h3>
 
     <div>
         {{ sesion.varios|raw }}

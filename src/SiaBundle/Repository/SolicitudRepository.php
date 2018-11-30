@@ -19,7 +19,7 @@ class SolicitudRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 'SELECT s FROM SiaBundle:Solicitud s 
-                     WHERE SUBSTRING(s.fechaInicio,1,4) >= :year AND s.academico = :id
+                     WHERE SUBSTRING(s.fechaInicio,1,4) = :year AND s.academico = :id
                          ORDER BY s.created ASC'
             )
             ->setParameter('id', $academico->getId())
