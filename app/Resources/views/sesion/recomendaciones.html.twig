@@ -138,11 +138,11 @@
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-        {% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}
-        {% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}
+        {#{% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}#}
+        {#{% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}#}
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
             habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.
+            CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.  {#{ recomendacion.totalErogado(solicitud)|number_format(2) }} #}
         </p><br>
 
         {% set i = i + 1 %}
@@ -219,8 +219,8 @@
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-        {% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}
-        {% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}
+        {#{% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}#}
+        {#{% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}#}
         <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
             habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
             CCM un total de {{ solicitud.totalDiasAusente }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.
@@ -235,11 +235,11 @@
     {% for solicitud in visitantes %}
 
         {#<p>V{{ i }}. <strong>{{ solicitud.anfitrion }}</strong> de solicitud Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>#}
-        <p>V{{ i }}.
-            {% for actividad in solicitud.actividades %}
-                {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                {% include 'sesion/actividadVisitante.html.twig' with {'actividad': actividad } %}</li>
-            {% endfor %}
+        <p class="my-4">V{{ i }}.
+        {#{% for actividad in solicitud.actividades %}#}
+        {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
+        {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}</li>
+        {#{% endfor %}#}
         {# Financiamiento #}
         {# Hay financiamiento ?#}
         {% set solicitaFinanciamiento = 0 %}
@@ -296,9 +296,11 @@
                 </div>
             </div>
         {% endif %}
+        </p>
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
+        {% if solicitud.getTotalAsignacion > 0 %}<p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>{% endif %}
         {% set i = i + 1 %}
     {% endfor %}
 

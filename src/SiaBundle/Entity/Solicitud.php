@@ -791,7 +791,6 @@ class Solicitud
         // Suma solo licencias del año de la salida
         // Y suma solo hasta esta solicitud
 
-
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
             if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasLicencia += $solicitud->getDias();
@@ -810,7 +809,7 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() == 'Comision'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasComision += $solicitud->getDias();
         }
 

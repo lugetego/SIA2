@@ -8,15 +8,15 @@ Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fe
 
 {#Actividades a realizar:#}
 
-{% if solicitud.tipo == 'Visitante' %}
-    {% for actividad in solicitud.actividades %}
-        {% include 'sesion/actividadVisitante.html.twig' with {'actividad': actividad } %}</li>
-    {% endfor %}
-{% else %}
-    {% for actividad in solicitud.actividades %}
-        {% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}
-    {% endfor %}
-{% endif %}
+{#{% if solicitud.tipo == 'Visitante' %}#}
+    {#{% for actividad in solicitud.actividades %}#}
+        {#{% include 'sesion/actividadVisitante.html.twig' with {'actividad': actividad } %}</li>#}
+    {#{% endfor %}#}
+{#{% else %}#}
+    {#{% for actividad in solicitud.actividades %}#}
+        {#{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}#}
+    {#{% endfor %}#}
+{#{% endif %}#}
 
 http://gaspacho.matmor.unam.mx/sia/solicitud/{{ solicitud.id }}
 

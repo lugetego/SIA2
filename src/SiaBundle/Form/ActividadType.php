@@ -28,6 +28,7 @@ class ActividadType extends AbstractType
                     'Coloquio'=>'Coloquio',
                     'Conferencia'=>'Conferencia',
                     'Congreso'=>'Congreso',
+                    'Simposio' => 'Simposio',
                     'Curso'=>'Curso',
                     'Distinción'=>'Distinción',
                     'Feria'=>'Feria',
@@ -43,9 +44,7 @@ class ActividadType extends AbstractType
                 'required'=>true,
                 'choices_as_values' => true,
             ))
-
         ;
-
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
@@ -112,8 +111,8 @@ class ActividadType extends AbstractType
                         ->add('lugar', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
-                        ))
-                        ->add('fechaActividad');
+                        ));
+//                        ->add('fechaActividad');
 
                 }
                 elseif ($tipo === 'Sinodal')
@@ -135,6 +134,7 @@ class ActividadType extends AbstractType
                                 'Licenciatura'=>'Licenciatura',
                                 'Maestría'=>'Maestría',
                                 'Doctorado'=>'Doctorado',
+                                'Segunda etapa de candidatura' => 'Segunda etapa de candidatura',
                             ),
                             'placeholder'=>'Seleccionar',
                             'required'=>true,
@@ -286,11 +286,12 @@ class ActividadType extends AbstractType
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
                         ))
-                        ->add('fechaActividad')
+                        ->add('fechaActividad', null, array(
+                            'label'=>'Opcional: Fecha de la cuándo da la plática',
+                            'required'=>false,
+                        ))
                     ;
                 }
-
-
 
                 // since we've added the listener to the child, we'll have to pass on
                 // the parent to the callback functions!

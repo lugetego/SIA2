@@ -21,6 +21,7 @@ class CreateActividadVisitanteForm extends AbstractType {
                         'choices' => array(
                             'Coloquio' => 'Coloquio',
                             'Congreso' => 'Congreso',
+                            'Simposio' => 'Simposio',
                             'Divulgacion' => 'Divulgacion',
                             'Investigación' => 'Investigación',
                             'Seminario' => 'Seminario',
@@ -65,11 +66,11 @@ class CreateActividadVisitanteForm extends AbstractType {
                         ->add('tituloTrabajo', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Título del trabajo',
                             'required'=>false,
-                        ))
-                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-                            'widget' => 'single_text',
-                            'html5' => false,
-                            'required' => false,));
+                        ));
+//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+//                            'widget' => 'single_text',
+//                            'html5' => false,
+//                            'required' => false,));
 
                 }
                 elseif ($tipo === 'Sinodal')
@@ -89,6 +90,7 @@ class CreateActividadVisitanteForm extends AbstractType {
                                 'Licenciatura'=>'Licenciatura',
                                 'Maestría'=>'Maestría',
                                 'Doctorado'=>'Doctorado',
+                                'Segunda etapa de candidatura' => 'Segunda etapa de candidatura',
                             ),
                             'placeholder'=>'Seleccionar',
                             'required'=>true,
@@ -114,12 +116,11 @@ class CreateActividadVisitanteForm extends AbstractType {
                         ->add('lugar', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
-                        ))
-                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-                            'widget' => 'single_text',
-                            'html5' => false,
-                            'required' => false,));
-
+                        ));
+//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+//                            'widget' => 'single_text',
+//                            'html5' => false,
+//                            'required' => false,));
                 }
                 elseif ($tipo === 'Conferencia')
                 {
@@ -186,11 +187,11 @@ class CreateActividadVisitanteForm extends AbstractType {
                         ->add('lugar', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
-                        ))
-                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-                            'widget' => 'single_text',
-                            'html5' => false,
-                            'required' => false));
+                        ));
+//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+//                            'widget' => 'single_text',
+//                            'html5' => false,
+//                            'required' => false));
                 }
 
                 elseif( $tipo != '') {
@@ -251,11 +252,11 @@ class CreateActividadVisitanteForm extends AbstractType {
                         ->add('lugar', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Lugar (ciudad, estado, país de origen)',
                             'required'=>false,
-                        ))
-                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-                            'widget' => 'single_text',
-                            'html5' => false,
-                            'required' => false,));
+                        ));
+//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
+//                            'widget' => 'single_text',
+//                            'html5' => false,
+//                            'required' => false,));
                 }
 
                 break;

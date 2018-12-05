@@ -1,62 +1,17 @@
-<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }}, visita el
-Centro de Ciencias Matemáticas para llevar a cabo {{ actividad.tipo }} {% if actividad.tituloTrabajo %}con título {{ actividad.tituloTrabajo }}{% endif %} con
-{{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }}. Estadía con duración de
-{{ actividad.solicitud.dias }} días, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.
-{% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }}
-con los recursos que se especifican en la siguiente tabla:{% endif %}
+{% set i = 1 %}
+{% set d = actividades|length %}
 
+{% for actividad in actividades %}
+    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }}, visita el Centro de Ciencias Matemáticas para{% endif %}
 
-{#Actividad: {{ actividad.tipo }}.#}
+    {% if i > 1 and i < d %}, {% elseif d > 1 and i == d %} y {% endif %}
+    {% if actividad.tipo == 'Sinodal' %} ser {{ actividad.tipo }} de {{ actividad.Sinodalgrado }} de {{ actividad.sinodalAlumno }}{% else %} para participar en {{ actividad.tipo }} {% endif %} {% if actividad.tituloTrabajo %}con título {{ actividad.tituloTrabajo }}{% endif %}
+    {# termina la descripción#}
 
-{#{% if actividad.nombreEvento != null %}#}
-{#Nombre del evento: {{ actividad.nombreEvento }}.#}
-{#{% endif %}#}
-
-{#{% if actividad.motivo != null %}#}
-    {#{% for key in actividad.motivo %}#}
-        {#{{ key }}#}
-    {#{% endfor %}#}
-{#{% endif %}#}
-
-{#{% if actividad.tituloTrabajo != null %}#}
-    {#{%  if actividad.tipo == 'Investigación'%}#}
-        {#Tema: <strong>"{{ actividad.tituloTrabajo }}"</strong>.#}
-    {#{% else %}#}
-        {#Plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.#}
-    {#{% endif %}#}
-{#{% endif %}#}
-
-{#{% if actividad.invitacion != null %}#}
-    {#{% if actividad.invitacion %} La participación es por invitación.{% endif %}#}
-{#{% endif %}#}
-
-{#{% if actividad.anfitrion != null %}#}
-    {#Anfitrión: {{ actividad.anfitrion }}.#}
-{#{% endif %}#}
-
-{#{% if actividad.sinodalGrado != null %}#}
-    {#Examen de grado de {{ actividad.sinodalGrado  }}#}
-{#{% endif %}#}
-
-{#{% if actividad.sinodalAlumno != null %}#}
-        {#de {{ actividad.sinodalAlumno }}.#}
-{#{% endif %}#}
-
-{#{% if actividad.nacional != null %}#}
-    {#El ámbito de la actividad es {% if actividad.nacional %}Nacional{% else %}Internacional{% endif %}.#}
-{#{% endif %}#}
-
-{#{% if actividad.plenaria != null %}#}
-        {#{% if actividad.plenaria %} Es una plática plenaria.{% endif %}#}
-{#{% endif %}#}
-
-{#{% if actividad.institucion != null %}#}
-        {#Institución: {{ actividad.institucion }}#}
-        {#{% if actividad.departamento != null %}#}
-            {#, {{ actividad.departamento }}#}
-        {#{% endif %}.#}
-{#{% endif %}#}
-
-{#{% if actividad.lugar != null %}#}
-    {#Lugar: {{ actividad.lugar }}.#}
-{#{% endif %}#}
+    {% if i == d %} con {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}. Estadía con duración de
+        {{ actividad.solicitud.dias }} días, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.
+        {% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }}
+        con los recursos que se especifican en la siguiente tabla:{% endif %}
+    {% endif %}
+    {% set i = i+1 %}
+{% endfor %}

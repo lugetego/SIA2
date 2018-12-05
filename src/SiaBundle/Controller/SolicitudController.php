@@ -269,7 +269,7 @@ class SolicitudController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $fechaSolicitud = new \DateTime('NOW');
+        $fechaEnvio = new \DateTime(date('Y-m-d'));
 //        $fechaEnvio = $fechaSolicitud->format("Y-m-d");
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -280,10 +280,16 @@ class SolicitudController extends Controller
         $academico = $user->getAcademico();
 
         $solicitud->setEnviada(true);
-        $solicitud->setFechaEnviada($fechaSolicitud);
+        $solicitud->setFechaEnviada($fechaEnvio);
 
-        $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaSolicitud);
-//      Límite para enviar la solicitud a la siguiente sesión
+        $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaEnvio);
+
+        $diff = $proxSesion->getFecha()->diff($fechaEnvio);
+
+        // Si es menor a dos días busca la próxima sesión
+        if($diff->format('d') < 2) {
+            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
+        }
 
         $solicitud->setSesion($proxSesion);
         $em->persist($solicitud);

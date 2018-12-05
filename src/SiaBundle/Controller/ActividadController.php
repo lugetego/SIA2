@@ -134,8 +134,6 @@ class ActividadController extends Controller
         ));
     }
 
-
-
     /**
      * Creates a new actividad entity.
      *

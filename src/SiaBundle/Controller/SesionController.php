@@ -24,19 +24,29 @@ class SesionController extends Controller
      */
     public function indexAction()
     {
-
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $today = new \DateTime('NOW');
+        $today = new \DateTime(date('Y-m-d'));
         $em = $this->getDoctrine()->getManager();
 
         $sesions = $em->getRepository('SiaBundle:Sesion')->findBy(array(),array('fecha'=>'DESC'));
 
         $proximaSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($today);
 
+        $diff = $proximaSesion->getFecha()->diff($today);
+
+//        // Dos días antes de la sesión busca la siguiente en el calendario
+//        if($diff->format('d') < 2) {
+//            $proximaSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
+//        }
+
+        // Diff < 2 busca siguiente sesión de consejo
+
         return $this->render(':sesion:index.html.twig', array(
             'sesions' => $sesions,
             'proximaSesion' => $proximaSesion,
+            'diff' => $diff,
+            'today' => $today,
         ));
     }
 

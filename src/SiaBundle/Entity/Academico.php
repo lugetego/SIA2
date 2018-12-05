@@ -395,6 +395,8 @@ class Academico
         $this->activo = $activo;
     }
 
+    // Métodos para el dash del académico
+
     /**
      * Erogado Licencias
      * Regresa el total de la asignación anual solicitado por licencia

@@ -46,3 +46,7 @@ services:
         class: Twig_Extensions_Extension_Text
         tags:
             - { name: twig.extension }
+
+    app.recomendacion:
+        class:     SiaBundle\Service\Recomendacion
+        arguments: [@doctrine.orm.entity_manager]

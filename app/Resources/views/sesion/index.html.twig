@@ -27,12 +27,15 @@
 
     <h5 class="text-secondary mb-4">Próxima Sesión: {{ proximaSesion.fecha|localizeddate('long', 'none') }}</h5>
 
+    <div class="row">
+        <div class="col-md-8">
+
     <table id="sesion" class="table table-hover table-bordered table-striped table-sm">
         <thead>
         <tr>
             <th class="text-center">Nombre</th>
             <th class="text-center">Fecha</th>
-            <th class="text-center">Acciones</th>
+            {#<th class="text-center">Acciones</th>#}
         </tr>
         </thead>
         <tbody>
@@ -41,45 +44,46 @@
             {% set sesionmodaledit = 'sesioneditModal'~ sesion.id  %}
 
             <tr>
-                <td><a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}">{{ sesion.name }}</a></td>
+                <td class="text-center"><a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}">{{ sesion.name }}</a></td>
 
                 <td>{% if sesion.fecha %}{{ sesion.fecha|localizeddate('long', 'none') }}{% endif %}</td>
 
 
-                <td class="text-center">
+                {#<td class="text-center">#}
 
-                    <a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}"><i class="fa fa-search"></i></a>
+                    {#<a href="{{ path('sesion_show', { 'slug': sesion.slug }) }}"><i class="fa fa-search"></i></a>#}
                     {#<a href="{{ path('sesion_edit', { 'slug': sesion.slug }) }}"><i class="fa fa-edit"></i></a>#}
 
-                    <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ sesionmodaledit }}">
-                        <i class="fa fa-edit"></i>
-                    </button>
+                    {#<button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ sesionmodaledit }}">#}
+                        {#<i class="fa fa-edit"></i>#}
+                    {#</button>#}
 
-                </td>
+                {#</td>#}
 
             </tr>
 
             <!-- Modal -->
-            <div class="modal fade" id="{{ sesionmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ sesionmodaledit }}Label" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="{{ sesionmodaledit }}Label"> {{ sesion.name }} </h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            {% render controller("SiaBundle:Sesion:edit", {'slug': sesion.slug}) %}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {#<div class="modal fade" id="{{ sesionmodaledit }}" tabindex="-1" role="dialog" aria-labelledby="{{ sesionmodaledit }}Label" aria-hidden="true">#}
+                {#<div class="modal-dialog modal-lg modal-dialog-centered" role="document">#}
+                    {#<div class="modal-content">#}
+                        {#<div class="modal-header">#}
+                            {#<h5 class="modal-title" id="{{ sesionmodaledit }}Label"> {{ sesion.name }} </h5>#}
+                            {#<button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+                                {#<span aria-hidden="true">&times;</span>#}
+                            {#</button>#}
+                        {#</div>#}
+                        {#<div class="modal-body">#}
+                            {#{% render controller("SiaBundle:Sesion:edit", {'slug': sesion.slug}) %}#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
 
 
         {% endfor %}
         </tbody>
     </table>
+    </div></div>
 
 {% endblock %}
 

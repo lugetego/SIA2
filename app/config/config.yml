@@ -39,6 +39,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        recomendacion: "@app.recomendacion"
 
 # Doctrine Configuration
 doctrine:

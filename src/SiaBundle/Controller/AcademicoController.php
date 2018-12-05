@@ -85,7 +85,7 @@ class AcademicoController extends Controller
         $totalDias = $diasLicencia + $diasComision;
 
         // Calcula Totales
-        // Envío el año para no contar éstas
+        // Envío el año como filtro
 
         $totalAsignacionLicencia = $this->erogadoAsignacion($solicitudes, 'Licencia', $year);
         $totalAsignacionComision = $this->erogadoAsignacion($solicitudes, 'Comisión', $year);
