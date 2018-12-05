@@ -844,7 +844,7 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
