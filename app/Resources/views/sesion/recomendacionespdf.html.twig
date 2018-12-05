@@ -210,10 +210,11 @@
 
         {#<p>V{{ i }}. <strong>{{ solicitud.anfitrion }}</strong> de solicitud Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>#}
         <p>V{{ i }}.
-        {% for actividad in solicitud.actividades %}
+        {#{% for actividad in solicitud.actividades %}#}
             {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-            {% include 'sesion/actividadVisitante.html.twig' with {'actividad': actividad } %}</li>
-        {% endfor %}</p>
+            {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
+        {#{% endfor %}</p>#}
+        </p>
         {# Financiamiento #}
         {# Hay financiamiento ?#}
         {% set solicitaFinanciamiento = 0 %}
@@ -272,7 +273,8 @@
         {% endif %}
 
         <p>{{ solicitud.descripcion }}</p>
-        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}<br><br>
+        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
+        {% if solicitud.getTotalAsignacion > 0 %}<p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>{% endif %}
         {% set i = i + 1 %}
     {% endfor %}
 

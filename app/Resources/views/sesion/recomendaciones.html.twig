@@ -238,7 +238,8 @@
         <p class="my-4">V{{ i }}.
         {#{% for actividad in solicitud.actividades %}#}
         {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-        {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}</li>
+        {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
+        </p>
         {#{% endfor %}#}
         {# Financiamiento #}
         {# Hay financiamiento ?#}
@@ -296,7 +297,6 @@
                 </div>
             </div>
         {% endif %}
-        </p>
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
