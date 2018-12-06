@@ -306,11 +306,11 @@
 
     {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}
 
-    <h3 class="border-top pt-2"><strong>Estudiantes</strong>
+    <h5 class="border-top pt-2"><strong>Estudiantes</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ alumnosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>
-    </h3>
+    </h5>
 
     <div>
         {{ sesion.estudiantes|raw }}
@@ -335,11 +335,11 @@
 
     {% set variosmodaledit = 'varioseditModal'~ sesion.id  %}
 
-    <h3 class="border-top pt-2"><strong>Varios</strong>
+    <h5 class="border-top pt-2"><strong>Varios</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ variosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>
-    </h3>
+    </h5>
 
     <div>
         {{ sesion.varios|raw }}

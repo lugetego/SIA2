@@ -284,12 +284,12 @@ class SolicitudController extends Controller
 
         $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaEnvio);
 
-        $diff = $proxSesion->getFecha()->diff($fechaEnvio);
+//        $diff = $proxSesion->getFecha()->diff($fechaEnvio);
 
         // Si es menor a dos días busca la próxima sesión
-        if($diff->format('d') < 2) {
-            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
-        }
+//        if($diff->format('d') < 2) {
+//            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
+//        }
 
         $solicitud->setSesion($proxSesion);
         $em->persist($solicitud);
