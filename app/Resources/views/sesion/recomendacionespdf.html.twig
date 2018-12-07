@@ -43,7 +43,6 @@
 
     {% for solicitud in licencias %}
 
-        <br>
         <p >L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
@@ -71,7 +70,6 @@
     {% set i = 1 %}
 
     {% for solicitud in comisiones %}
-
         <br>
         <p >C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
