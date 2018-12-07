@@ -69,7 +69,7 @@ vich_uploader:
 
     mappings:
         sia_cartaInvitacion:
-            uri_prefix:         /SIA2/submissions
+            uri_prefix:         /sia/submissions
             delete_on_remove: true
             delete_on_update: true
             upload_destination: %kernel.root_dir%/../web/submissions
