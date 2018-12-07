@@ -13,6 +13,8 @@
 {% if actividad.tituloTrabajo != null %}
     {%  if actividad.tipo == 'Investigación'%}
         realizar investigación sobre: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
+    {%  else if actividad.tipo == 'Asesoría Tesis'%}
+        <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {% else %}
         y participar con la plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {% endif %}
@@ -23,7 +25,12 @@
 {% endif %}
 
 {% if actividad.anfitrion != null %}
-    Anfitrión: {{ actividad.anfitrion }}.
+    {%  if actividad.tipo == 'Asesoría de Tesis'%}
+        Estudiante: {{ actividad.anfitrion }}.
+    {% endif %}
+    {% else %}
+        Anfitrión: {{ actividad.anfitrion }}.
+    {%  %}
 {% endif %}
 
 {% if actividad.sinodalGrado != null %}
