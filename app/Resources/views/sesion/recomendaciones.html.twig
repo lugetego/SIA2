@@ -79,71 +79,11 @@
                 <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
-        {# Financiamiento #}
-        {# Hay financiamiento ?#}
-        {% set solicitaFinanciamiento = 0 %}
 
-        {% for fin in solicitud.financiamiento %}
-            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                {% set solicitaFinanciamiento = 1 %}
-            {% endif %}
-        {% endfor %}
-
-        {% if solicitaFinanciamiento %}
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <table class="table table-striped table-bordered table-sm">
-                        <thead>
-                        <tr>
-                            <th class="text-center">Fuente</th>
-                            <th class="text-center">CCM</th>
-                            <th class="text-center">PAPIIT</th>
-                            <th class="text-center">Conacyt</th>
-                            <th class="text-center">Otro</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% set ccm = 0 %}
-                        {% set papiit = 0 %}
-                        {% set conacyt = 0 %}
-                        {% set otro = 0 %}
-
-                        {% for fin in solicitud.financiamiento %}
-                            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                                <tr>
-                                    <td>{{ fin.nombre }}</td>
-                                    <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
-                                    <td class="text-right">{{ fin.otro  }}</td>
-                                </tr>
-                                {% set ccm = fin.ccm + ccm %}
-                                {% set papiit = fin.papiit + papiit %}
-                                {% set conacyt = fin.conacyt + conacyt %}
-                                {% set otro = fin.otro + otro %}
-                            {% endif %}
-                        {% endfor %}
-                        <tr>
-                            <td><h6><i class="fa fa-usd"></i> Total</td>
-                            <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong></strong></h6></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        {% endif %}
+        {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
         <p>{{ solicitud.descripcion }}</p>
-        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-        {#{% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}#}
-        {#{% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}#}
-        <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-            habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de {{ solicitud.totalDiasAusente }} días durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.  {#{ recomendacion.totalErogado(solicitud)|number_format(2) }} #}
-        </p><br>
+        {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}<br>
 
         {% set i = i + 1 %}
     {% endfor %}
@@ -160,72 +100,10 @@
                 <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
-        {# Financiamiento #}
-        {# Hay financiamiento ?#}
-        {% set solicitaFinanciamiento = 0 %}
 
-        {% for fin in solicitud.financiamiento %}
-            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                {% set solicitaFinanciamiento = 1 %}
-            {% endif %}
-        {% endfor %}
-
-        {% if solicitaFinanciamiento %}
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <table class="table table-striped table-bordered table-sm">
-                        <thead>
-                        <tr>
-                            <th class="text-center">Fuente</th>
-                            <th class="text-center">CCM</th>
-                            <th class="text-center">PAPIIT</th>
-                            <th class="text-center">Conacyt</th>
-                            <th class="text-center">Otro</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% set ccm = 0 %}
-                        {% set papiit = 0 %}
-                        {% set conacyt = 0 %}
-                        {% set otro = 0 %}
-
-                        {% for fin in solicitud.financiamiento %}
-                            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                                <tr>
-                                    <td>{{ fin.nombre }}</td>
-                                    <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
-                                    <td class="text-right">{{ fin.otro  }}</td>
-                                </tr>
-                                {% set ccm = fin.ccm + ccm %}
-                                {% set papiit = fin.papiit + papiit %}
-                                {% set conacyt = fin.conacyt + conacyt %}
-                                {% set otro = fin.otro + otro %}
-                            {% endif %}
-                        {% endfor %}
-                        <tr>
-                            <td><h6><i class="fa fa-usd"></i> Total</td>
-                            <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong></strong></h6></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        {% endif %}
+        {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
         <p>{{ solicitud.descripcion }}</p>
-        <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-        {#{% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}#}
-        {#{% set totalErogado =  solicitud.academico.erogadoLicencias(yearSolicitud) %}#}
-        <p>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-            habrá utilizado {{ solicitud.totalDiasLicencia }} días de su disponibilidad de 45 días de licencia, se habrá ausentando del
-            CCM un total de {{ solicitud.totalDiasAusente }} días durante el 2018{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.
-        </p>
-
         {% set i = i + 1 %}
     {% endfor %}
 
@@ -236,77 +114,25 @@
 
         {#<p>V{{ i }}. <strong>{{ solicitud.anfitrion }}</strong> de solicitud Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>#}
         <p class="my-4">V{{ i }}.
-        {#{% for actividad in solicitud.actividades %}#}
-        {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
+
         {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
-        {#{% endfor %}#}
-        {# Financiamiento #}
-        {# Hay financiamiento ?#}
-        {% set solicitaFinanciamiento = 0 %}
 
-        {% for fin in solicitud.financiamiento %}
-            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                {% set solicitaFinanciamiento = 1 %}
-            {% endif %}
-        {% endfor %}
-
-        {% if solicitaFinanciamiento %}
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <table class="table table-striped table-bordered table-sm">
-                        <thead>
-                        <tr>
-                            <th class="text-center">Fuente</th>
-                            <th class="text-center">CCM</th>
-                            <th class="text-center">PAPIIT</th>
-                            <th class="text-center">Conacyt</th>
-                            <th class="text-center">Otro</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% set ccm = 0 %}
-                        {% set papiit = 0 %}
-                        {% set conacyt = 0 %}
-                        {% set otro = 0 %}
-
-                        {% for fin in solicitud.financiamiento %}
-                            {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
-                                <tr>
-                                    <td>{{ fin.nombre }}</td>
-                                    <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
-                                    <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
-                                    <td class="text-right">{{ fin.otro  }}</td>
-                                </tr>
-                                {% set ccm = fin.ccm + ccm %}
-                                {% set papiit = fin.papiit + papiit %}
-                                {% set conacyt = fin.conacyt + conacyt %}
-                                {% set otro = fin.otro + otro %}
-                            {% endif %}
-                        {% endfor %}
-                        <tr>
-                            <td><h6><i class="fa fa-usd"></i> Total</td>
-                            <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
-                            <td class="text-right"><h6><strong></strong></h6></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        {% endif %}
+        {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
         <p>{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-        {% if solicitud.getTotalAsignacion > 0 %}<p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>{% endif %}
+        {% if solicitud.erogadoAsignacion %}
+            {% if solicitud.getTotalAsignacion > 0 %}
+                <p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>
+            {% endif %}
+        {% endif %}
         {% set i = i + 1 %}
     {% endfor %}
 
     {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}
 
-    <h5 class="border-top pt-2"><strong>Estudiantes</strong>
+    <h5 class="border-top pt-2 mt-4"><strong>Estudiantes</strong>
         <button type="button" class="btn btn-sm btn-link" data-toggle="modal" data-target="#{{ alumnosmodaledit }}">
             <i class="fa fa-edit"></i>
         </button>

@@ -1,0 +1,54 @@
+{% set solicitaFinanciamiento = 0 %}
+
+{% for fin in solicitud.financiamiento %}
+    {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
+        {% set solicitaFinanciamiento = 1 %}
+    {% endif %}
+{% endfor %}
+
+{% if solicitaFinanciamiento %}
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <table class="table table-striped table-bordered table-sm">
+                <thead>
+                <tr>
+                    <th class="text-center">Fuente</th>
+                    <th class="text-center">CCM</th>
+                    <th class="text-center">PAPIIT</th>
+                    <th class="text-center">Conacyt</th>
+                    <th class="text-center">Otro</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set ccm = 0 %}
+                {% set papiit = 0 %}
+                {% set conacyt = 0 %}
+                {% set otro = 0 %}
+
+                {% for fin in solicitud.financiamiento %}
+                    {% if fin.ccm or fin.papiit or fin.conacyt or fin.otro %}
+                        <tr>
+                            <td>{{ fin.nombre }}</td>
+                            <td class="text-right">${{ fin.ccm|number_format(2)  }}</td>
+                            <td class="text-right">${{ fin.papiit|number_format(2)  }}</td>
+                            <td class="text-right">${{ fin.conacyt|number_format(2)  }}</td>
+                            <td class="text-right">{{ fin.otro  }}</td>
+                        </tr>
+                        {% set ccm = fin.ccm + ccm %}
+                        {% set papiit = fin.papiit + papiit %}
+                        {% set conacyt = fin.conacyt + conacyt %}
+                        {% set otro = fin.otro + otro %}
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    <td><h6><i class="fa fa-usd"></i> Total</td>
+                    <td class="text-right"><h6><strong>${{ ccm|number_format(2) }}</strong></h6></td>
+                    <td class="text-right"><h6><strong>${{ papiit|number_format(2)  }}</strong></h6></td>
+                    <td class="text-right"><h6><strong>${{ conacyt|number_format(2)  }}</strong></h6></td>
+                    <td class="text-right"><h6><strong></strong></h6></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
