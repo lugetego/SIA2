@@ -52,7 +52,6 @@
             {% endfor %}
         </ul>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
-
         <p>{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}<br>
 
@@ -83,7 +82,6 @@
         </ul>
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
-
         <p>{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}<br>
         {# Financiamiento #}
