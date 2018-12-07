@@ -52,7 +52,7 @@
         </ul>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
         <p>{{ solicitud.descripcion }}</p>
-        {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}<br>
+        {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
 
         {#<strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}<br>#}
         {#{% set yearSolicitud = solicitud.fechaInicio |date('Y')  %}#}
@@ -81,7 +81,7 @@
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
         <p>{{ solicitud.descripcion }}</p>
-        {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}<br>
+        {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
         {# Financiamiento #}
         {#{% set solicitaFinanciamiento = 0 %}#}
 
