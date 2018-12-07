@@ -31,7 +31,8 @@ class CreateActividadForm extends AbstractType {
                             'Reunión de trabajo' => 'Reunión de trabajo',
                             'Taller' => 'Taller',
                             'Seminario' => 'Seminario',
-                            'Sinodal' => 'Sinodal'
+                            'Sinodal' => 'Sinodal',
+                            'Asesoría Tesis' => 'Asesoría Tesis'
                         ),
                         'placeholder' => 'Seleccionar',
                         'required' => true,
