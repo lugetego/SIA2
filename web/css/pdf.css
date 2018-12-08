@@ -31,12 +31,13 @@ table th {
 }
 
 .table {
-    margin: 0 auto;
+    margin: auto;
     width: 100% !important;
     font-size: 8pt;
-    page-break-inside: avoid !important;
 }
 
-table thead {
-    display: table-row-group;
-}
+
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
