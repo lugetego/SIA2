@@ -228,9 +228,10 @@
                 <p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>
             {% endif %}
         {% endif %}
+        <br>
         {% set i = i + 1 %}
     {% endfor %}
-    <br>
+
 
     {% if sesion.estudiantes %}
         <p><strong>Estudiantes</strong></p>
