@@ -772,9 +772,14 @@ class Solicitud
      */
     public function getDias()
     {
-        $dias = $this->fechaFin->diff($this->fechaInicio);
+        //$dias = $this->fechaFin->diff($this->fechaInicio);
+        //return $dias->format('%d') + 1;
 
-        return $dias->format('%d') + 1;
+        $dias = $this->fechaFin->diff($this->fechaInicio);
+        return $dias->days+1;
+//// shows the total amount of days (not divided into years, months and days like above)
+
+
     }
 
     /**
