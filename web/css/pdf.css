@@ -1,13 +1,13 @@
 /* Printable area */
 .print-area {
-    position:   relative;
+    position:   page;
     top:        .5cm;
     left:       .5cm;
     right:      .5cm;
-    bottom:     .5cm;
+    bottom:     2.5cm;
     width:      19cm;
     height:     27.6cm;
-    font-size: 11pt;
+    font-size: 12pt;
 
 }
 .titulo {
