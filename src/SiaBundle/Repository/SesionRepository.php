@@ -40,18 +40,17 @@ class SesionRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllSolicitudes($sesion)
-    {
-        return $this->getEntityManager()
-            ->createQuery(
-                "SELECT s FROM SiaBundle:Solicitud s
-                  JOIN s.sesion se
-                  WHERE s.tipo = :tipo  
-                  ORDER BY s.fechaInicio ASC"
-            )
-            ->setParameter('sesion', $sesion)
-            ->getResult();
-    }
-
+//    public function findAllSolicitudesBySesion($sesion)
+//    {
+//        return $this->getEntityManager()
+//            ->createQuery(
+//                "SELECT s FROM SiaBundle:Solicitud s
+//                  JOIN s.sesion se
+//                  WHERE s.tipo = :tipo
+//                  ORDER BY s.fechaInicio ASC"
+//            )
+//            ->setParameter('sesion', $sesion)
+//            ->getResult();
+//    }
 
 }

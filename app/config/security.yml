@@ -29,7 +29,7 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
-                default_target_path: after_login_route_name
+                default_target_path: /dash
 
             logout:
                 path: /logout

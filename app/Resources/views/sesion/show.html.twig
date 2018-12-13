@@ -36,6 +36,12 @@
         </ol>
     </nav>
 
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success" role="alert">
+            <i class="fa fa-check" aria-hidden="true"></i> {{ flashMessage }}
+        </div>
+    {% endfor %}
+
     <h2 class="text-secondary">Sesión de Consejo {{ sesion.name }}</h2>
     <div class="row mb-4">
         <div class="col-md6">
@@ -51,7 +57,7 @@
 
     <div class="row mb-5">
         <div class="col">
-            <a class="btn btn-primary btn-sm" href="#" role="button">Aprobar solicitudes</a> <a class="btn btn-primary btn-sm" href="#" role="button">Enviar Notificaciones</a>
+            <a class="btn btn-primary btn-sm" href="{{ path('sesion_aprueba', { 'slug': sesion.slug }) }}" role="button">Aprobar solicitudes</a> <a class="btn btn-primary btn-sm disabled" href="#" role="button">Enviar Notificaciones</a>
         </div>
     </div>
 

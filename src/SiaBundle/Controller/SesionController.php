@@ -109,39 +109,37 @@ class SesionController extends Controller
     /**
      * Aprueba las solicitudes de una sesión
      *
-     * @Route("/{slug}/aprueba-solicitudes/", name="sesion_apueba")
+     * @Route("/{slug}/aprueba-solicitudes/", name="sesion_aprueba")
      * @Method("GET")
      */
     public function apruebaSolicitudesAction(Sesion $sesion)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        //
         $em = $this->getDoctrine()->getManager();
+//        $solicitudes = $em->getRepository('SiaBundle:Sesion')->findAllSolicitudesBySesion($sesion);
 
-        $solicitudes = $em->getRepository('SiaBundle:Sesion')->findAllSolicitudes($sesion);
+        $solicitudes = $sesion->getSolicitudes();
 
+        $i = 0;
         foreach($solicitudes as $solicitud) {
 
-            $i = 0;
-            if($solicitud->getEviada() && $solicitud->getDictamen() != false){
-                $solicitud->setDictament(true);
+            if($solicitud->isEnviada()) {
+                $solicitud->setDictamen(true);
                 $em->persist($solicitud);
-                $i++;
+                $i = $i + 1;
             }
 
             $em->flush();
-
-                        $this->addFlash(
-                'notice',
-                'La solicitud se ha modificado'
-            );
-
         }
 
+        $this->addFlash(
+            'notice',
+            $i . ' Solicitudes fueron aprobadas'
+        );
 
+        return $this->redirectToRoute('sesion_show', array('slug' => $sesion->getSlug()));
 
-        $this->redirect('');
     }
 
     /**
