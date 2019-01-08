@@ -45,7 +45,7 @@ class SolicitudController extends Controller
             return $this->redirectToRoute('dashboard');
         }
 
-        $solicitudes = $em->getRepository('SiaBundle:Solicitud')-> findAllByYear($user->getAcademico(), '2018');
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')-> findAllByYear($user->getAcademico(), '2019');
 
         return $this->render('solicitud/index.html.twig', array(
             'solicituds' => $solicitudes,

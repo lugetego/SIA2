@@ -69,7 +69,7 @@ class AcademicoController extends Controller
      *
      * @Method("GET")
      */
-    public function showAction(Academico $academico, $year = '2018')
+    public function showAction(Academico $academico, $year = '2019')
     {
         $this->denyAccessUnlessGranted('view', $academico);
 
@@ -148,7 +148,7 @@ class AcademicoController extends Controller
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $em = $this->getDoctrine()->getManager();
-        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, '2018');
+        $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, '2019');
 
         return $this->render('academico/salidas.txt.twig', array(
             'academico' => $academico,
