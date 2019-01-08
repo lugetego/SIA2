@@ -10,10 +10,10 @@
         <a class="btn btn-sm btn-info" role="button" href="{{ path('dashboard', {'_switch_user': academico.user.username}) }}">Switch user {{ academico.user.username }}</a>
     {% endif %}
 
-    {% if year == 2018 %}
-        <div class="lead my-4 text-secondary">Ver histórico: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2017' }) }}">2017</a></div>
+    {% if year == 2019 %}
+        <div class="lead my-4 text-secondary">Ver histórico: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2018' }) }}">2018</a></div>
     {% else %}
-        <div class="lead my-4 text-secondary">Ver año actual: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2018' }) }}">2018</a></div>
+        <div class="lead my-4 text-secondary">Ver año actual: <a href="{{ path('academico_show', {'slug': academico.slug, 'year': '2019' }) }}">2019</a></div>
     {% endif %}
 
     <div class="card-deck mb-4 text-muted">
