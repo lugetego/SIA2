@@ -48,15 +48,15 @@
 
     {% for solicitud in licencias %}
 
-        <p >L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                <li >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
+                <li class="text-justify" >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
-        <p>{{ solicitud.descripcion }}</p>
+        <p class="text-justify">{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
 
         {#<strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}<br>#}
@@ -77,16 +77,16 @@
     {% set i = 1 %}
 
     {% for solicitud in comisiones %}
-        <p >C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                <li >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
+                <li class="text-justify">{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
-        <p>{{ solicitud.descripcion }}</p>
+        <p class="text-justify">{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
         {# Financiamiento #}
         {#{% set solicitaFinanciamiento = 0 %}#}
@@ -166,7 +166,7 @@
     {% for solicitud in visitantes %}
 
         {#<p>V{{ i }}. <strong>{{ solicitud.anfitrion }}</strong> de solicitud Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>#}
-        <p>V{{ i }}.
+        <p class="text-justify">V{{ i }}.
         {#{% for actividad in solicitud.actividades %}#}
             {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
             {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
@@ -230,7 +230,7 @@
             {#</div>#}
         {#{% endif %}#}
 
-        <p>{{ solicitud.descripcion }}</p>
+        <p class="text-justify">{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
@@ -241,17 +241,16 @@
         {% set i = i + 1 %}
     {% endfor %}
 
-
     {% if sesion.estudiantes %}
-        <p><strong><h5>Estudiantes</h5></strong></p>
+        <p class="text-justify"><strong><h5>Estudiantes</h5></strong></p>
         <hr>
         <p>{{ sesion.estudiantes|raw}}</p>
     {% endif %}
 
     {% if sesion.varios %}
-        <p><strong><h5>Varios</h5></strong></p>
+        <p class="text-justify"><strong><h5>Varios</h5></strong></p>
         <hr>
-        <p>{{ sesion.varios|raw}}</p>
+        <p class="text-justify">{{ sesion.varios|raw}}</p>
     {% endif %}
 </div>
 
