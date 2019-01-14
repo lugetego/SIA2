@@ -859,7 +859,7 @@ class Solicitud
         }
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and solicitd->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $diasAusente += $solicitud->getDias();
         }
 
