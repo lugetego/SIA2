@@ -791,15 +791,28 @@ class Solicitud
 
         $year = $this->getFechaInicio()->format('Y');
 
+
+        // Suma solo licencias del año de la salida
+        // Sumas todas las aceptadas! y luego ...
+
         // Si el tipo de solicitud es Licencia
         // Y ha sido enviada (puede no tener dictamen)
-        // Suma solo licencias del año de la salida
         // Y suma solo hasta esta solicitud
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() == 'Licencia'and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y'))
                 $diasLicencia += $solicitud->getDias();
         }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() == 'Licencia' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasLicencia += $solicitud->getDias();
+        }
+
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->getTipo() == 'Licencia'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $diasLicencia += $solicitud->getDias();
+//        }
 
         return $diasLicencia;
     }
@@ -814,9 +827,19 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() == 'Comision'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() == 'Comision'and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y'))
                 $diasComision += $solicitud->getDias();
         }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() == 'Comision' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasComision += $solicitud->getDias();
+        }
+
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->getTipo() == 'Comision'and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $diasComision += $solicitud->getDias();
+//        }
 
         return $diasComision;
     }
@@ -831,9 +854,19 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y'))
                 $diasAusente += $solicitud->getDias();
         }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() != 'Visitante' and solicitd->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasAusente += $solicitud->getDias();
+        }
+
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $diasAusente += $solicitud->getDias();
+//        }
 
         return $diasAusente;
     }

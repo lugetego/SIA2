@@ -48,7 +48,22 @@
 
     {% for solicitud in licencias %}
 
-        <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+        {% if solicitud.getDias == 1 %}
+            {% set inicio = solicitud.fechaInicio|localizeddate('long', 'none') %}
+            {% set detalleDias = 'día: ' ~ inicio ~ '.' %}
+        {% else %}
+            {% if solicitud.fechaInicio|date('Y') == solicitud.fechaFin|date('Y') %}
+                {% set inicio = solicitud.fechaInicio|localizeddate('none', 'none', 'es_MX', null, "d 'de' MMMM") %}
+                {% set fin = solicitud.fechafin|localizeddate('long', 'none') %}
+                {% set detalleDias = 'días. Del ' ~ inicio ~ ' al ' ~ fin ~ '.' %}
+            {% else %}
+                {% set inicio = solicitud.fechaInicio|localizeddate('long', 'none') %}
+                {% set fin = solicitud.fechafin|localizeddate('long', 'none') %}
+                {% set detalleDias = 'días. Del ' ~ inicio ~ ' al ' ~ fin ~ '.' %}
+            {% endif %}
+        {% endif %}
+
+        <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
@@ -77,7 +92,23 @@
     {% set i = 1 %}
 
     {% for solicitud in comisiones %}
-        <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
+
+        {% if solicitud.getDias == 1 %}
+            {% set inicio = solicitud.fechaInicio|localizeddate('long', 'none') %}
+            {% set detalleDias = 'día: ' ~ inicio ~ '.' %}
+        {% else %}
+            {% if solicitud.fechaInicio|date('Y') == solicitud.fechaFin|date('Y') %}
+                {% set inicio = solicitud.fechaInicio|localizeddate('none', 'none', 'es_MX', null, "d 'de' MMMM") %}
+                {% set fin = solicitud.fechafin|localizeddate('long', 'none') %}
+                {% set detalleDias = 'días. Del ' ~ inicio ~ ' al ' ~ fin ~ '.' %}
+            {% else %}
+                {% set inicio = solicitud.fechaInicio|localizeddate('long', 'none') %}
+                {% set fin = solicitud.fechafin|localizeddate('long', 'none') %}
+                {% set detalleDias = 'días. Del ' ~ inicio ~ ' al ' ~ fin ~ '.' %}
+            {% endif %}
+        {% endif %}
+
+        <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}</p>
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}

@@ -14,7 +14,7 @@
     {%  if actividad.tipo == 'Investigación' %}
         realizar investigación sobre: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {%  elseif actividad.tipo == 'Asesoría Tesis' %}
-        <strong>"{{ actividad.tituloTrabajo|title }}"</strong>.
+        <strong>"{{ actividad.tituloTrabajo }}"</strong>
     {% else %}
         y participar con la plática: <strong>"{{ actividad.tituloTrabajo }}"</strong>.
     {% endif %}
