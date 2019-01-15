@@ -292,7 +292,7 @@
     <div class="row justify-content-center mb-5" >
         <div class="col-md-4">
             {{ form_start(delete_form) }}
-            {% if solicitud.enviada == true %}
+            {% if solicitud.enviada == true or solicitud.actividades|length == 0 %}
                 <button disabled class="btn btn-success">Solicitud enviada</button>
                 {% if solicitud.dictamen == true and is_granted("ROLE_ADMIN")%}
                     <a class="btn btn-success" href="{{ path('solicitud_notificacion',{ 'id': solicitud.id}) }}" role="button"><i class="fa fa-paper-plane" aria-hidden="true"></i> Enviar notificación</a>
