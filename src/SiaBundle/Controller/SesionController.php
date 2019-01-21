@@ -163,7 +163,7 @@ class SesionController extends Controller
             'visitantes' => $visitantes,
         ));
 
-        $filename = sprintf($sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
+        $filename = sprintf('Recomendaciones'.$sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
 
         $footer = $this->renderView('sesion/footer.html.twig');
 

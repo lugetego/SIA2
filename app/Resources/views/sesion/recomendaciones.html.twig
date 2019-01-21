@@ -112,7 +112,6 @@
 
     {% for solicitud in visitantes %}
 
-
         {#<p>V{{ i }}. <strong>{{ solicitud.anfitrion }}</strong> de solicitud Del {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>#}
         <p class="my-4">V{{ i }}.
 
@@ -125,10 +124,13 @@
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
-                <p>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>
+                <p><strong>Observaciones: </strong>{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>
             {% endif %}
         {% endif %}
         {% set i = i + 1 %}
+
+        <strong>Dictamen</strong>:
+
     {% endfor %}
 
     {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}

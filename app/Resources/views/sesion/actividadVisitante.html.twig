@@ -2,7 +2,7 @@
 {% set d = actividades|length %}
 
 {% for actividad in actividades %}
-    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }} en {{ actividad.lugar }}, visita el Centro de Ciencias Matemáticas {% endif %}
+    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }}{% if actividad.lugar %}, {{ actividad.lugar }}{% endif %}, visita el Centro de Ciencias Matemáticas {% endif %}
 
     {% if i > 1 and i < d %}, {% elseif d > 1 and i == d %} y {% endif %}
     {% if actividad.tipo == 'Sinodal' %} para ser {{ actividad.tipo }} de {{ actividad.Sinodalgrado }} de {{ actividad.sinodalAlumno }}
