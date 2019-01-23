@@ -137,7 +137,7 @@
                 <p><strong>Observaciones: </strong> {% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.</p>
             {% endif %}
         {% endif %}
-        <strong>Dictamen</strong>:
+        <strong>Dictamen</strong>: {% if solicitud.dictamen == true %}Aprobada {% elseif solicitud.dictamen == false %}No aprobada{% endif %}
         <br><br>
 
         {% set i = i + 1 %}
