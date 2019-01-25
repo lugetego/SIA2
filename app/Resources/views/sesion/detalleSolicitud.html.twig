@@ -2,7 +2,7 @@
 <p class="text-justify"><strong>Observaciones: </strong>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
     habrá utilizado {{ solicitud.totalDiasLicencia }}{% if solicitud.totalDiasLicencia > 1 %} días{% else %} día{% endif %} de su disponibilidad de 45 días de licencia, se habrá ausentando del
     CCM un total de {{ solicitud.totalDiasAusente }}{% if solicitud.totalDiasAusente > 1 %} días{% else %} día{% endif %} durante el {{ solicitud.fechaInicio |date('Y') }}{% if solicitud.getTotalAsignacion > 0 %} y habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.<br>
-    <strong>Dictamen</strong>:  {% if solicitud.dictamen == true %}Aprobada {% elseif solicitud.dictamen == false %}No aprobada{% endif %}
+    <strong>Dictamen</strong>: {% if solicitud.dictamen is not null %}{% if solicitud.dictamen is same as(true) %}Aprobada {% elseif solicitud.dictamen is same as(false) %}No aprobada{% endif %}{% endif %}
 </p>
 
 
