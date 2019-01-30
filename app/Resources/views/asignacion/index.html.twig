@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Asignacions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Periodo</th>
+                <th>Asignacion</th>
+                <th>Diaslicencia</th>
+                <th>Diascomision</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for asignacion in asignacions %}
+            <tr>
+                <td><a href="{{ path('asignacion_show', { 'periodo': asignacion.periodo }) }}">{{ asignacion.periodo }}</a></td>
+                <td>{{ asignacion.asignacion }}</td>
+                <td>{{ asignacion.diasLicencia }}</td>
+                <td>{{ asignacion.diasComision }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('asignacion_show', { 'periodo': asignacion.periodo }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('asignacion_edit', { 'periodo': asignacion.periodo }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('asignacion_new') }}">Create a new asignacion</a>
+        </li>
+    </ul>
+{% endblock %}

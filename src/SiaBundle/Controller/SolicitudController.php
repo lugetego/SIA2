@@ -296,7 +296,7 @@ class SolicitudController extends Controller
         $em->flush();
 
         // Obtiene correo y msg de la forma de contacto
-        $subject = 'Solicitud '. ' '. $solicitud->getTipo() .' ' . $solicitud->getAcademico()->getNombre() . $solicitud->getAcademico()->getApellido();
+        $subject = 'Solicitud '. ' '. $solicitud->getTipo() .' ' . $solicitud->getAcademico()->getNombre() . ' ' . $solicitud->getAcademico()->getApellido();
 
         $mailer = $this->get('mailer');
 

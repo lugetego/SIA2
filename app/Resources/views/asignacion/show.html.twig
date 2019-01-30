@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Asignacion</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ asignacion.id }}</td>
+            </tr>
+            <tr>
+                <th>Periodo</th>
+                <td>{{ asignacion.periodo }}</td>
+            </tr>
+            <tr>
+                <th>Asignacion</th>
+                <td>{{ asignacion.asignacion }}</td>
+            </tr>
+            <tr>
+                <th>Diaslicencia</th>
+                <td>{{ asignacion.diasLicencia }}</td>
+            </tr>
+            <tr>
+                <th>Diascomision</th>
+                <td>{{ asignacion.diasComision }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('asignacion_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('asignacion_edit', { 'periodo': asignacion.periodo }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

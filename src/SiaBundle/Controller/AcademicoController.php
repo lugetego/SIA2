@@ -77,10 +77,17 @@ class AcademicoController extends Controller
 
         // Se reciben solicitudes del año en curso o posteriores
         $solicitudes = $em->getRepository('SiaBundle:Solicitud')->findAllByYear($academico, $year);
+        $asignacion = $em->getRepository('SiaBundle:Asignacion')->findOneByPeriodo($year);
+// No encuentra asignación
 
-        $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
-        $diasLicencia = $this->container->getParameter('sia.dias_licencia');
-        $diasComision = $this->container->getParameter('sia.dias_comision');
+
+//        $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
+//        $diasLicencia = $this->container->getParameter('sia.dias_licencia');
+//        $diasComision = $this->container->getParameter('sia.dias_comision');
+
+        $asignacionAnual = $asignacion->getAsignacion();
+        $diasLicencia = $asignacion->getDiasLicencia();
+        $diasComision = $asignacion->getDiasComision();
 
         $totalDias = $diasLicencia + $diasComision;
 
