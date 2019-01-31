@@ -57,6 +57,25 @@ class Recomendacion
     }
 
     /**
+     * @return Total de días autorizados hasta esta solicitud
+     */
+    public function totalDiasAutorizados(Solicitud $solicitud)
+    {
+        $diasAutorizados = 0;
+
+        $year = $solicitud->getFechaInicio()->format('Y');
+        $solicitudes = $this->em->getRepository('SiaBundle:Solicitud')->findAllByYear($solicitud->getAcademico(), $year);
+
+
+        foreach ($solicitudes as $s) {
+            if($s->getTipo() != 'Visitante' and $s->isEnviada() and $s->getFechaInicio() <= $solicitud->getFechaInicio())
+                $diasAutorizados += $s->getDias();
+        }
+
+        return $diasAutorizados;
+    }
+
+    /**
      * @return Total de días auscente hasta esta solicitud
      */
     public function totalDiasAusente(Solicitud $solicitud)

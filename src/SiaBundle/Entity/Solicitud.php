@@ -845,6 +845,33 @@ class Solicitud
     }
 
     /**
+     * @return Total de días aprobados hasta esta solicitud
+     */
+    public function totalDiasAprobados()
+    {
+        $diasAprobados = 0;
+
+        $year = $this->getFechaInicio()->format('Y');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null)
+                $diasAprobados += $solicitud->getDias();
+        }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $diasAprobados += $solicitud->getDias();
+        }
+
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $diasAusente += $solicitud->getDias();
+//        }
+
+        return $diasAprobados;
+    }
+
+    /**
      * @return Total de días auscente hasta esta solicitud
      */
     public function totalDiasAusente()
@@ -854,14 +881,14 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null)
+            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->getFechaInicio() <= $this->getSesion()->getFecha())
                 $diasAusente += $solicitud->getDias();
         }
 
-        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-                $diasAusente += $solicitud->getDias();
-        }
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->getTipo() != 'Visitante' and $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $diasAusente += $solicitud->getDias();
+//        }
 
 //        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
 //            if($solicitud->getTipo() != 'Visitante' and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
@@ -871,13 +898,13 @@ class Solicitud
         return $diasAusente;
     }
 
+
     /**
      * Para las recomendaciones
      * @return Total Erogado
      */
     public function totalErogado()
     {
-
         $totalErogado = 0;
         $year = $this->getFechaInicio()->format('Y');
 
