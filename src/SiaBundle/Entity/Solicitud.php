@@ -915,4 +915,37 @@ class Solicitud
 
         return $totalErogado;
     }
+
+    /**
+     * Para las recomendaciones
+     * @return Total Erogado
+     */
+    public function totalErogadoVisitante()
+    {
+        // Es posible solicitar dos visitantes con la misma fecha.
+        // Se suma incremental por la fecha de envío
+
+        // Suma primero las aprobadas
+        // Luego suma las enviadas de ésta sesión por fecha de creación
+
+        $totalErogado = 0;
+        $year = $this->getFechaInicio()->format('Y');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if( $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null)
+                $totalErogado += $solicitud->getTotalAsignacion();
+        }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if( $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio() && $solicitud->getCreated() <= $this->getCreated() )
+                $totalErogado += $solicitud->getTotalAsignacion();
+        }
+
+//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//            if($solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//                $totalErogado += $solicitud->getTotalAsignacion();
+//        }
+
+        return $totalErogado;
+    }
 }
