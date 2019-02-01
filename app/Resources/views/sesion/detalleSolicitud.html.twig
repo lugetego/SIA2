@@ -1,10 +1,15 @@
 <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
-<p class="text-justify"><strong>Observaciones: </strong>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,
-    se le habrán aprobado {{ solicitud.totalDiasLicencia }}{% if solicitud.totalDiasLicencia > 1 %} días{% else %} día{% endif %} de su disponibilidad de 45 días de licencia. Se le habrán aprobado un total de {{ solicitud.totalDiasAprobados }}{% if solicitud.totalDiasAprobados > 1 %} días{% else %} día{% endif %}
-    durante el {{ solicitud.fechaInicio |date('Y') }}.
-    Hasta ésta sesión de consejo se ha ausentado {{ solicitud.totalDiasAusente }}{% if solicitud.totalDiasAusente > 1 %} días{% else %} día{% endif %}{% if solicitud.getTotalAsignacion > 0 %}. Se le ha aprobado la erogación de ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.<br>
-    <strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}
+{#<p class="text-justify"><strong>Observaciones: </strong>Incluyendo los días que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando en estas recomendaciones,#}
+    {#se le habrán aprobado {{ solicitud.totalDiasLicencia }}{% if solicitud.totalDiasLicencia > 1 %} días{% else %} día{% endif %} de su disponibilidad de 45 días de licencia. Se le habrán aprobado un total de {{ solicitud.totalDiasAprobados }}{% if solicitud.totalDiasAprobados > 1 %} días{% else %} día{% endif %}#}
+    {#durante el {{ solicitud.fechaInicio |date('Y') }}.#}
+    {#Hasta ésta sesión de consejo se ha ausentado {{ solicitud.totalDiasAusente }}{% if solicitud.totalDiasAusente > 1 %} días{% else %} día{% endif %}{% if solicitud.getTotalAsignacion > 0 %}. Se le ha aprobado la erogación de ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual{% endif %}.<br>#}
+    {#<strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}#}
+{#</p>#}
+<p>
+<strong>Observaciones: </strong><br>
+Días autorizados de licencia incluyendo esta solicitud: <strong>{{ solicitud.totalDiasLicencia }}</strong><br>
+Total de días autorizados en el {{ solicitud.fechaInicio |date('Y') }}: <strong>{{ solicitud.totalDiasAprobados }}</strong><br>
+Días ausentados al día de hoy: <strong>{{ solicitud.totalDiasAusente }}</strong><br>
+{% if solicitud.getTotalAsignacion > 0 %}Incluyendo las erogaciones que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando, habrá erogado <strong>${{ solicitud.totalErogado|number_format(2) }}</strong> de su asignación anual{% endif %}<br>
+<strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}
 </p>
-
-
-{#{{ recomendacion.totalErogado(solicitud)|number_format(2) }}#}
