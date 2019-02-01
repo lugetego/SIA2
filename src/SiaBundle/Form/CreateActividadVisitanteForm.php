@@ -19,7 +19,8 @@ class CreateActividadVisitanteForm extends AbstractType {
                     ->add('tipo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                         'label' => '*Tipo de Actividad',
                         'choices' => array(
-                            'Coloquio' => 'Coloquio',
+                            'Coloquio CCM' => 'Coloquio CCM',
+                            'Coloquio PCCM' => 'Coloquio PCCM',
                             'Congreso' => 'Congreso',
                             'Simposio' => 'Simposio',
                             'Divulgacion' => 'Divulgacion',
@@ -67,11 +68,6 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'label'=>'Título del trabajo',
                             'required'=>false,
                         ));
-//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-//                            'widget' => 'single_text',
-//                            'html5' => false,
-//                            'required' => false,));
-
                 }
                 elseif ($tipo === 'Sinodal')
                 {
@@ -117,28 +113,10 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
                         ));
-//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-//                            'widget' => 'single_text',
-//                            'html5' => false,
-//                            'required' => false,));
                 }
                 elseif ($tipo === 'Conferencia')
                 {
                     $builder
-//                        ->add('motivo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',array(
-//                            'label'=>'*Motivo de la Actividad',
-//                            'choices'=>array(
-//                                'Asistencia'=>'Asistencia',
-//                                'Divulgación'=>'Divulgación',
-//                                'Participación'=>'Participación',
-//                                'Organización'=>'Organización',
-//                            ),
-//                            'placeholder'=>'Seleccionar',
-//                            'required'=>true,
-//                            'expanded'=>true,
-//                            'multiple'=>true,
-//
-//                        ))
                         ->add('nombreEvento', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Nombre del evento o actividad',
                             'required'=>false,
@@ -149,24 +127,6 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'read_only'=>true,
 
                         ))
-//                        ->add('plenaria', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
-//                            'choices'=>array(
-//                                true=>'Si',
-//                                false=>'No'),
-//                            'expanded'=>true,
-//                            'required'=>true,
-//                            'label'=>'Conferencia plenaria',
-//                            'choices_as_values' => false,
-//                        ))
-//                        ->add('invitacion', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
-//                            'choices'=>array(
-//                                true=>'Si',
-//                                false=>'No'),
-//                            'expanded'=>true,
-//                            'required'=>true,
-//                            'label'=>'Por invitación',
-//                            'choices_as_values' => false,
-//                        ))
                         ->add('institucion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Institución',
                             'required'=>false,
@@ -188,29 +148,11 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'label'=>'Lugar (ciudad, estado, país)',
                             'required'=>false,
                         ));
-//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-//                            'widget' => 'single_text',
-//                            'html5' => false,
-//                            'required' => false));
                 }
 
                 elseif( $tipo != '') {
 
                     $builder
-//                        ->add('motivo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',array(
-//                            'label'=>'*Motivo de la Actividad',
-//                            'choices'=>array(
-//                                'Asistencia'=>'Asistencia',
-//                                'Divulgación'=>'Divulgación',
-//                                'Participación'=>'Participación',
-//                                'Organización'=>'Organización',
-//                            ),
-//                            'placeholder'=>'Seleccionar',
-//                            'required'=>true,
-//                            'expanded'=>true,
-//                            'multiple'=>true,
-//
-//                        ))
                         ->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Nombre del invitado',
                             'required'=>false,
@@ -232,15 +174,6 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'label'=>'Ámbito de la actividad',
                             'choices_as_values' => false,
                         ))
-//                        ->add('invitacion', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
-//                            'choices'=>array(
-//                                true=>'Si',
-//                                false=>'No'),
-//                            'expanded'=>true,
-//                            'required'=>true,
-//                            'label'=>'Por invitación',
-//                            'choices_as_values' => false,
-//                        ))
                         ->add('institucion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Institución de origen del invitado',
                             'required'=>false,
@@ -253,10 +186,6 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'label'=>'Lugar (ciudad, estado, país de origen)',
                             'required'=>false,
                         ));
-//                        ->add('fechaActividad', 'Symfony\Component\Form\Extension\Core\Type\DateType', array(
-//                            'widget' => 'single_text',
-//                            'html5' => false,
-//                            'required' => false,));
                 }
 
                 break;
