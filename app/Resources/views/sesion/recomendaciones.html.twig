@@ -125,7 +125,9 @@
         {% if solicitud.erogadoAsignacion %}
             <p>
             {% if solicitud.getTotalAsignacion > 0 %}
-                <strong>Observaciones: </strong> {% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado <strong>${{ solicitud.totalErogado|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.
+                <strong>Observaciones: </strong><br>
+                {#{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado <strong>${{ solicitud.totalErogado|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.<br>#}
+                Incluyendo las erogaciones que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando, habrá erogado <strong>${{ solicitud.totalErogado|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.
             {% endif %}
             <br><strong>Dictamen</strong>:
             </p>
