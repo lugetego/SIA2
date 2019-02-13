@@ -80,11 +80,6 @@ class AcademicoController extends Controller
         $asignacion = $em->getRepository('SiaBundle:Asignacion')->findOneByPeriodo($year);
 // No encuentra asignación
 
-
-//        $asignacionAnual = $this->container->getParameter('sia.asignacion_anual');
-//        $diasLicencia = $this->container->getParameter('sia.dias_licencia');
-//        $diasComision = $this->container->getParameter('sia.dias_comision');
-
         $asignacionAnual = $asignacion->getAsignacion();
         $diasLicencia = $asignacion->getDiasLicencia();
         $diasComision = $asignacion->getDiasComision();
@@ -208,7 +203,6 @@ class AcademicoController extends Controller
     {
         $erogado = 0;
         // Solo éste año
-
 
         foreach ($solicitudes as $solicitud) {
             if($solicitud->getTipo() == $tipo && $solicitud->isErogadoAsignacion() && $solicitud->isEnviada() && !$solicitud->isCancelada() && $year == $solicitud->getFechaInicio()->format('Y'))

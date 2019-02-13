@@ -124,7 +124,6 @@
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-
         <p class="text-justify">V{{ i }}.
             {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
@@ -135,7 +134,6 @@
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
                 <strong>Observaciones: </strong><br>
-                {#{% if solicitud.academico.genero == 'M' %}El {% else %}La {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} habrá erogado ${{ solicitud.totalErogado|number_format(2) }} de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.#}
                 Incluyendo las erogaciones que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando, habrá erogado <strong>${{ solicitud.totalErogadoVisitante|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.<br>
             {% endif %}
         {% endif %}

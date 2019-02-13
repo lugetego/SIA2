@@ -909,7 +909,7 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+            if($solicitud->isEnviada() and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
@@ -932,12 +932,12 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if( $solicitud->isDictamen() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null)
+            if( $solicitud->isDictamen() and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') and $solicitud->isCancelada() == null)
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if( $solicitud->isDictamen() == null and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio() && $solicitud->getCreated() <= $this->getCreated() )
+            if( $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
