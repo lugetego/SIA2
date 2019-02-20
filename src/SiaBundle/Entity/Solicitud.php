@@ -936,15 +936,15 @@ class Solicitud
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
-        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if( $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-                $totalErogado += $solicitud->getTotalAsignacion();
-        }
-
 //        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-//            if($solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//            if( $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
 //                $totalErogado += $solicitud->getTotalAsignacion();
 //        }
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->isEnviada()and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+                $totalErogado += $solicitud->getTotalAsignacion();
+        }
 
         return $totalErogado;
     }
