@@ -23,7 +23,8 @@ class SesionRepository extends EntityRepository
             )
             ->setParameter('fechaSolicitud', $fechaSolicitud)
             ->setMaxResults(1)
-            ->getSingleResult();
+            ->getOneOrNullResult();
+//        getSingleResult();
     }
 
     public function findSolicitudes($tipo, $sesion)

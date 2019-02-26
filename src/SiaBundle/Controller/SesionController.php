@@ -33,6 +33,10 @@ class SesionController extends Controller
 
         $proximaSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($today);
 
+        if (!$proximaSesion) {
+            throw $this->createNotFoundException('No existe próxima sesión de consejo interno.');
+        }
+
         $diff = $proximaSesion->getFecha()->diff($today);
 
 //        // Dos días antes de la sesión busca la siguiente en el calendario

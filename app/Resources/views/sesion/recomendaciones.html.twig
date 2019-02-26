@@ -26,6 +26,12 @@
         </ol>
     </nav>
 
+    {#<ul>#}
+        {#<li>Licencias {{ licencias|length }}</li>#}
+        {#<li>Comisiones {{ comisiones|length }}</li>#}
+        {#<li>Visitantes {{ visitantes|length }}</li>#}
+    {#</ul>#}
+
     <div class="row">
         <div class="col-md-6">
             <a class="nav-link" href="{{ path('sesion_recomendaciones', { 'slug': sesion.slug }) }}">
@@ -111,7 +117,7 @@
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-        <p class="my-4">V{{ i }}.
+        <p class="my-4">V{{ i }}. {{ solicitud.id }}
 
         {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
         </p>

@@ -918,6 +918,23 @@ class Solicitud
 
     /**
      * Para las recomendaciones
+     * @return Total Erogado Visitante
+     */
+    public function totalErogadoVis()
+    {
+        $totalErogado = 0;
+        $year = $this->getFechaInicio()->format('Y');
+
+        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+            if($solicitud->isEnviada() and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio() && $solicitud->getId() <= $this->getId())
+                $totalErogado += $solicitud->getTotalAsignacion();
+        }
+
+        return $totalErogado;
+    }
+
+    /**
+     * Para las recomendaciones
      * @return Total Erogado
      */
     public function totalErogadoVisitante()
@@ -936,14 +953,19 @@ class Solicitud
                 $totalErogado += $solicitud->getTotalAsignacion();
         }
 
-//        foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-//            if( $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-//                $totalErogado += $solicitud->getTotalAsignacion();
-//        }
+//      foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
+//          if( $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $solicitud->isEnviada() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
+//              $totalErogado += $solicitud->getTotalAsignacion();
+//      }
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if($solicitud->isEnviada()and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-                $totalErogado += $solicitud->getTotalAsignacion();
+
+            if ($solicitud->isEnviada() and $solicitud->isDictamen() == null and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y')) {
+                if($solicitud->getFechaInicio() < $this->getFechaInicio())
+                    $totalErogado += $solicitud->getTotalAsignacion();
+                elseif ($solicitud->getFechaInicio() == $this->getFechaInicio() and $solicitud->getId() <= $this->getId())
+                    $totalErogado += $solicitud->getTotalAsignacion();
+            }
         }
 
         return $totalErogado;
