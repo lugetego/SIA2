@@ -14,7 +14,7 @@
     {#{% if actividad.tituloTrabajo and i == 1 %}con título {{ actividad.tituloTrabajo }}{% endif %}#}
     {# termina la descripción#}
 
-    {% if i == d %} con {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}. Estadía con duración de
+    {% if i == d %} con {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong>. Estadía con duración de
         {{ actividad.solicitud.dias }}{% if actividad.solicitud.dias > 1 %} días{% else %} día{% endif %}, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.
         {% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }}
         con los recursos que se especifican en la siguiente tabla:{% endif %}
