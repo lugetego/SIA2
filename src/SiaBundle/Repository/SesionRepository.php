@@ -34,7 +34,7 @@ class SesionRepository extends EntityRepository
                 "SELECT s FROM SiaBundle:Solicitud s
                   JOIN s.sesion se
                   WHERE s.tipo = :tipo AND se = :sesion 
-                  ORDER BY s.fechaInicio ASC"
+                  ORDER BY s.fechaInicio ASC, s.id ASC"
             )
             ->setParameter('tipo', $tipo)
             ->setParameter('sesion', $sesion)
