@@ -27,7 +27,7 @@ class Academico
      * @var array $solicitudes
      *
      * @ORM\OneToMany(targetEntity="SiaBundle\Entity\Solicitud", mappedBy="academico")
-     * @ORM\OrderBy({"id" = "DESC"})
+     * @ORM\OrderBy({"id" = "ASC"})
      *
      * The mappedBy attribute designates the field in the entity that is the owner of the relationship.
      */
@@ -370,6 +370,7 @@ class Academico
         $this->slug = $slug;
         return $this;
     }
+
     /**
      * Get slug
      *
