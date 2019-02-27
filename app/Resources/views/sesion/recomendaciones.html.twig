@@ -117,7 +117,7 @@
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-        <p class="my-4">V{{ i }}. 
+        <p class="my-4">V{{ i }}.
 
         {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
         </p>

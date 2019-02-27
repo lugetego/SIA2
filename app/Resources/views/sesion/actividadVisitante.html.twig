@@ -2,13 +2,16 @@
 {% set d = actividades|length %}
 
 {% for actividad in actividades %}
-    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }}{% if actividad.lugar %}, {{ actividad.lugar }}{% endif %}, visita el Centro de Ciencias Matemáticas {% endif %}
+    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de {{ actividad.institucion }}, visita el Centro de Ciencias Matemáticas {% endif %}
 
     {% if i > 1 and i < d %}, {% elseif d > 1 and i == d %} y {% endif %}
     {% if actividad.tipo == 'Sinodal' %} para ser {{ actividad.tipo }} de {{ actividad.Sinodalgrado }} de {{ actividad.sinodalAlumno }}
     {% elseif actividad.tipo == 'Investigación' %} para realizar {{ actividad.tipo }} sobre {{ actividad.tituloTrabajo }}
-    {% elseif actividad.tipo == 'Seminario' %} para impartir un seminario
-    {% else %} para participar en un {{ actividad.tipo }}
+    {% elseif actividad.tipo == 'Seminario' %} para impartir un seminario con título <em>{{ actividad.tituloTrabajo }}</em>
+    {% elseif actividad.tipo == 'Coloquio CCM' %} para participar en el Coloquio del CCM:  <em>{{ actividad.tituloTrabajo }}</em>
+    {% elseif actividad.tipo == 'Coloquio PCCM' %} para participar en el Coloquio del PCCM:  <em>{{ actividad.tituloTrabajo }}</em>
+    {% elseif actividad.tipo == 'Divulgacion' %} para participar la actividad de divulgación:  <em>{{ actividad.tituloTrabajo }}</em>
+    {% else %} para participar en: {{ actividad.tipo }} <em>{{ actividad.tituloTrabajo }}</em>
 
     {% endif %}
     {#{% if actividad.tituloTrabajo and i == 1 %}con título {{ actividad.tituloTrabajo }}{% endif %}#}
