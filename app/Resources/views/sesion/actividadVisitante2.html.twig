@@ -1,0 +1,29 @@
+{% set i = 1 %}
+{% set d = actividades|length %}
+
+{% for actividad in actividades %}
+
+    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de la {{ actividad.institucion }}{% if actividad.departamento %}, {{ actividad.departamento }}{% endif %} visita {% if solicitud.academico.genero == 'M' %} al {% else %} a la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong> en el Centro de Ciencias Matemáticas
+        para participar en {% if d == 1 %}la siguiente actividad{% else %}las siguientes actividades {% endif %}:<br><br>{% endif %}
+
+    <strong>{{ actividad.tipo }}</strong><br>
+    {%  if actividad.nombreEvento %}
+        <strong>{{ actividad.nombreEvento }}</strong><br>
+    {% endif %}
+    {% if actividad.tituloTrabajo %}
+        <em>{{ actividad.tituloTrabajo }}</em><br>
+    {% endif %}
+    {#{{ actividad.institucion }}, {{ actividad.departamento }}<br>#}
+    {#{{ actividad.lugar }}#}
+    {% if actividad.sinodalAlumno %}
+        <br>Estudiante: {{ actividad.sinodalAlumno }}<br>
+    {% endif %}
+    <br>
+
+    {% if i == d %}Estadía con duración de {{ actividad.solicitud.dias }}{% if actividad.solicitud.dias > 1 %} días{% else %} día{% endif %}, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.<br>
+    {% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }} con los recursos que se especifican en la siguiente tabla:{% endif %}
+    {% endif %}
+    {% set i = i+1 %}
+{% endfor %}
+
+

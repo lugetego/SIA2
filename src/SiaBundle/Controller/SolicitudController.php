@@ -191,14 +191,15 @@ class SolicitudController extends Controller
         $deleteForm = $this->createDeleteForm($solicitud);
 
         $em = $this->getDoctrine()->getManager();
+
         $now = new \DateTime('NOW');
         $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($now);
 
-        $interval = $now->diff($proxSesion->getFecha());
-        // echo $interval->format('%Y-%m-%d %H:%i:%s');
-        // Cierre de recepción de solicitudes
+        $diff = $proxSesion->getFecha()->diff($now);
 
-        if($interval->days < 1){
+        // Si es menor a dos días busca la próxima sesión
+        // Se cierra el viernes anterior
+        if($diff->format('%a') < 3) {
             $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
         }
 
@@ -210,6 +211,7 @@ class SolicitudController extends Controller
             'actividades'=> $solicitud->getActividades(),
             'hasfinanciamiento' => $hasFinanciamiento,
             'proxSesion' => $proxSesion,
+            'diff' => $diff->format('%a'),
         ));
     }
 
@@ -284,12 +286,13 @@ class SolicitudController extends Controller
 
         $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($fechaEnvio);
 
-//        $diff = $proxSesion->getFecha()->diff($fechaEnvio);
+        $diff = $proxSesion->getFecha()->diff($fechaEnvio);
 
         // Si es menor a dos días busca la próxima sesión
-//        if($diff->format('d') < 2) {
-//            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
-//        }
+        // Se cierra el viernes anterior
+        if($diff->format('%a') < 3) {
+            $proxSesion = $em->getRepository('SiaBundle:Sesion')->findProxSesion($proxSesion->getFecha());
+        }
 
         $solicitud->setSesion($proxSesion);
         $em->persist($solicitud);

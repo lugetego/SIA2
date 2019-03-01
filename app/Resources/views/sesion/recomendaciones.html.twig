@@ -79,12 +79,16 @@
     {% for solicitud in licencias %}
 
         <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {% if solicitud.getDias == 1 %}día{% else %}días{% endif %}. Del  {{ solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ solicitud.fechaFin |localizeddate('long', 'none') }}.</p>
-        <ul>
-            {% for actividad in solicitud.actividades %}
-                {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
-            {% endfor %}
-        </ul>
+
+        {% for actividad in solicitud.actividades %}
+            {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
+        {% endfor %}
+        <br>
+        {#<ul>#}
+            {#{% for actividad in solicitud.actividades %}#}
+                {#<li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>#}
+            {#{% endfor %}#}
+        {#</ul>#}
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
         <p>{{ solicitud.descripcion }}</p>
@@ -102,7 +106,7 @@
         <ul>
             {% for actividad in solicitud.actividades %}
                 {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                <li>{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
+                <li>{% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}</li>
             {% endfor %}
         </ul>
 
@@ -118,13 +122,12 @@
 
     {% for solicitud in visitantes %}
         <p class="my-4">V{{ i }}.
-
-        {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
+            {% include 'sesion/actividadVisitante2.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
-        <p>{{ solicitud.descripcion }}</p>
+        {{ solicitud.descripcion }}<br>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.
         {% if solicitud.erogadoAsignacion %}
             <p>
@@ -137,9 +140,7 @@
             </p>
         {% endif %}
 
-
         {% set i = i + 1 %}
-
     {% endfor %}
 
     {% set alumnosmodaledit = 'alumnoseditModal'~ sesion.id  %}

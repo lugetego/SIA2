@@ -1,0 +1,18 @@
+<div class="bt">
+<strong>{{ actividad.tipo }}</strong><br>
+{% if actividad.anfitrion %}
+    <span class="label label-default">{{ actividad.anfitrion }}</span><br>
+{% endif %}
+{%  if actividad.nombreEvento %}
+    <strong>{{ actividad.nombreEvento }}</strong><br>
+{% endif %}
+{% if actividad.tituloTrabajo %}
+    <em>{{ actividad.tituloTrabajo }}</em><br>
+{% endif %}
+{{ actividad.institucion }}, {{ actividad.departamento }}<br>
+{{ actividad.lugar }}
+{% if actividad.sinodalAlumno %}
+    <br>Estudiante: {{ actividad.sinodalAlumno }}<br>
+{% endif %}
+<br>
+</div>

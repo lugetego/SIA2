@@ -64,11 +64,15 @@
         {% endif %}
 
         <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
-        <ul>
-            {% for actividad in solicitud.actividades %}
-                <li class="text-justify" >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
-            {% endfor %}
-        </ul>
+        {% for actividad in solicitud.actividades %}
+            {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
+        {% endfor %}
+        <br>
+        {#<ul>#}
+            {#{% for actividad in solicitud.actividades %}#}
+                {#<li class="text-justify" >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>#}
+            {#{% endfor %}#}
+        {#</ul>#}
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
         <p class="text-justify">{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
@@ -101,12 +105,15 @@
         {% endif %}
 
         <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}</p>
-        <ul>
-            {% for actividad in solicitud.actividades %}
-                {#<li>{{ render(controller('AppBundle\\Controller\\ActividadController::recomendacion', { 'id': {{ actividad.id }} })) }}</li>#}
-                <li class="text-justify">{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>
-            {% endfor %}
-        </ul>
+        {% for actividad in solicitud.actividades %}
+            {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
+        {% endfor %}
+        <br>
+        {#<ul>#}
+            {#{% for actividad in solicitud.actividades %}#}
+                {#<li class="text-justify">{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>#}
+            {#{% endfor %}#}
+        {#</ul>#}
 
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
         <p class="text-justify">{{ solicitud.descripcion }}</p>
@@ -125,7 +132,7 @@
 
     {% for solicitud in visitantes %}
         <p class="text-justify">V{{ i }}.
-            {% include 'sesion/actividadVisitante.html.twig' with {'actividades': solicitud.actividades } %}
+            {% include 'sesion/actividadVisitante2.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
@@ -134,7 +141,7 @@
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
                 <strong>Observaciones: </strong><br>
-                Incluyendo las erogaciones que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando, habrá erogado <strong>${{ solicitud.totalErogado|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.<br>
+                Incluyendo las erogaciones que {% if solicitud.academico.genero == 'M' %} el {% else %} la {% endif %}{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }} está solicitando, habrá erogado <strong>${{ solicitud.totalErogadoVisitante|number_format(2) }}</strong> de su asignación anual en el {{ solicitud.fechaInicio |date('Y') }}.<br>
             {% endif %}
         {% endif %}
         <strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}
@@ -144,15 +151,15 @@
     {% endfor %}
 
     {% if sesion.estudiantes %}
-        <p class="text-justify"><strong><h5>Estudiantes</h5></strong></p>
+        <p><strong><h5>Estudiantes</h5></strong></p>
         <hr>
-        <p>{{ sesion.estudiantes|raw}}</p>
+        <p><div class="text-justify">{{ sesion.estudiantes|raw}}</div></p>
     {% endif %}
 
     {% if sesion.varios %}
-        <p class="text-justify"><strong><h5>Varios</h5></strong></p>
+        <p><strong><h5>Varios</h5></strong></p>
         <hr>
-        <p class="text-justify">{{ sesion.varios|raw}}</p>
+        <p><div class="text-justify">{{ sesion.varios|raw}}</div></p>
     {% endif %}
 </div>
 
