@@ -66,8 +66,9 @@
         <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
+            <br>
         {% endfor %}
-        <br><br>
+        <br>
         {#<ul>#}
             {#{% for actividad in solicitud.actividades %}#}
                 {#<li class="text-justify" >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>#}
