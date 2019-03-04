@@ -271,7 +271,7 @@ class SolicitudController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $fechaEnvio = new \DateTime(date('NOW'));
+        $fechaEnvio = new \DateTime('NOW');
 
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
