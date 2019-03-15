@@ -169,18 +169,18 @@ class SesionController extends Controller
 
         $filename = sprintf('Recomendaciones-'.$sesion->getSlug().'%s.pdf','-'. $sesion->getFecha()->format('d/m/Y'));
 
-        $footer = $this->renderView('sesion/footer.html.twig');
+        $footer = $this->renderView('sesion/footer.html.twig', array('sesion' => $sesion));
 
         $pdfOptions = array(
 
             'viewport-size'=> '1920x1080',
-            'margin-top'    => 10,
+            'margin-top'    => 15,
             'margin-right'  => 10,
-            'margin-bottom' => 10,
+            'margin-bottom' => 15,
             'margin-left'   => 10,
             'encoding' => 'utf-8',
             'footer-html' => $footer,
-            'footer-center'     => ('Hoja [page] de [toPage]'),
+//            'footer-center'    => ('Hoja [page] de [toPage]' . ' ' . $sesion->getName()),
             'footer-font-size'=> 8,
             'page-width'=> 210,
             'page-height'=> 333,
