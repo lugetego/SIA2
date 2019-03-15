@@ -40,7 +40,7 @@
         <p>{{ sesion.orden|raw}}</p>
 
         <br>
-        <p><strong><h5>Licencias</h5></strong></p>
+        <p class="my-1"><strong><h5>Licencias</h5></strong></p>
         <hr>
     </div>
 
@@ -63,19 +63,19 @@
             {% endif %}
         {% endif %}
 
-        <p>L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
+        <p class="my-1">L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
-            <br>
+            {#<br>#}
         {% endfor %}
-        <br>
+        {#<br>#}
         {#<ul>#}
             {#{% for actividad in solicitud.actividades %}#}
                 {#<li class="text-justify" >{% include 'sesion/actividad.html.twig' with {'actividad': actividad } %}</li>#}
             {#{% endfor %}#}
         {#</ul>#}
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
-        <p class="text-justify">{{ solicitud.descripcion }}</p>
+        <p class="my-1 text-justify">{{ solicitud.descripcion }}</p>
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
 
         {% set i = i + 1 %}
@@ -83,8 +83,8 @@
     {% endfor %}
 
     {# Comisiones #}
-    <br>
-    <p><strong><h5>Comisiones</h5></strong></p>
+
+    <p class="my-1"><strong><h5>Comisiones</h5></strong></p>
     <hr>
     {% set i = 1 %}
 
@@ -125,19 +125,18 @@
     {% endfor %}
 
     {# Visitantes#}
-    <br>
-    <p><strong><h5>Visitantes</h5></strong></p>
+    <p class="my-1" y-1><strong><h5>Visitantes</h5></strong></p>
     <hr>
 
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-        <p class="text-justify">V{{ i }}.
+        <p class=" my-1 text-justify">V{{ i }}.
             {% include 'sesion/actividadVisitante2.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
-        <p class="text-justify">{{ solicitud.descripcion }}</p>
+        <p class=" my-1 text-justify">{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
@@ -146,21 +145,21 @@
             {% endif %}
         {% endif %}
         <strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}
-        <br><br>
+
 
         {% set i = i + 1 %}
     {% endfor %}
 
     {% if sesion.estudiantes %}
-        <p><strong><h5>Estudiantes</h5></strong></p>
+        <p class="my-1"><strong><h5>Estudiantes</h5></strong></p>
         <hr>
         <p><div class="text-justify">{{ sesion.estudiantes|raw}}</div></p>
     {% endif %}
 
     {% if sesion.varios %}
-        <p><strong><h5>Varios</h5></strong></p>
+        <p class="my-1"><strong><h5>Varios</h5></strong></p>
         <hr>
-        <p><div class="text-justify">{{ sesion.varios|raw}}</div></p>
+        <p class="my-1"><div class="text-justify">{{ sesion.varios|raw}}</div></p>
     {% endif %}
 </div>
 

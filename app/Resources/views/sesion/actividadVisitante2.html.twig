@@ -3,8 +3,9 @@
 
 {% for actividad in actividades %}
 
-    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de la {{ actividad.institucion }}{% if actividad.departamento %}, {{ actividad.departamento }}{% endif %} visita {% if solicitud.academico.genero == 'M' %} al {% else %} a la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong>
-        para participar en {% if d == 1 %}la siguiente actividad{% else %}las siguientes actividades {% endif %}:<br><br>{% endif %}
+    {% if i == 1 %}<strong>{{ actividad.anfitrion }}</strong> de la {{ actividad.institucion }}{% if actividad.departamento %},
+        {{ actividad.departamento }}{% endif %} visita {% if solicitud.academico.genero == 'M' %} al {% else %} a la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong>
+        para participar en {% if d == 1 %}la siguiente actividad{% else %}las siguientes actividades {% endif %}:<br>{% endif %}
 
     <strong>{{ actividad.tipo }}</strong><br>
     {%  if actividad.nombreEvento %}
@@ -18,10 +19,10 @@
     {% if actividad.sinodalAlumno %}
         <br>Estudiante: {{ actividad.sinodalAlumno }}<br>
     {% endif %}
-    <br>
+    {#<br>#}
 
     {% if i == d %}Estadía con duración de {{ actividad.solicitud.dias }}{% if actividad.solicitud.dias > 1 %} días{% else %} día{% endif %}, del {{ actividad.solicitud.fechaInicio|localizeddate('long', 'none') }} al {{ actividad.solicitud.fechaFin|localizeddate('long', 'none') }}.<br>
-    {% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }} con los recursos que se especifican en la siguiente tabla:{% endif %}
+        {% if actividad.solicitud.hasFinanciamento %}{% if solicitud.academico.genero == 'M' %} El {% else %} La {% endif %}{{ solicitud.academico.titulo }} {{ actividad.solicitud.academico.nombre }} {{ actividad.solicitud.academico.apellido }} planea financiar la visita de {{ actividad.anfitrion }} con los recursos que se especifican en la siguiente tabla:{% endif %}
     {% endif %}
     {% set i = i+1 %}
 {% endfor %}
