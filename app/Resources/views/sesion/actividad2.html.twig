@@ -4,7 +4,9 @@
     <span class="label label-default">{{ actividad.anfitrion }}</span><br>
 {% endif %}
 {%  if actividad.nombreEvento %}
-    <strong>{{ actividad.nombreEvento }}</strong><br>
+    {% if actividad.tipo starts with 'Coloquio' %}
+        <strong>{{ actividad.nombreEvento }}</strong><br>
+    {% endif %}
 {% endif %}
 {% if actividad.tituloTrabajo %}
     {% if actividad.tipo == "Investigación" %}

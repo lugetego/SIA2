@@ -9,7 +9,9 @@
 
     <strong>{{ actividad.tipo }}</strong><br>
     {%  if actividad.nombreEvento %}
-        <strong>{{ actividad.nombreEvento }}</strong><br>
+        {% if not actividad.tipo starts with 'Coloquio' %}
+            <strong>{{ actividad.nombreEvento }}</strong><br>
+        {% endif %}
     {% endif %}
     {% if actividad.tituloTrabajo %}
         <em>{{ actividad.tituloTrabajo }}</em><br>
