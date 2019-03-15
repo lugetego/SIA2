@@ -125,7 +125,7 @@
     {% endfor %}
 
     {# Visitantes#}
-    <p class="my-3"><strong><h5>Visitantes</h5></strong></p>
+    <p class="my-5"><strong><h5>Visitantes</h5></strong></p>
     <hr>
 
     {% set i = 1 %}
@@ -151,13 +151,13 @@
     {% endfor %}
 
     {% if sesion.estudiantes %}
-        <p class="my-3"><strong><h5>Estudiantes</h5></strong></p>
+        <p class="my-5"><strong><h5>Estudiantes</h5></strong></p>
         <hr>
         <p><div class="text-justify">{{ sesion.estudiantes|raw}}</div></p>
     {% endif %}
 
     {% if sesion.varios %}
-        <p class="my-3"><strong><h5>Varios</h5></strong></p>
+        <p class="my-1"><strong><h5>Varios</h5></strong></p>
         <hr>
         <p class="my-3"><div class="text-justify">{{ sesion.varios|raw}}</div></p>
     {% endif %}
