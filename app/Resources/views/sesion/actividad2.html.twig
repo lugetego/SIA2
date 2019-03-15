@@ -7,11 +7,15 @@
     <strong>{{ actividad.nombreEvento }}</strong><br>
 {% endif %}
 {% if actividad.tituloTrabajo %}
-    Plática: <em>{{ actividad.tituloTrabajo }}</em><br>
+    {% if actividad.tipo == "Investigación" %}
+        Trabajo: <em>{{ actividad.tituloTrabajo }}</em><br>
+    {% else %}
+        Plática: <em>{{ actividad.tituloTrabajo }}</em><br>
+    {% endif %}
 {% endif %}
 {{ actividad.institucion }}, {{ actividad.departamento }}<br>
 {{ actividad.lugar }}
 {% if actividad.sinodalAlumno %}
-    <br>Estudiante: {{ actividad.sinodalAlumno }}<br>
+    <br>Estudiante  {{ actividad.sinodalGrado }}: {{ actividad.sinodalAlumno }}<br>
 {% endif %}
 </div>

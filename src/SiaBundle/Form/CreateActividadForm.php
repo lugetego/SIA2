@@ -81,7 +81,7 @@ class CreateActividadForm extends AbstractType {
                             'required' => false,));
 
                 }
-                elseif ($tipo === 'Sinodal')
+                elseif ($tipo === 'Sinodal' || $tipo === 'Asesoría Tesis')
                 {
                     $builder->remove('anfitrion')
 

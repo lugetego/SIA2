@@ -38,11 +38,11 @@
         <p><strong><h5>Orden del día</h5></strong></p>
         <hr>
         <p>{{ sesion.orden|raw}}</p>
-
-        <br>
-        <p class="my-1"><strong><h5>Licencias</h5></strong></p>
-        <hr>
     </div>
+
+    <br>
+    <p class="my-3"><strong><h5>Licencias</h5></strong></p>
+    <hr>
 
     {% set i = 1 %}
 
@@ -63,7 +63,7 @@
             {% endif %}
         {% endif %}
 
-        <p class="my-1">L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
+        <p class="my-3">L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
             {#<br>#}
@@ -84,7 +84,7 @@
 
     {# Comisiones #}
 
-    <p class="my-1"><strong><h5>Comisiones</h5></strong></p>
+    <p class="my-3"><strong><h5>Comisiones</h5></strong></p>
     <hr>
     {% set i = 1 %}
 
@@ -105,7 +105,7 @@
             {% endif %}
         {% endif %}
 
-        <p>C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}</p>
+        <p class="my-3">C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}</p>
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
         {% endfor %}
@@ -125,18 +125,18 @@
     {% endfor %}
 
     {# Visitantes#}
-    <p class="my-1" y-1><strong><h5>Visitantes</h5></strong></p>
+    <p class="my-3"><strong><h5>Visitantes</h5></strong></p>
     <hr>
 
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-        <p class=" my-1 text-justify">V{{ i }}.
+        <p class=" my-3 text-justify">V{{ i }}.
             {% include 'sesion/actividadVisitante2.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
 
-        <p class=" my-1 text-justify">{{ solicitud.descripcion }}</p>
+        <p class=" my-3 text-justify">{{ solicitud.descripcion }}</p>
         <strong>Erogación del CCM:</strong>{% if solicitud.getTotalAsignacion == 0 %} Ninguna{% else %} ${{ solicitud.getTotalAsignacion|number_format(2) }}{% endif %}.<br>
         {% if solicitud.erogadoAsignacion %}
             {% if solicitud.getTotalAsignacion > 0 %}
