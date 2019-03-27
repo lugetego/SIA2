@@ -6,6 +6,8 @@
 {%  if actividad.nombreEvento %}
     {% if actividad.tipo starts with 'Coloquio' %}
         <strong>{{ actividad.nombreEvento }}</strong><br>
+    {% else %}
+        {{ actividad.nombreEvento }}<br>
     {% endif %}
 {% endif %}
 {% if actividad.tituloTrabajo %}
