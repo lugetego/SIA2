@@ -9,6 +9,8 @@
     {% else %}
          <strong>{{ actividad.nombreEvento }}</strong><br>
     {% endif %}
+{% else %}
+    <br>
 {% endif %}
 {% if actividad.tituloTrabajo %}
     {% if actividad.tipo == "Investigación" %}
