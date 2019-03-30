@@ -7,7 +7,7 @@
         {{ actividad.departamento }}{% endif %} visita {% if solicitud.academico.genero == 'M' %} al {% else %} a la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong>
         para participar en {% if d == 1 %}la siguiente actividad{% else %}las siguientes actividades {% endif %}:<br>{% endif %}
 
-    <strong>{{ actividad.tipo }}</strong>:
+    <strong>{{ actividad.tipo }}</strong>
     {%  if actividad.nombreEvento %}
         {% if actividad.tipo starts with 'Coloquio' %}
             <br>
@@ -16,7 +16,11 @@
         {% endif %}
     {% endif %}
     {% if actividad.tituloTrabajo %}
-        Título: <em>{{ actividad.tituloTrabajo }}</em><br>
+        {% if actividad.tipo == "Investigación" %}
+            Tema: <em>{{ actividad.tituloTrabajo }}</em><br>
+        {% else %}
+            Plática: <em>{{ actividad.tituloTrabajo }}</em><br>
+        {% endif %}
     {% endif %}
     {#{{ actividad.institucion }}, {{ actividad.departamento }}<br>#}
     {#{{ actividad.lugar }}#}

@@ -1,5 +1,5 @@
 <div class="bt">
-<strong>{{ actividad.tipo }}</strong><br>
+<strong>{{ actividad.tipo }} </strong>
 {% if actividad.anfitrion %}
     <span class="label label-default">{{ actividad.anfitrion }}</span><br>
 {% endif %}
@@ -7,7 +7,7 @@
     {% if actividad.tipo starts with 'Coloquio' %}
         <strong>{{ actividad.nombreEvento }}</strong><br>
     {% else %}
-        {{ actividad.nombreEvento }}<br>
+         <strong>{{ actividad.nombreEvento }}</strong><br>
     {% endif %}
 {% endif %}
 {% if actividad.tituloTrabajo %}
