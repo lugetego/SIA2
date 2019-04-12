@@ -55,6 +55,10 @@
                     <div class="form-group col-md-6">
                         <label>{{ form_label(form.anfitrion) }}</label>
                         {{ form_widget(form.anfitrion, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            Favor de escribir el nombre completo del invitado ya que es necesario para realizar todos los
+                            trámites correspondientes a su visita (pagos).
+                        </small>
                         <div class="text-danger">{{ form_errors(form.anfitrion) }}</div>
                     </div>
                 {% endif %}
