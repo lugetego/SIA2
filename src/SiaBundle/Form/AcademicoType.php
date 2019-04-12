@@ -16,6 +16,8 @@ class AcademicoType extends AbstractType
         $builder
             ->add('nombre')
             ->add('apellido')
+            ->add('genero')
+            ->add('titulo')
             ->add('nacimiento')
             ->add('rfc')
             ->add('activo')
