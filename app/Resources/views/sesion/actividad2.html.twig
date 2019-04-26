@@ -1,7 +1,7 @@
 <div class="bt">
 <strong>{{ actividad.tipo }}</strong>{%  if actividad.nombreEvento %}<strong>: {{ actividad.nombreEvento }}</strong><br>{% else %}<br>{% endif %}
 {% if actividad.anfitrion %}
-    <br>{{ actividad.anfitrion }}
+    {{ actividad.anfitrion }}<br>
 {% endif %}
 {% if actividad.tituloTrabajo %}
     {% if actividad.tipo == "Investigación" %}

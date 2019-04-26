@@ -10,6 +10,11 @@
     font-size: 11pt;
 
 }
+
+.print-area p {
+    margin-bottom: 0px;
+}
+
 .titulo {
     font-family: 'montserrat';
     color:#bb151b;

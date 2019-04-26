@@ -79,7 +79,7 @@
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
 
         {% set i = i + 1 %}
-
+        <br><br>
     {% endfor %}
 
     {# Comisiones #}
@@ -121,7 +121,7 @@
         {% include 'sesion/detalleSolicitud.html.twig' with {'solicitud': solicitud } %}
 
         {% set i = i + 1 %}
-
+        <br><br>
     {% endfor %}
 
     {# Visitantes#}
@@ -146,8 +146,8 @@
         {% endif %}
         <strong>Dictamen</strong>: {% if solicitud.dictamen %}Aprobada {% elseif solicitud.dictamen is null %}{% else %}No aprobada{% endif %}
 
-
         {% set i = i + 1 %}
+        <br><br>
     {% endfor %}
 
     {% if sesion.estudiantes %}
