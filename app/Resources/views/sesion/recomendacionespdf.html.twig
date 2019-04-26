@@ -63,7 +63,7 @@
             {% endif %}
         {% endif %}
 
-        <p class="my-3">L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}</p>
+        L{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. Con duración de {{ solicitud.getDias }} {{ detalleDias }}
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
             {#<br>#}
@@ -105,7 +105,7 @@
             {% endif %}
         {% endif %}
 
-        <p class="my-3">C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}</p>
+        C{{ i }}. <strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }}</strong>. {{ solicitud.getDias }} {{ detalleDias }}
         {% for actividad in solicitud.actividades %}
             {% include 'sesion/actividad2.html.twig' with {'actividad': actividad } %}
         {% endfor %}
@@ -131,7 +131,7 @@
     {% set i = 1 %}
 
     {% for solicitud in visitantes %}
-        <p class=" my-3 text-justify">V{{ i }}.
+        <p class="text-justify">V{{ i }}.
             {% include 'sesion/actividadVisitante2.html.twig' with {'actividades': solicitud.actividades } %}
         </p>
         {% include 'sesion/detalleFinanciamiento.html.twig' with {'solicitud': solicitud } %}
