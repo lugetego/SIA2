@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2 class="my-4">Relación de visitantes 2018</h2>
+
+    <h3 class="mb-4">{{ visitantes|length }} visitas</h3>
+
+    <table class="table">
+        <theader>
+            <tr>
+            <th>Visitante</th><th>Origen</th><th>Actividad</th><th>Académico</th><th>Estancia</th>
+            </tr>
+        </theader>
+        {% for v in visitantes %}
+
+            {% for a in v.actividades %}
+            <tr>
+                <td>{{ a.anfitrion }}</td><td>{{ a.institucion }}</td><td>{{ a.tipo }}</td><td>{{ v.academico.apellido }} {{ v.academico.nombre }}</td><td>{{ v.fechaInicio|date("m/d/Y") }}</td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+
+{% endblock %}

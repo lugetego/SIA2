@@ -54,6 +54,26 @@ class SolicitudController extends Controller
     }
 
     /**
+     * Vistantes del año
+     *
+     * @Route("/visitantes", name="solicitud_visitantes")
+     * @Method("GET")
+     */
+    public function SalidasAction()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $visitantes = $em->getRepository('SiaBundle:Solicitud')-> findVisitantes();
+
+        return $this->render('solicitud/visitantes-result.html.twig', array(
+            'visitantes' => $visitantes,
+
+        ));
+    }
+
+    /**
      * Lists all solicitud entities.
      *
      * @Route("/step", name="solicitud_step")

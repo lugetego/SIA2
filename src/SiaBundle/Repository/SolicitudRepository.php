@@ -59,7 +59,7 @@ class SolicitudRepository extends EntityRepository
             ->createQuery(
                 "SELECT s FROM SiaBundle:Solicitud s
                   WHERE s.tipo = :tipo AND SUBSTRING(s.fechaInicio,1,4) = :year 
-                  ORDER BY s.fechaInicio ASC, ORDER BY s.id ASC"
+                  ORDER BY s.fechaInicio ASC"
             )
             ->setParameter('tipo', 'Visitante')
             ->setParameter('year', '2018')
@@ -79,5 +79,4 @@ class SolicitudRepository extends EntityRepository
             ->setParameter('year', '2018')
             ->getResult();
     }
-
 }
