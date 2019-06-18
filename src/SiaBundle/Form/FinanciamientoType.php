@@ -36,12 +36,13 @@ class FinanciamientoType extends AbstractType
             ))
             ->add('otro', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
                 'choices'=>array(
-                    'Entidad convidante'=>'Entidad convidante',
-                    'Recursos propios'=>'Recursos propios',
                     'Comité organizador'=>'Comité organizador',
+                    'Entidad convidante'=>'Entidad convidante',
+                    'Entidad de adscripción'=>'Entidad de adscripción',
                     'Intercambio académico'=>'Intercambio académico',
                     'Partida especial evento'=>'Partida especial evento',
                     'PAPIME'=>'PAPIME',
+                    'Recursos propios'=>'Recursos propios',
                     'No especifica'=>'No especifica'
                 ),
                 'placeholder'=>'Seleccionar',
