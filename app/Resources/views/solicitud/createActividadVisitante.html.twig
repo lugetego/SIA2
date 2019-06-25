@@ -51,8 +51,17 @@
             {% endif %}
 
             <div class="row">
+
+                {% if form.titulo is defined %}
+                    <div class="form-group col-md-1">
+                        <label>{{ form_label(form.titulo) }}</label>
+                        {{ form_widget(form.titulo, {'attr': {'class': 'form-control form-control-sm'} } ) }}
+                        <div class="text-danger">{{ form_errors(form.titulo) }}</div>
+                    </div>
+                {% endif %}
+
                 {% if form.anfitrion is defined %}
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label>{{ form_label(form.anfitrion) }}</label>
                         {{ form_widget(form.anfitrion, {'attr': {'class': 'form-control form-control-sm'} } ) }}
                         <small id="passwordHelpBlock" class="form-text text-muted">

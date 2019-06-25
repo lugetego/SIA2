@@ -37,6 +37,8 @@ class CreateActividadVisitanteFlow extends FormFlow {
         if ($step === 2) {
 
             $options['tipo'] = $formData->getTipo();
+
+
         }
 
         return $options;

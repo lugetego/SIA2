@@ -39,10 +39,25 @@ class CreateActividadVisitanteForm extends AbstractType {
 
                 if ( $tipo === 'Investigación') {
 
-                    $builder->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
-                        'label'=>'Nombre del invitado',
-                        'required'=>false,
-                    ))
+                    $builder
+                        ->add('titulo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                            'label'=>'Título',
+                            'required'=>true,
+                            'choices'=>array(
+                                'Dr.'=>'Dr.',
+                                'Dra.'=>'Dra.',
+                                'Est.'=>'Est.',
+                                'Lic.' => 'Lic.',
+                                'Mat.'=>'Mat.',
+                                'M.C.C.'=>'M.C.C.',
+                                'Sr.'=>'Sr.',
+                                'Sra.'=>'Sra.',
+                            ),
+                        ))
+                        ->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
+                            'label'=>'Nombre del invitado',
+                            'required'=>false,
+                        ))
                         ->add('institucion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Institución de origen',
                             'required'=>false,
@@ -71,7 +86,21 @@ class CreateActividadVisitanteForm extends AbstractType {
                 }
                 elseif ($tipo === 'Sinodal')
                 {
-                    $builder->remove('anfitrion')
+                    $builder//->remove('anfitrion')
+                        ->add('titulo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                        'label'=>'Título',
+                        'required'=>true,
+                        'choices'=>array(
+                            'Dr.'=>'Dr.',
+                            'Dra.'=>'Dra.',
+                            'Est.'=>'Est.',
+                            'Lic.' => 'Lic.',
+                            'Mat.'=>'Mat.',
+                            'M.C.C.'=>'M.C.C.',
+                            'Sr.'=>'Sr.',
+                            'Sra.'=>'Sra.',
+                        ),
+                    ))
                         ->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Nombre del invitado',
                             'required'=>false,
@@ -153,6 +182,20 @@ class CreateActividadVisitanteForm extends AbstractType {
                 elseif( $tipo != '') {
 
                     $builder
+                        ->add('titulo', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array(
+                            'label'=>'Título',
+                            'required'=>true,
+                            'choices'=>array(
+                                'Dr.'=>'Dr.',
+                                'Dra.'=>'Dra.',
+                                'Est.'=>'Est.',
+                                'Lic.' => 'Lic.',
+                                'Mat.'=>'Mat.',
+                                'M.C.C.'=>'M.C.C.',
+                                'Sr.'=>'Sr.',
+                                'Sra.'=>'Sra.',
+                            ),
+                        ))
                         ->add('anfitrion', 'Symfony\Component\Form\Extension\Core\Type\TextType',array(
                             'label'=>'Nombre del invitado',
                             'required'=>false,
@@ -196,7 +239,7 @@ class CreateActividadVisitanteForm extends AbstractType {
     {
         $resolver->setDefaults(array(
             'tipo' => null,
-         ));
+        ));
     }
 
     public function getBlockPrefix() {

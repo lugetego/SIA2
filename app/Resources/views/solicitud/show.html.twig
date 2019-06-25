@@ -158,7 +158,7 @@
                         <a href="#" data-toggle="modal" data-target="#{{ actividadmodalshow }}"><i class="fa fa-list-alt fa-x" aria-hidden="true"></i> {{ actividad.tipo }}</a>
                     </div>
                     {% if actividad.anfitrion %}
-                        <span class="label label-default">{{ actividad.anfitrion }}</span><br>
+                        <span class="label label-default">{{ actividad.titulo }} {{ actividad.anfitrion }}</span><br>
                     {% endif %}
 
                     {%  if actividad.nombreEvento %}

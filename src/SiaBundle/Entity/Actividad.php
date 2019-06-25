@@ -38,6 +38,13 @@ class Actividad
     /**
      * @var string
      *
+     * @ORM\Column(name="titulo", type="string", length=20, nullable=true)
+     */
+    private $titulo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="anfitrion", type="string", length=255, nullable=true)
      */
     private $anfitrion;
@@ -157,6 +164,22 @@ class Actividad
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitulo()
+    {
+        return $this->titulo;
+    }
+
+    /**
+     * @param string $titulo
+     */
+    public function setTitulo($titulo)
+    {
+        $this->titulo = $titulo;
     }
 
     /**
