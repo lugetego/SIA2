@@ -3,7 +3,7 @@
 
 {% for actividad in actividades %}
 
-    {% if i == 1 %}<strong>{{ actividad.titulo }} {{ actividad.anfitrion }}</strong> de: {{ actividad.institucion }}{% if actividad.departamento %},
+    {% if i == 1 %}<strong>{{ actividad.titulo }} {{ actividad.anfitrion }},</strong> de {{ actividad.institucion }}{% if actividad.departamento %},
         {{ actividad.departamento }}, {% endif %}en {% if actividad.lugar %}{{ actividad.lugar }}, {% endif %}visita {% if solicitud.academico.genero == 'M' %} al {% else %} a la {% endif %}<strong>{{ solicitud.academico.titulo }} {{ solicitud.academico.nombre|title }} {{ solicitud.academico.apellido|title }}</strong>
         para participar en {% if d == 1 %}la siguiente actividad{% else %}las siguientes actividades {% endif %}:<br>{% endif %}
 
