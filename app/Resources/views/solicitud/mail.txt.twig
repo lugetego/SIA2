@@ -1,4 +1,4 @@
-{% if solicitud.academico.genero == 'M' %}Estimado Dr.{% else %}Estimada  Dra.{% endif %} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }},
+{% if solicitud.academico.genero == 'M' %}Estimado {{ solicitud.academico.titulo }}{% else %}Estimada {{ solicitud.academico.titulo }}{% endif %} {{ solicitud.academico.nombre }} {{ solicitud.academico.apellido }},
 
 Su solicitud ha sido recibida en la Secretaría Académica y será revisada por el Consejo Interno.
 
