@@ -22,6 +22,7 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'Coloquio CCM' => 'Coloquio CCM',
                             'Coloquio PCCM' => 'Coloquio PCCM',
                             'Congreso' => 'Congreso',
+                            'Curso' => 'Curso',
                             'Simposio' => 'Simposio',
                             'Divulgacion' => 'Divulgacion',
                             'Investigación' => 'Investigación',
