@@ -29,7 +29,7 @@ framework:
     default_locale: '%locale%'
     trusted_hosts: ~
     trusted_proxies: ~
-    session: 10800
+    session:
         # handler_id set to null will use default session handler from php.ini
         handler_id: ~
     fragments: ~
