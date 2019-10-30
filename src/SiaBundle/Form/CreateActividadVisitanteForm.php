@@ -50,7 +50,7 @@ class CreateActividadVisitanteForm extends AbstractType {
                                 'Est.'=>'Est.',
                                 'Lic.' => 'Lic.',
                                 'Mat.'=>'Mat.',
-                                'M.C.C.'=>'M.C.C.',
+                                'M.C.'=>'M.C.',
                                 'Sr.'=>'Sr.',
                                 'Sra.'=>'Sra.',
                             ),
