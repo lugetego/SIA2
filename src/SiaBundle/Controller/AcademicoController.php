@@ -69,7 +69,7 @@ class AcademicoController extends Controller
      *
      * @Method("GET")
      */
-    public function showAction(Academico $academico, $year = '2019')
+    public function showAction(Academico $academico, $year = '2020')
     {
         $this->denyAccessUnlessGranted('view', $academico);
 
