@@ -909,10 +909,13 @@ class Solicitud
         $year = $this->getFechaInicio()->format('Y');
 
         foreach ($this->getAcademico()->getSolicitudes() as $solicitud) {
-            if( $solicitud->isEnviada() and $solicitud->isCancelada() == null and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y') && $solicitud->getFechaInicio() <= $this->getFechaInicio())
-                $totalErogado += $solicitud->getTotalAsignacion();
+            if( $solicitud->isEnviada() and $solicitud->isCancelada() == null and $solicitud->isErogadoAsignacion() and $year == $solicitud->getFechaInicio()->format('Y')){
+                if ($solicitud->isDictamen())
+                    $totalErogado += $solicitud->getTotalAsignacion();
+                elseif ($solicitud->getFechaInicio() <= $this->getFechaInicio())
+                    $totalErogado += $solicitud->getTotalAsignacion();
+            }
         }
-
         return $totalErogado;
     }
 
