@@ -26,7 +26,8 @@ class CreateActividadVisitanteForm extends AbstractType {
                             'Divulgacion' => 'Divulgacion',
                             'Investigación' => 'Investigación',
                             'Seminario' => 'Seminario',
-                            'Sinodal' => 'Sinodal'
+                            'Sinodal' => 'Sinodal',
+                            'Taller' => 'Taller'
                         ),
                         'placeholder' => 'Seleccionar',
                         'required' => true,
