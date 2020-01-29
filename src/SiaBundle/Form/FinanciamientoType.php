@@ -41,8 +41,8 @@ class FinanciamientoType extends AbstractType
                     'Entidad de adscripción'=>'Entidad de adscripción',
                     'Intercambio académico'=>'Intercambio académico',
                     'Partida especial evento'=>'Partida especial evento',
-                    'PAPIME'=>'PAPIME',
                     'PAEP'=>'PAEP',
+                    'PAPIME'=>'PAPIME',
                     'Proyecto externo'=>'Proyecto externo',
                     'Recursos propios'=>'Recursos propios',
                     'No especifica'=>'No especifica'
